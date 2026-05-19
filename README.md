@@ -14,7 +14,7 @@ With ExploreSwiftUI, you write clean, future-proof SwiftUI code once, and it aut
 | **macOS** | macOS 12.0 (macOS 15.0 for TabContent) | macOS 26.0+ |
 | **tvOS** | tvOS 15.0 | tvOS 26.0+ |
 | **watchOS** | watchOS 8.0 | watchOS 26.0+ |
-| **visionOS** | visionOS 1.0 | visionOS 2.0+ |
+| **visionOS** | visionOS 1.0 | vis dionOS 2.0+ |
 
 ---
 
@@ -45,6 +45,7 @@ Or add it directly via Xcode: **File** > **Add Packages...** and search for `Exp
 ## 🚀 Core API: Availability & Control Flow
 
 ### 1. Dynamic Platform Checking (`isAvailable`)
+
 Instead of nesting raw platform checks, check compatibility with clean, parameter-driven runtime evaluations.
 
 > [!NOTE]
@@ -65,6 +66,7 @@ if UniPlatformVersion.isAvailable(iOS: (16, 4), macOS: (13, 3)) {
 ```
 
 ### 2. Conditional SwiftUI Layout Modifiers (`View.if`)
+
 The library exposes a highly convenient conditional layout modifier on `View` to safely apply styling inline without breaking the SwiftUI ViewBuilder type system.
 
 ```swift
@@ -76,6 +78,7 @@ Text("Explore SwiftUI")
 ```
 
 You can also use a dual-branch condition (`then` vs `else`):
+
 ```swift
 Text("Premium Status")
     .if(
@@ -86,6 +89,7 @@ Text("Premium Status")
 ```
 
 ### 3. Conditional Side Effects (`runIf`)
+
 Safely manage setup, configuration, or analytical code based on dynamic capability.
 
 ```swift
@@ -99,6 +103,7 @@ UniPlatformVersion.runIf(UniPlatformVersion.supportsAdvancedListAPI) {
 ## 🎨 Major Components Showcase
 
 ### 1. Unified Tab Navigation (`UniTabView`)
+
 One of the most complex SwiftUI challenges is bridging iOS 18+'s new `TabContent` API (which uses non-View protocols) with legacy `TabView` structures. ExploreSwiftUI resolves this using a **Polymorphic DSL** descriptor pattern.
 
 ```swift
@@ -123,10 +128,12 @@ UniTabView(selection: $selectedTab) {
     }
 }
 ```
+
 - **On iOS 18+ / macOS 15+**: Compiled natively using the new `Tab` and `TabSection` containers.
 - **On iOS 15-17**: Seamlessly degraded into a standard `TabView` with `.tabItem` and `.tag` modifiers.
 
 ### 2. Uni Buttons (`UniButton`)
+
 The standard `Button` API varies widely across OS versions. `UniButton` abstracts roles, styling sizes, and border shapes dynamically.
 
 ```swift
@@ -137,6 +144,7 @@ UniButton("Delete Record", role: .destructive, action: deleteItem)
 ```
 
 ### 3. Content Unavailable Placeholders (`UniContentUnavailableView`)
+
 Provide modern empty-state layouts natively supported on newer systems, with high-fidelity fallbacks on older platforms.
 
 ```swift
@@ -150,6 +158,7 @@ UniContentUnavailableView(
 ```
 
 ### 4. High-Fidelity Text Formatters (`UniText`)
+
 Display numbers, percentages, and currencies reliably on any operating system without dealing with localized formatters manually.
 
 ```swift
@@ -192,6 +201,7 @@ ExploreSwiftUI follows a strict design paradigm to ensure maximum performance an
 ExploreSwiftUI comes with a comprehensive testing suite to verify platform generation boundaries, capability configurations, and semantic contract coverages.
 
 To run the smoke and contract tests:
+
 ```bash
 swift test --disable-sandbox
 ```

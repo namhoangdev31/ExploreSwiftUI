@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ShapesSmokeTests: XCTestCase {
     @MainActor
@@ -12,7 +12,7 @@ final class ShapesSmokeTests: XCTestCase {
 
 private struct ShapesSmokeView: View {
     var body: some View {
-        AdaptiveShape()
-            .adaptiveShapeTint(.blue)
+        UniShape()
+            .uniShapeTint(.blue)
     }
 }

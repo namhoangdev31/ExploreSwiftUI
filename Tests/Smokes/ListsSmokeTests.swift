@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ListsSmokeTests: XCTestCase {
     @MainActor
@@ -21,26 +21,26 @@ private struct ListsSmokeView: View {
         List {
             Section("Group") {
                 Text("Row")
-                    .adaptiveListRowSeparator(.hidden)
-                    .adaptiveListRowBackground(Color.blue.opacity(0.1))
-                    .adaptiveSwipeActions { Button("Swipe") {} }
-                    .adaptiveBadge(1)
+                    .uniListRowSeparator(.hidden)
+                    .uniListRowBackground(Color.blue.opacity(0.1))
+                    .uniSwipeActions { Button("Swipe") {} }
+                    .uniBadge(1)
             }
-            .adaptiveSectionIndexLabel("S")
-            .adaptiveListSectionSeparator(.visible)
+            .uniSectionIndexLabel("S")
+            .uniListSectionSeparator(.visible)
 
-            AdaptiveDisclosureGroup("Disclosure") {
+            UniDisclosureGroup("Disclosure") {
                 Text("Nested")
             }
 
-            AdaptiveOutlineGroup([Item(name: "A", children: nil)], children: \.children) { item in
+            UniOutlineGroup([Item(name: "A", children: nil)], children: \.children) { item in
                 Text(item.name)
             }
         }
-        .adaptiveListStyle(.insetGrouped)
-        .adaptiveListRowSpacing(4)
-        .adaptiveListSectionSpacing(.compact)
-        .adaptiveRefreshable {}
-        .adaptiveListSectionIndexVisibility(.visible)
+        .uniListStyle(.insetGrouped)
+        .uniListRowSpacing(4)
+        .uniListSectionSpacing(.compact)
+        .uniRefreshable {}
+        .uniListSectionIndexVisibility(.visible)
     }
 }

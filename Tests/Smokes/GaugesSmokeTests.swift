@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class GaugesSmokeTests: XCTestCase {
     @MainActor
@@ -14,13 +14,13 @@ private struct GaugesSmokeView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                AdaptiveGauge(value: 0.75) {
+                UniGauge(value: 0.75) {
                     Text("Accessory Linear")
                 }
-                .adaptiveGaugeStyle(.accessoryLinear)
-                .adaptiveGaugeTint(.blue)
+                .uniGaugeStyle(.accessoryLinear)
+                .uniGaugeTint(.blue)
 
-                AdaptiveGauge(value: 0.5, in: 0...1) {
+                UniGauge(value: 0.5, in: 0...1) {
                     Text("Accessory Circular")
                 } currentValueLabel: {
                     Text("50%")
@@ -29,22 +29,22 @@ private struct GaugesSmokeView: View {
                 } maximumValueLabel: {
                     Text("100")
                 }
-                .adaptiveGaugeStyle(.accessoryCircularCapacity)
+                .uniGaugeStyle(.accessoryCircularCapacity)
 
-                AdaptiveGauge(value: 0.3) {
+                UniGauge(value: 0.3) {
                     Text("Automatic")
                 }
-                .adaptiveGaugeStyle(.automatic)
+                .uniGaugeStyle(.automatic)
 
-                AdaptiveGauge(value: 0.6) {
+                UniGauge(value: 0.6) {
                     Text("Linear")
                 }
-                .adaptiveGaugeStyle(.linear)
+                .uniGaugeStyle(.linear)
 
-                AdaptiveGauge(value: 0.4) {
+                UniGauge(value: 0.4) {
                     Text("Circular")
                 }
-                .adaptiveGaugeStyle(.circular)
+                .uniGaugeStyle(.circular)
             }
             .padding()
         }

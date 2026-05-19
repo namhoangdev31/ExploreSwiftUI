@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class SlidersSmokeTests: XCTestCase {
     @MainActor
@@ -14,12 +14,12 @@ private struct SlidersSmokeView: View {
     @State private var value = 0.5
     var body: some View {
         VStack {
-            AdaptiveSlider(value: $value) {
+            UniSlider(value: $value) {
                 Text("Simple Slider")
             }
-            .adaptiveSliderTint(.red)
+            .uniSliderTint(.red)
 
-            AdaptiveTickedSlider(
+            UniTickedSlider(
                 value: $value,
                 in: 0...1,
                 step: 0.1,
@@ -33,9 +33,9 @@ private struct SlidersSmokeView: View {
             } maximumValueLabel: {
                 Text("Max")
             }
-            .adaptiveSliderTint(.blue)
+            .uniSliderTint(.blue)
 
-            AdaptiveTickedSlider(value: $value, tickValues: [0.25, 0.75]) {
+            UniTickedSlider(value: $value, tickValues: [0.25, 0.75]) {
                 Text("Ticks")
             } currentValueLabel: {
                 EmptyView()

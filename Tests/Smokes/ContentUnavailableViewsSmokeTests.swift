@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ContentUnavailableViewsSmokeTests: XCTestCase {
     @MainActor
@@ -13,9 +13,9 @@ final class ContentUnavailableViewsSmokeTests: XCTestCase {
 private struct ContentUnavailableViewsSmokeView: View {
     var body: some View {
         VStack {
-            AdaptiveContentUnavailableView("No Results", systemImage: "magnifyingglass")
-            AdaptiveContentUnavailableView.search(text: "Antigravity")
-            AdaptiveContentUnavailableView("Empty", systemImage: "tray") {
+            UniContentUnavailableView("No Results", systemImage: "magnifyingglass")
+            UniContentUnavailableView.search(text: "Antigravity")
+            UniContentUnavailableView("Empty", systemImage: "tray") {
                 Button("Retry") {}
             }
         }

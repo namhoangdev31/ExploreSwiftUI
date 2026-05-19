@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class DatePickersSmokeTests: XCTestCase {
     @MainActor
@@ -15,13 +15,13 @@ private struct DatePickersSmokeView: View {
     @State private var dates = Set<DateComponents>()
     var body: some View {
         VStack {
-            AdaptiveDatePicker("Pick", selection: $date)
-                .adaptiveDatePickerStyle(.graphical)
+            UniDatePicker("Pick", selection: $date)
+                .uniDatePickerStyle(.graphical)
 
-            AdaptiveDatePicker("Range", selection: $date, in: Date()...)
-                .adaptiveDatePickerStyle(.wheel)
+            UniDatePicker("Range", selection: $date, in: Date()...)
+                .uniDatePickerStyle(.wheel)
 
-            AdaptiveMultiDatePicker(selection: $dates) {
+            UniMultiDatePicker(selection: $dates) {
                 Text("Multi")
             }
         }

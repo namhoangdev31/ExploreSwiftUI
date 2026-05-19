@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class NavigationSmokeTests: XCTestCase {
     @MainActor
@@ -14,7 +14,7 @@ private struct NavigationSmokeView: View {
     var body: some View {
         NavigationStack {
             Text("Nav")
-                .adaptiveNavigationTitle("Title", subtitle: "Subtitle")
+                .uniNavigationTitle("Title", subtitle: "Subtitle")
         }
     }
 }

@@ -3,8 +3,8 @@ import json
 import os
 import re
 
-file_path = '/Users/hoangnam/Developer/ExploreSwiftUI/Tests/AdaptiveSwiftUiTests/Fixtures/exploreswiftui_feed.xml'
-output_path = '/Users/hoangnam/Developer/ExploreSwiftUI/Tests/AdaptiveSwiftUiTests/Fixtures/exploreswiftui_feed.json'
+file_path = '/Users/hoangnam/Developer/ExploreSwiftUI/Tests/Fixtures/exploreswiftui_feed.xml'
+output_path = '/Users/hoangnam/Developer/ExploreSwiftUI/Tests/Fixtures/exploreswiftui_feed.json'
 
 def parse_rss(xml_file):
     try:

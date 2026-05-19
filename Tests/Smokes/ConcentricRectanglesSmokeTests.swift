@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ConcentricRectanglesSmokeTests: XCTestCase {
     @MainActor
@@ -12,7 +12,7 @@ final class ConcentricRectanglesSmokeTests: XCTestCase {
 
 private struct ConcentricRectanglesSmokeView: View {
     var body: some View {
-        AdaptiveConcentricRectangle(fallbackCornerRadius: 10)
+        UniConcentricRectangle(fallbackCornerRadius: 10)
             .fill(Color.blue)
             .frame(width: 100, height: 100)
     }

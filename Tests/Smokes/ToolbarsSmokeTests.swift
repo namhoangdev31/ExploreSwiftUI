@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ToolbarsSmokeTests: XCTestCase {
     @MainActor
@@ -20,16 +20,16 @@ private struct ToolbarsSmokeView: View {
                 Text("Smoke Test Content")
             }
             #if !os(tvOS) && !os(watchOS)
-                .adaptiveNavigationSubtitle("Adaptive Subtitle")
+                .uniNavigationSubtitle("Uni Subtitle")
             #endif
             .toolbar {
-                ToolbarItem(placement: .adaptive(.title)) {
+                ToolbarItem(placement: .uni(.title)) {
                     Text("Title")
                 }
 
-                AdaptiveToolbarSpacer(.flexible)
+                UniToolbarSpacer(.flexible)
 
-                ToolbarItem(placement: .adaptive(.subtitle)) {
+                ToolbarItem(placement: .uni(.subtitle)) {
                     Text("Sub")
                 }
 
@@ -38,13 +38,13 @@ private struct ToolbarsSmokeView: View {
                     Button("Action B") {}
                 }
 
-                AdaptiveToolbarSpacer(.fixed, fallbackLength: 12)
+                UniToolbarSpacer(.fixed, fallbackLength: 12)
 
                 #if !os(tvOS) && !os(watchOS)
                     ToolbarItem {
                         Button("Shared") {}
                     }
-                    .adaptiveSharedBackgroundVisibility(.visible)
+                    .uniSharedBackgroundVisibility(.visible)
                 #endif
             }
         }

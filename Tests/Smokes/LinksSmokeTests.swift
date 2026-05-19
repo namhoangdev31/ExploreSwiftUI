@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class LinksSmokeTests: XCTestCase {
     @MainActor
@@ -17,22 +17,22 @@ private struct LinksSmokeView: View {
         Form {
             Section("Links") {
                 // Standard Link
-                AdaptiveLink("Visit Apple", destination: URL(string: "https://apple.com")!)
+                UniLink("Visit Apple", destination: URL(string: "https://apple.com")!)
 
                 // Link with Custom Label
-                AdaptiveLink(destination: URL(string: "https://swift.org")!) {
+                UniLink(destination: URL(string: "https://swift.org")!) {
                     Label("Swift.org", systemImage: "link")
                 }
             }
 
             Section("Sharing") {
                 // Standard ShareLink
-                AdaptiveShareLink("Share Apple", item: URL(string: "https://apple.com")!)
+                UniShareLink("Share Apple", item: URL(string: "https://apple.com")!)
 
                 // ShareLink with Preview and Custom Label
-                AdaptiveShareLink(
+                UniShareLink(
                     item: URL(string: "https://apple.com")!,
-                    preview: AdaptiveSharePreview(
+                    preview: UniSharePreview(
                         "Apple Website", image: Image(systemName: "applelogo"))
                 ) {
                     Label("Share with Preview", systemImage: "square.and.arrow.up")
@@ -41,12 +41,12 @@ private struct LinksSmokeView: View {
 
             Section("Specialized Links") {
                 // HelpLink (Requires action closure)
-                AdaptiveHelpLink {
+                UniHelpLink {
                     print("Help requested")
                 }
 
                 // TextFieldLink (watchOS polyfill, requires onSubmit)
-                AdaptiveTextFieldLink("Enter Name", prompt: Text("Your Name")) { value in
+                UniTextFieldLink("Enter Name", prompt: Text("Your Name")) { value in
                     self.submittedText = value
                 }
 

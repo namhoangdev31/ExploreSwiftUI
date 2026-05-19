@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class SheetsSmokeTests: XCTestCase {
     @MainActor
@@ -13,7 +13,7 @@ final class SheetsSmokeTests: XCTestCase {
 private struct SheetsSmokeView: View {
     @State private var isBasicPresented = false
     @State private var isAdvancedPresented = false
-    @State private var selectedDetent: AdaptivePresentationDetent = .medium
+    @State private var selectedDetent: UniPresentationDetent = .medium
 
     var body: some View {
         List {
@@ -23,14 +23,14 @@ private struct SheetsSmokeView: View {
                 }
                 .sheet(isPresented: $isBasicPresented) {
                     VStack(spacing: 20) {
-                        Text("Adaptive Sheet")
+                        Text("Uni Sheet")
                             .font(.headline)
                         Text("Current Detent: \(selectedDetent == .medium ? "Medium" : "Large")")
                         Button("Close") { isBasicPresented = false }
                     }
-                    .adaptivePresentationDetents([.medium, .large], selection: $selectedDetent)
-                    .adaptivePresentationBackground(.ultraThinMaterial)
-                    .adaptivePresentationDragIndicator(.visible)
+                    .uniPresentationDetents([.medium, .large], selection: $selectedDetent)
+                    .uniPresentationBackground(.ultraThinMaterial)
+                    .uniPresentationDragIndicator(.visible)
                 }
             }
 
@@ -54,13 +54,13 @@ private struct SheetsSmokeView: View {
                     }
                     .padding()
                     // Sizing (iOS 18+)
-                    .adaptivePresentationSizing(.fitted)
+                    .uniPresentationSizing(.fitted)
                     // Visuals
-                    .adaptivePresentationCornerRadius(32)
+                    .uniPresentationCornerRadius(32)
                     // Interactions
-                    .adaptivePresentationContentInteraction(.scrolls)
-                    .adaptivePresentationBackgroundInteraction(.enabledUpThrough(.medium))
-                    .adaptiveInteractiveDismissDisabled(false)
+                    .uniPresentationContentInteraction(.scrolls)
+                    .uniPresentationBackgroundInteraction(.enabledUpThrough(.medium))
+                    .uniInteractiveDismissDisabled(false)
                 }
             }
         }

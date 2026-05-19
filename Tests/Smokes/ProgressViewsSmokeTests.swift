@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ProgressViewsSmokeTests: XCTestCase {
     @MainActor
@@ -15,30 +15,30 @@ private struct ProgressViewsSmokeView: View {
         ScrollView {
             VStack(spacing: 30) {
                 Section("Indeterminate") {
-                    AdaptiveProgressView("Loading...")
-                        .adaptiveProgressViewStyle(.circular)
+                    UniProgressView("Loading...")
+                        .uniProgressViewStyle(.circular)
 
-                    AdaptiveProgressView {
+                    UniProgressView {
                         Text("Custom Indeterminate")
                     }
-                    .adaptiveProgressViewStyle(.linear)
+                    .uniProgressViewStyle(.linear)
                 }
 
                 Section("Value-based") {
-                    AdaptiveProgressView("Downloading", value: 0.6)
-                        .adaptiveProgressViewStyle(.linear)
-                        .adaptiveProgressTint(.blue)
+                    UniProgressView("Downloading", value: 0.6)
+                        .uniProgressViewStyle(.linear)
+                        .uniProgressTint(.blue)
 
-                    AdaptiveProgressView(value: 0.3) {
+                    UniProgressView(value: 0.3) {
                         Text("Circular Progress")
                     }
-                    .adaptiveProgressViewStyle(.circular)
-                    .adaptiveProgressTint(.orange)
+                    .uniProgressViewStyle(.circular)
+                    .uniProgressTint(.orange)
                 }
 
                 Section("Timer-based") {
                     if #available(iOS 14.0, macOS 11.0, watchOS 7.0, tvOS 14.0, *) {
-                        AdaptiveProgressView(
+                        UniProgressView(
                             timerInterval: DateInterval(
                                 start: Date(), end: Date().addingTimeInterval(30)),
                             countsDown: true

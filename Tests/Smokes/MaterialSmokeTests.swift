@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class MaterialSmokeTests: XCTestCase {
     @MainActor
@@ -14,7 +14,7 @@ private struct MaterialSmokeView: View {
     var body: some View {
         VStack {
             Text("Background")
-                .adaptiveMaterialBackground(.thin, cornerRadius: 10)
+                .uniMaterialBackground(.thin, cornerRadius: 10)
         }
     }
 }

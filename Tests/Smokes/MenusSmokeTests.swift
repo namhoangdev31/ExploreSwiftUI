@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class MenusSmokeTests: XCTestCase {
     @MainActor
@@ -13,7 +13,7 @@ final class MenusSmokeTests: XCTestCase {
 private struct MenusSmokeView: View {
     var body: some View {
         VStack {
-            AdaptiveMenuActionButton {
+            UniMenuActionButton {
                 Button("1") {}
                 Section("2") {
                     Button("Nested") {}
@@ -25,10 +25,10 @@ private struct MenusSmokeView: View {
             } primaryAction: {
                 print("Primary")
             }
-            .adaptiveMenuOrder(.fixed)
+            .uniMenuOrder(.fixed)
 
             Text("Context")
-                .adaptiveContextMenu {
+                .uniContextMenu {
                     Button("Edit") {}
                 } preview: {
                     Text("Preview")

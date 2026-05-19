@@ -7,15 +7,15 @@ import SwiftUI
 // MARK: - OS Generation
 
 /// Represents major iOS versions as an enum for clean conditional checks.
-/// Use with `AdaptivePlatformVersion.isAvailable` or `AdaptivePlatformVersion.isAtLeast`.
+/// Use with `UniPlatformVersion.isAvailable` or `UniPlatformVersion.isAtLeast`.
 ///
 /// Example:
 /// ```swift
-/// if AdaptivePlatformVersion.isAtLeast(.v18) {
+/// if UniPlatformVersion.isAtLeast(.v18) {
 ///     // Use iOS 18 APIs
 /// }
 /// ```
-public enum AdaptiveOSGeneration: Int, CaseIterable, Sendable {
+public enum UniOSGeneration: Int, CaseIterable, Sendable {
     case v15 = 15
     case v16 = 16
     case v17 = 17
@@ -23,12 +23,12 @@ public enum AdaptiveOSGeneration: Int, CaseIterable, Sendable {
     case v26 = 26
 }
 
-public enum AdaptivePlatformVersion {
+public enum UniPlatformVersion {
     public static var currentMajor: Int {
         ProcessInfo.processInfo.operatingSystemVersion.majorVersion
     }
 
-    public static func isAtLeast(_ version: AdaptiveOSGeneration) -> Bool {
+    public static func isAtLeast(_ version: UniOSGeneration) -> Bool {
         currentMajor >= version.rawValue
     }
 
@@ -36,7 +36,7 @@ public enum AdaptivePlatformVersion {
     ///
     /// Example:
     /// ```swift
-    /// if AdaptivePlatformVersion.isAvailable(iOS: 18, macOS: 15) {
+    /// if UniPlatformVersion.isAvailable(iOS: 18, macOS: 15) {
     ///     // Modern layout logic
     /// }
     /// ```
@@ -60,7 +60,7 @@ public enum AdaptivePlatformVersion {
     ///
     /// Example:
     /// ```swift
-    /// if AdaptivePlatformVersion.isAvailable(iOS: (16, 4), macOS: (13, 3)) {
+    /// if UniPlatformVersion.isAvailable(iOS: (16, 4), macOS: (13, 3)) {
     ///     // Advanced sheet presentation
     /// }
     /// ```
@@ -155,7 +155,7 @@ extension View {
     /// Example:
     /// ```swift
     /// Text("Hello")
-    ///     .if(AdaptivePlatformVersion.supportsAdvancedSheetPresentation) { view in
+    ///     .if(UniPlatformVersion.supportsAdvancedSheetPresentation) { view in
     ///         view.presentationDetents([.medium, .large])
     ///     }
     /// ```
@@ -177,7 +177,7 @@ extension View {
     /// ```swift
     /// Text("Status")
     ///     .if(
-    ///         AdaptivePlatformVersion.supportsTabContentAPI,
+    ///         UniPlatformVersion.supportsTabContentAPI,
     ///         then: { $0.foregroundStyle(.blue) },
     ///         else: { $0.foregroundColor(.blue) }
     ///     )

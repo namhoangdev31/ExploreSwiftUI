@@ -7699,7 +7699,7 @@ extension AttributedTextSelection {
 ///
 ///     /// Makes the background color for all Genmoji blue.
 ///     ///
-///     /// - Note: This constraint depends on a valid adaptiveImageGlyph value.
+///     /// - Note: This constraint depends on a valid uniImageGlyph value.
 ///     struct BlueGenmojiBackgroundConstraint<Scope: AttributeScope>: AttributedTextValueConstraint {
 ///         typealias AttributeKey = AttributeScopes.SwiftUIAttributes
 ///             .BackgroundColorAttribute
@@ -7708,7 +7708,7 @@ extension AttributedTextSelection {
 ///             _ container: inout Attributes
 ///         ) {
 ///             if container[
-///                 AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute.self
+///                 AttributeScopes.SwiftUIAttributes.UniImageGlyphAttribute.self
 ///             ] != nil {
 ///                 container.backgroundColor = .blue
 ///             }
@@ -32256,7 +32256,7 @@ public struct GridItem : Sendable {
         /// spacing to decide exactly how many items fit. This approach prefers
         /// to insert as many items of the `minimum` size as possible
         /// but lets them increase to the `maximum` size.
-        case adaptive(minimum: CGFloat, maximum: CGFloat = .infinity)
+        case uni(minimum: CGFloat, maximum: CGFloat = .infinity)
     }
 
     /// The size of the item, which is the width of a column item or the
@@ -65246,7 +65246,7 @@ public struct SliderTickContentForEach<Data, ID, Content> : SliderTickContent wh
 /// A flexible space that expands along the major axis of its containing stack
 /// layout, or on both axes if not contained in a stack.
 ///
-/// A spacer creates an adaptive view with no content that expands as much as
+/// A spacer creates an uni view with no content that expands as much as
 /// it can. For example, when placed within an ``HStack``, a spacer expands
 /// horizontally as much as the stack allows, moving sibling views out of the
 /// way, within the limits of the stack's size.
@@ -65273,7 +65273,7 @@ public struct SliderTickContentForEach<Data, ID, Content> : SliderTickContent wh
 /// checkmark and name are centered vertically and separated by system
 /// standard-spacing within the stack.](Spacer-1.png)
 ///
-/// Adding a spacer before the image creates an adaptive view with no content
+/// Adding a spacer before the image creates an uni view with no content
 /// that expands to push the image and text to the right side of the stack.
 /// The stack also now expands to take as much space as the parent view allows,
 /// shown by the blue border that indicates the boundary of the stack:
@@ -112385,7 +112385,7 @@ extension View {
     /// editor:
     ///
     ///     struct MyAttributeScope: AttributeScope {
-    ///         let adaptiveImageGlyph: AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute
+    ///         let uniImageGlyph: AttributeScopes.SwiftUIAttributes.UniImageGlyphAttribute
     ///     }
     ///
     ///     TextEditor(text: $text)
@@ -112406,7 +112406,7 @@ extension View {
     /// editor:
     ///
     ///     struct MyAttributeScope: AttributeScope {
-    ///         let adaptiveImageGlyph: AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute
+    ///         let uniImageGlyph: AttributeScopes.SwiftUIAttributes.UniImageGlyphAttribute
     ///     }
     ///
     ///     extension AttributeScopes {
@@ -143695,7 +143695,7 @@ extension AttributeScopes {
         public let lineHeight: AttributeScopes.CoreTextAttributes.LineHeightAttribute
 
         @available(macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-        public let adaptiveImageGlyph: AttributeScopes.SwiftUIAttributes.AdaptiveImageGlyphAttribute
+        public let uniImageGlyph: AttributeScopes.SwiftUIAttributes.UniImageGlyphAttribute
 
         /// A property for accessing attributes defined by the Accessibility framework.
         public let accessibility: AttributeScopes.AccessibilityAttributes

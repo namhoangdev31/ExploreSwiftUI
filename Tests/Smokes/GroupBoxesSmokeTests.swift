@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class GroupBoxesSmokeTests: XCTestCase {
     @MainActor
@@ -13,10 +13,10 @@ final class GroupBoxesSmokeTests: XCTestCase {
 private struct GroupBoxesSmokeView: View {
     var body: some View {
         VStack {
-            AdaptiveGroupBox("Label") {
+            UniGroupBox("Label") {
                 Text("Content")
             }
-            .adaptiveGroupBoxBackgroundStyle(.thinMaterial)
+            .uniGroupBoxBackgroundStyle(.thinMaterial)
         }
     }
 }

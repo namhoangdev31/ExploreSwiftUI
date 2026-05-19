@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ButtonsSmokeTests: XCTestCase {
     @MainActor
@@ -13,24 +13,24 @@ final class ButtonsSmokeTests: XCTestCase {
 private struct ButtonsSmokeView: View {
     var body: some View {
         VStack {
-            AdaptiveButton("Fitted") {}
-                .adaptiveButtonStyle(.borderedProminent)
-                .adaptiveButtonSizing(.fitted)
+            UniButton("Fitted") {}
+                .uniButtonStyle(.borderedProminent)
+                .uniButtonSizing(.fitted)
 
-            AdaptiveButton("Flexible") {}
-                .adaptiveButtonStyle(.glass)
-                .adaptiveButtonSizing(.flexible)
+            UniButton("Flexible") {}
+                .uniButtonStyle(.glass)
+                .uniButtonSizing(.flexible)
 
-            AdaptiveButton("Cancel", role: .cancel) {}
-                .adaptiveButtonBorderShape(.capsule)
+            UniButton("Cancel", role: .cancel) {}
+                .uniButtonBorderShape(.capsule)
 
-            AdaptiveButton("Close", systemImage: "xmark", role: .close) {}
-                .adaptiveButtonTint(.red)
+            UniButton("Close", systemImage: "xmark", role: .close) {}
+                .uniButtonTint(.red)
 
-            AdaptiveRoleButton(role: .confirm) {}
-            AdaptiveRenameButton {}
-            AdaptivePasteButton { _ in }
-            AdaptiveEditButton()
+            UniRoleButton(role: .confirm) {}
+            UniRenameButton {}
+            UniPasteButton { _ in }
+            UniEditButton()
         }
     }
 }

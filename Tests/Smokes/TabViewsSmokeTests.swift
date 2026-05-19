@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class TabViewsSmokeTests: XCTestCase {
     @MainActor
@@ -18,38 +18,38 @@ private struct TabViewsSmokeView: View {
         if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, watchOS 11.0, *) {
             TabView(selection: $selection) {
                 // Individual Tab with Customization and Badges
-                AdaptiveValueTab("Home", systemImage: "house", value: "home") {
+                UniValueTab("Home", systemImage: "house", value: "home") {
                     HomeContentView()
                 }
-                .adaptiveCustomizationID("tab.home")
-                .adaptiveTabBadge(5)
+                .uniCustomizationID("tab.home")
+                .uniTabBadge(5)
 
                 // Grouped Tabs (TabSection) for Sidebar
-                AdaptiveTabSection("Personal") {
-                    AdaptiveValueTab(
+                UniTabSection("Personal") {
+                    UniValueTab(
                         "Search", systemImage: "magnifyingglass", value: "search", role: .search
                     ) {
                         Text("Search Screen")
                     }
-                    .adaptiveCustomizationID("tab.search")
+                    .uniCustomizationID("tab.search")
 
-                    AdaptiveValueTab("Profile", systemImage: "person", value: "profile") {
+                    UniValueTab("Profile", systemImage: "person", value: "profile") {
                         Text("User Profile")
                     }
-                    .adaptiveCustomizationID("tab.profile")
-                    .adaptiveTabBadge("New")
+                    .uniCustomizationID("tab.profile")
+                    .uniTabBadge("New")
                 }
             }
-            .adaptiveTabViewStyle(.sidebarAdaptable)
-            .adaptiveTabViewCustomization($customizationData)
-            .adaptiveTabViewSidebarHeader {
+            .uniTabViewStyle(.sidebarAdaptable)
+            .uniTabViewCustomization($customizationData)
+            .uniTabViewSidebarHeader {
                 Text("App Sidebar").font(.caption).bold().padding(.vertical, 4)
             }
-            .adaptiveTabViewSidebarFooter {
+            .uniTabViewSidebarFooter {
                 Text("Build 1.0.0").font(.caption2).padding(.vertical, 4)
             }
             // Future-proofing iOS 26+ Liquid Glass features
-            .adaptiveTabViewBottomAccessory {
+            .uniTabViewBottomAccessory {
                 HStack {
                     Image(systemName: "music.note")
                     Text("Now Playing: SwiftUI Rocks")
@@ -60,7 +60,7 @@ private struct TabViewsSmokeView: View {
                 .background(.ultraThinMaterial)
                 .cornerRadius(12)
             }
-            .adaptiveTabBarMinimizeBehavior(.onScrollDown)
+            .uniTabBarMinimizeBehavior(.onScrollDown)
         } else {
             // Legacy Fallback for iOS 13-17
             TabView(selection: $selection) {

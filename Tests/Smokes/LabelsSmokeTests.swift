@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class LabelsSmokeTests: XCTestCase {
     @MainActor
@@ -13,8 +13,8 @@ final class LabelsSmokeTests: XCTestCase {
 private struct LabelsSmokeView: View {
     var body: some View {
         VStack {
-            AdaptiveLabel("Star", systemImage: "star")
-            AdaptiveLabel("Gear") { Image(systemName: "gear") }
+            UniLabel("Star", systemImage: "star")
+            UniLabel("Gear") { Image(systemName: "gear") }
         }
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ViewsSmokeTests: XCTestCase {
     @MainActor
@@ -13,9 +13,9 @@ final class ViewsSmokeTests: XCTestCase {
 private struct ViewsSmokeView: View {
     var body: some View {
         Text("Surface")
-            .adaptiveControlSize(.mini)
-            .adaptiveContainerBackground(.thinMaterial, for: .navigation)
-            .adaptiveBackgroundExtensionEffect()
-            .adaptiveGlassEffect()
+            .uniControlSize(.mini)
+            .uniContainerBackground(.thinMaterial, for: .navigation)
+            .uniBackgroundExtensionEffect()
+            .uniGlassEffect()
     }
 }

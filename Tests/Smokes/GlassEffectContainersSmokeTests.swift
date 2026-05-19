@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class GlassEffectContainersSmokeTests: XCTestCase {
     @MainActor
@@ -12,9 +12,9 @@ final class GlassEffectContainersSmokeTests: XCTestCase {
 
 private struct GlassEffectContainersSmokeView: View {
     var body: some View {
-        AdaptiveGlassEffectContainer {
+        UniGlassEffectContainer {
             Text("Glass Content")
-                .adaptiveGlass()
+                .uniGlass()
         }
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ScrollViewsSmokeTests: XCTestCase {
     @MainActor
@@ -12,12 +12,12 @@ final class ScrollViewsSmokeTests: XCTestCase {
 
 private struct ScrollViewsSmokeView: View {
     var body: some View {
-        AdaptiveScrollView {
+        UniScrollView {
             VStack {
                 Text("A")
                 Text("B")
             }
         }
-        .adaptiveScrollEdgeEffectStyle(.hard, for: .vertical)
+        .uniScrollEdgeEffectStyle(.hard, for: .vertical)
     }
 }

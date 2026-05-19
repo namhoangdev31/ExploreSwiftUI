@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class LabeledContentSmokeTests: XCTestCase {
     @MainActor
@@ -15,7 +15,7 @@ private struct LabeledContentSmokeView: View {
         List {
             Section("Custom Layout") {
                 // Testing init(content:label:)
-                AdaptiveLabeledContent {
+                UniLabeledContent {
                     Text("Custom Content")
                         .foregroundColor(.blue)
                 } label: {
@@ -25,20 +25,20 @@ private struct LabeledContentSmokeView: View {
 
             Section("Title and Value (String)") {
                 // Testing init(_:value:)
-                AdaptiveLabeledContent("Status", value: "Completed")
+                UniLabeledContent("Status", value: "Completed")
 
                 // Testing LocalizedStringKey variant
-                AdaptiveLabeledContent(LocalizedStringKey("Version"), value: "1.0.0")
+                UniLabeledContent(LocalizedStringKey("Version"), value: "1.0.0")
             }
 
             Section("Formatted Values") {
                 // Testing init(_:value:format:)
                 if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) {
-                    AdaptiveLabeledContent("Price", value: 1250.5, format: .currency(code: "USD"))
-                    AdaptiveLabeledContent("Progress", value: 0.75, format: .percent)
+                    UniLabeledContent("Price", value: 1250.5, format: .currency(code: "USD"))
+                    UniLabeledContent("Progress", value: 0.75, format: .percent)
                 } else {
                     // Fallback test for older versions if needed
-                    AdaptiveLabeledContent("Price", value: "1250.5 USD")
+                    UniLabeledContent("Price", value: "1250.5 USD")
                 }
             }
         }

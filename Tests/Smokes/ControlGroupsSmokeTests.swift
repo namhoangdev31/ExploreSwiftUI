@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ControlGroupsSmokeTests: XCTestCase {
     @MainActor
@@ -13,16 +13,16 @@ final class ControlGroupsSmokeTests: XCTestCase {
 private struct ControlGroupsSmokeView: View {
     var body: some View {
         VStack {
-            AdaptiveControlGroup {
+            UniControlGroup {
                 Button("1") {}
                 Button("2") {}
             }
-            .adaptiveControlGroupStyle(.navigation)
+            .uniControlGroupStyle(.navigation)
 
-            AdaptiveControlGroup("Palette", systemImage: "paintpalette") {
+            UniControlGroup("Palette", systemImage: "paintpalette") {
                 Button("Red") {}
             }
-            .adaptiveControlGroupStyle(.palette)
+            .uniControlGroupStyle(.palette)
         }
     }
 }

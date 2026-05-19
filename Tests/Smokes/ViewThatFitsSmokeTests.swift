@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ViewThatFitsSmokeTests: XCTestCase {
     @MainActor
@@ -12,7 +12,7 @@ final class ViewThatFitsSmokeTests: XCTestCase {
 
 private struct ViewThatFitsSmokeView: View {
     var body: some View {
-        AdaptiveViewThatFits(axes: .horizontal) {
+        UniViewThatFits(axes: .horizontal) {
             Text("A very long text that may not fit in the current space")
             Text("A shorter text")
             Text("Fit")

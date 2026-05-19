@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class ColorsSmokeTests: XCTestCase {
     @MainActor
@@ -14,20 +14,20 @@ private struct ColorsSmokeView: View {
     var body: some View {
         VStack {
             Rectangle()
-                .fill(AdaptiveColor.systemFill)
+                .fill(UniColor.systemFill)
                 .frame(width: 50, height: 50)
 
             Text("Primary")
-                .adaptiveForegroundStyle(.blue, hierarchy: .primary)
+                .uniForegroundStyle(.blue, hierarchy: .primary)
 
             Text("Secondary Gradient")
-                .adaptiveForegroundStyle(.blue, gradient: true, hierarchy: .secondary)
+                .uniForegroundStyle(.blue, gradient: true, hierarchy: .secondary)
 
             Text("Tertiary")
-                .adaptiveForegroundStyle(.orange, hierarchy: .tertiary, opacity: 0.8)
+                .uniForegroundStyle(.orange, hierarchy: .tertiary, opacity: 0.8)
 
             Text("Quaternary")
-                .adaptiveForegroundStyle(.green, hierarchy: .quaternary)
+                .uniForegroundStyle(.green, hierarchy: .quaternary)
         }
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class PickersSmokeTests: XCTestCase {
     @MainActor
@@ -14,20 +14,20 @@ private struct PickersSmokeView: View {
     @State private var selection = 1
     var body: some View {
         VStack {
-            AdaptivePicker("Mode", selection: $selection) {
+            UniPicker("Mode", selection: $selection) {
                 Text("A").tag(1)
                 Text("B").tag(2)
             }
-            .adaptivePickerStyle(.menu)
+            .uniPickerStyle(.menu)
 
-            AdaptivePicker("Radio", selection: $selection) {
+            UniPicker("Radio", selection: $selection) {
                 Text("1").tag(1)
                 Text("2").tag(2)
             }
-            .adaptivePickerStyle(.radioGroup)
-            .adaptiveHorizontalRadioGroupLayout()
+            .uniPickerStyle(.radioGroup)
+            .uniHorizontalRadioGroupLayout()
 
-            AdaptiveValueLabelPicker(selection: $selection) {
+            UniValueLabelPicker(selection: $selection) {
                 Text("X").tag(1)
             } label: {
                 Text("Picker")
@@ -35,6 +35,6 @@ private struct PickersSmokeView: View {
                 Text("Value: \(selection)")
             }
         }
-        .adaptiveDefaultWheelPickerItemHeight(44)
+        .uniDefaultWheelPickerItemHeight(44)
     }
 }

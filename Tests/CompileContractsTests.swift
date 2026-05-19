@@ -2,21 +2,21 @@ import Foundation
 import SwiftUI
 import XCTest
 
-@testable import AdaptiveSwiftUi
+@testable import UniSwiftUi
 
 final class CompileContractsTests: XCTestCase {
     func testOSGenerationOrdering() {
-        XCTAssertTrue(AdaptiveOSGeneration.v26.rawValue > AdaptiveOSGeneration.v18.rawValue)
-        XCTAssertTrue(AdaptiveOSGeneration.v18.rawValue > AdaptiveOSGeneration.v15.rawValue)
+        XCTAssertTrue(UniOSGeneration.v26.rawValue > UniOSGeneration.v18.rawValue)
+        XCTAssertTrue(UniOSGeneration.v18.rawValue > UniOSGeneration.v15.rawValue)
     }
 
     func testPlatformCapabilityFlagsEvaluate() {
-        _ = AdaptivePlatformVersion.supportsWWDC25Design
-        _ = AdaptivePlatformVersion.supportsTabContentAPI
-        _ = AdaptivePlatformVersion.supportsAdaptableTabCustomization
-        _ = AdaptivePlatformVersion.supportsAdvancedSheetPresentation
-        _ = AdaptivePlatformVersion.supportsAdvancedListAPI
-        _ = AdaptivePlatformVersion.supportsAdvancedPickerAPI
+        _ = UniPlatformVersion.supportsWWDC25Design
+        _ = UniPlatformVersion.supportsTabContentAPI
+        _ = UniPlatformVersion.supportsAdaptableTabCustomization
+        _ = UniPlatformVersion.supportsAdvancedSheetPresentation
+        _ = UniPlatformVersion.supportsAdvancedListAPI
+        _ = UniPlatformVersion.supportsAdvancedPickerAPI
     }
 
     func testExploreSwiftUIRSSFixtureHasFullCoverage() throws {
@@ -124,7 +124,7 @@ final class ExploreSwiftUIRSSParser: NSObject, XMLParserDelegate {
         parser.shouldProcessNamespaces = true
 
         guard parser.parse() else {
-            throw parser.parserError ?? NSError(domain: "AdaptiveSwiftUiTests", code: 2)
+            throw parser.parserError ?? NSError(domain: "UniSwiftUiTests", code: 2)
         }
 
         return ExploreSwiftUIRSSFeed(
@@ -228,7 +228,7 @@ func loadExploreSwiftUIRSSFixtureData() throws -> Data {
         )
 
     guard let fixtureURL else {
-        throw NSError(domain: "AdaptiveSwiftUiTests", code: 1)
+        throw NSError(domain: "UniSwiftUiTests", code: 1)
     }
 
     return try Data(contentsOf: fixtureURL)

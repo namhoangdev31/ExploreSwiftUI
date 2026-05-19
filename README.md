@@ -14,7 +14,7 @@ With ExploreSwiftUI, you write clean, future-proof SwiftUI code once, and it aut
 | **macOS** | macOS 12.0 (macOS 15.0 for TabContent) | macOS 26.0+ |
 | **tvOS** | tvOS 15.0 | tvOS 26.0+ |
 | **watchOS** | watchOS 8.0 | watchOS 26.0+ |
-| **visionOS** | visionOS 1.0 | vis dionOS 2.0+ |
+| **visionOS** | visionOS 1.0 | visionOS 2.0+ |
 
 ---
 
@@ -208,6 +208,13 @@ swift test --disable-sandbox
 
 ---
 
+## 🤝 Credits & Acknowledgements
+
+This library and its API references are compiled and synthesized based on information and resources from [ExploreSwiftUI](https://exploreswiftui.com/).
+
+---
+
 ## 📄 License
 
 ExploreSwiftUI is available under the **MIT License**. See the `LICENSE` file for details.
+

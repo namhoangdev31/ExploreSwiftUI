@@ -20,28 +20,44 @@ extension View {
     ///     .uniNavigationTitle("Settings", subtitle: "Profile and Security")
     /// ```
     @ViewBuilder
-    public func uniNavigationTitle(_ title: LocalizedStringKey, subtitle: LocalizedStringKey)
+    public func uniNavigationTitle(_ title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil)
         -> some View
     {
-        if #available(iOS 26.0, macOS 11.0, *) {
-            self.navigationTitle(title).navigationSubtitle(subtitle)
-        } else {
+        if let subtitle = subtitle {
+            #if os(iOS) || os(macOS)
+            if #available(iOS 26.0, macOS 11.0, *) {
+                self.navigationTitle(title).navigationSubtitle(subtitle)
+            } else {
+                fallbackTitle(titleKey: title, subtitleKey: subtitle)
+            }
+            #else
             fallbackTitle(titleKey: title, subtitleKey: subtitle)
+            #endif
+        } else {
+            self.navigationTitle(title)
         }
     }
 
     /// Configures the view's uni title and subtitle using string protocols.
     @ViewBuilder
-    public func uniNavigationTitle<S: StringProtocol>(_ title: S, subtitle: S) -> some View {
-        if #available(iOS 26.0, macOS 11.0, *) {
-            self.navigationTitle(title).navigationSubtitle(subtitle)
-        } else {
+    public func uniNavigationTitle<S: StringProtocol>(_ title: S, subtitle: S? = nil) -> some View {
+        if let subtitle = subtitle {
+            #if os(iOS) || os(macOS)
+            if #available(iOS 26.0, macOS 11.0, *) {
+                self.navigationTitle(title).navigationSubtitle(subtitle)
+            } else {
+                fallbackTitle(title: title, subtitle: subtitle)
+            }
+            #else
             fallbackTitle(title: title, subtitle: subtitle)
+            #endif
+        } else {
+            self.navigationTitle(title)
         }
     }
 
     @ViewBuilder
-    private func fallbackTitle(titleKey: LocalizedStringKey, subtitleKey: LocalizedStringKey)
+    private func fallbackTitle(titleKey: LocalizedStringKey, subtitleKey: LocalizedStringKey?)
         -> some View
     {
         if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
@@ -51,9 +67,11 @@ extension View {
                         VStack(spacing: 0) {
                             Text(titleKey)
                                 .font(.headline)
-                            Text(subtitleKey)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            if let subtitleKey = subtitleKey {
+                                Text(subtitleKey)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                 }
@@ -67,7 +85,7 @@ extension View {
     }
 
     @ViewBuilder
-    private func fallbackTitle<S: StringProtocol>(title: S, subtitle: S) -> some View {
+    private func fallbackTitle<S: StringProtocol>(title: S, subtitle: S?) -> some View {
         if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
             self.navigationTitle(title)
                 .toolbar {
@@ -75,9 +93,11 @@ extension View {
                         VStack(spacing: 0) {
                             Text(title)
                                 .font(.headline)
-                            Text(subtitle)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+                            if let subtitle = subtitle {
+                                Text(subtitle)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                 }
@@ -180,4 +200,62 @@ extension View {
             self
         }
     }
+    
+    // MARK: - Toolbar Background (iOS 16+)
+    
+    /// Specifies the background style for the navigation toolbar.
+    ///
+    /// - **iOS 16+**: Uses the native `.toolbarBackground(_:for:)` modifier.
+    /// - **iOS 15**: Gracefully ignores the modifier to maintain stability and avoid global `UINavigationBar.appearance()` side-effects.
+    @ViewBuilder
+    public func uniToolbarBackground<S: ShapeStyle>(_ style: S, visibility: Visibility = .visible) -> some View {
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+            self.toolbarBackground(style, for: .navigationBar)
+                .toolbarBackground(visibility, for: .navigationBar)
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
+    }
+    
+    /// Specifies the background visibility for the navigation toolbar.
+    @ViewBuilder
+    public func uniToolbarBackground(_ visibility: Visibility, for placement: UniToolbarPlacement = .navigationBar) -> some View {
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
+            // Note: Currently maps directly to navigationBar for simplicity.
+            self.toolbarBackground(visibility, for: .navigationBar)
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
+    }
+
+    // MARK: - Navigation Bar Back Button Hidden
+    
+    /// Hides the navigation bar back button, with safe fallbacks across platforms.
+    ///
+    /// Example:
+    /// ```swift
+    /// View()
+    ///     .uniNavigationBarBackButtonHidden(true)
+    /// ```
+    @ViewBuilder
+    public func uniNavigationBarBackButtonHidden(_ hidden: Bool = true) -> some View {
+        // Native modifier is available since iOS 13, but wrapping it allows us 
+        // to attach future swipe-to-back polyfills seamlessly.
+        self.navigationBarBackButtonHidden(hidden)
+    }
+}
+
+/// Helper enum to map Toolbar Placement securely.
+public enum UniToolbarPlacement {
+    case automatic
+    case navigationBar
+    case bottomBar
 }

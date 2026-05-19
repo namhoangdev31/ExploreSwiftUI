@@ -167,11 +167,92 @@ UniText(1250.75, format: .currency(code: "USD"))
     .uniTracking(0.5) // Gracefully applies kerning/tracking inline safely
 ```
 
+### 5. Unified Navigation (`UniNavigationStack` & `UniNavigationSplitView`)
+
+Apple transitioned from `NavigationView` to `NavigationStack` and `NavigationSplitView`. ExploreSwiftUI handles this dynamically.
+
+```swift
+// Unified Stack Navigation
+UniNavigationStack {
+    List(items) { item in
+        UniNavigationLink(value: item) {
+            Text(item.name)
+        }
+    }
+    .uniNavigationDestination(for: Item.self) { item in
+        DetailView(item: item)
+    }
+}
+```
+
+- **On iOS 16+**: Utilizes native high-performance `NavigationStack` with `navigationDestination(for:destination:)`.
+- **On iOS 15**: Fallbacks to `NavigationView` and simulates link routing via traditional `NavigationLink(destination:isActive:label:)` with a binded state.
+
+### 6. Enhanced ScrollView Modifiers (`uniScrollTargetBehavior` & `uniScrollPosition`)
+
+Leverage iOS 17+ ScrollView features safely on iOS 15/16.
+
+```swift
+@State private var scrollID: Int?
+
+UniScrollView(.horizontal) {
+    LazyHStack {
+        ForEach(0..<100) { item in
+            CardView(item).id(item)
+        }
+    }
+}
+.uniScrollTargetBehavior(.paging) // Native on iOS 17+, safely ignored on older platforms
+.uniScrollPosition(id: $scrollID) // Native on iOS 17+, falls back to ScrollViewReader programmatically
+```
+
+### 7. Modern Share Sheets (`UniShareLink`)
+
+Dynamically trigger sharing workflows using the latest native sheet layouts.
+
+```swift
+UniShareLink(item: URL(string: "https://apple.com")!) {
+    Label("Share Article", systemImage: "square.and.arrow.up")
+}
+
+// Share text dynamically
+UniShareLink(item: "Read this amazing content!") {
+    Label("Share Message", systemImage: "message")
+}
+```
+
+- **On iOS 16+**: Leverages standard native `ShareLink`.
+- **On iOS 15**: Seamlessly triggers UIKit's `UIActivityViewController` inside an automatically managed hidden sheet.
+
+### 8. Dynamic Symbol Animations (`uniSymbolEffect`)
+
+SF Symbols 5/6 introduce dynamic motion. ExploreSwiftUI simulates these animations on older devices.
+
+```swift
+@State private var isBouncing = false
+
+Image(systemName: "wifi")
+    .uniSymbolEffect(.bounce, isActive: isBouncing) // Simulates bounce via spring scale on iOS 15-16
+```
+
+### 9. Unified Alerts & Dialogs (`uniAlert` & `uniConfirmationDialog`)
+
+Unify the messy, ever-changing alert API syntax across iOS releases.
+
+```swift
+.uniAlert("Confirm Action", isPresented: $showAlert) {
+    Button("Delete", role: .destructive) { }
+    Button("Cancel", role: .cancel) { }
+} message: {
+    Text("This action cannot be undone.")
+}
+```
+
 ---
 
 ## 🛠️ Complete Uni Components Reference
 
-| Component | Modern SwiftUI Counterpart | Fallback Behavior on Legacy Systems |
+| Component / Modifier | Modern SwiftUI Counterpart | Fallback Behavior on Legacy Systems |
 | :--- | :--- | :--- |
 | `UniButton` | `Button(role:action:)` | Resolves custom destructive/close roles, caps bounds, and maps layout sizes. |
 | `UniScrollView` | `ScrollView` | Wraps layout axes and sets up margin trackers. |
@@ -183,6 +264,12 @@ UniText(1250.75, format: .currency(code: "USD"))
 | `UniContentUnavailableView` | `ContentUnavailableView` | Generates a high-fidelity vertically stacked fallback with standard buttons. |
 | `UniViewThatFits` | `ViewThatFits` | Falls back to dynamic Scrolling layouts on older OS versions. |
 | `UniGlassEffectContainer` | `.background(.ultraThinMaterial)` | Polyfills high-definition glass materials with semi-transparent tinted styling. |
+| `UniNavigationStack` / `UniNavigationSplitView` | `NavigationStack` / `NavigationSplitView` | Falls back to traditional `NavigationView` and standard active links. |
+| `UniShareLink` | `ShareLink` | Triggers UIKit's `UIActivityViewController` on iOS 15 or `NSSharingServicePicker` on macOS. |
+| `.uniScrollTargetBehavior(_:)` | `.scrollTargetBehavior` | Gracefully ignored. |
+| `.uniScrollPosition(id:anchor:)` | `.scrollPosition` | Leverages internal `ScrollViewReader` to scroll programmatically. |
+| `.uniSymbolEffect(_:isActive:)` | `.symbolEffect` | Simulates bounce (spring scale) and pulse (opacity animations). |
+| `.uniAlert(...)` / `.uniConfirmationDialog(...)` | `.alert(...)` / `.confirmationDialog(...)` | Wraps closure-based DSL and falls back to legacy `Alert` and `ActionSheet` types. |
 
 ---
 

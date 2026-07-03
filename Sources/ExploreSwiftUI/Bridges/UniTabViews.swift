@@ -276,12 +276,18 @@ extension View {
 extension View {
 
     /// Configures the tab bar minimize behavior on scroll (iOS 26+).
+    ///
+    /// Example:
+    /// ```swift
+    /// TabView { ... }
+    ///     .uniTabBarMinimizeBehavior(.onScrollDown)
+    /// ```
     @ViewBuilder
     public func uniTabBarMinimizeBehavior(
         _ behavior: UniTabBarMinimizeBehavior = .onScrollDown
     ) -> some View {
-        #if os(iOS)
-            if #available(iOS 26.0, *) {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
                 switch behavior {
                 case .automatic: self.tabBarMinimizeBehavior(.automatic)
                 case .never: self.tabBarMinimizeBehavior(.never)
@@ -297,6 +303,14 @@ extension View {
     }
 
     /// Adds a bottom accessory view to the tab bar (iOS 26+).
+    ///
+    /// Example:
+    /// ```swift
+    /// TabView { ... }
+    ///     .uniTabViewBottomAccessory {
+    ///         Text("Bottom Player Accessory")
+    ///     }
+    /// ```
     @ViewBuilder
     public func uniTabViewBottomAccessory<Content: View>(
         @ViewBuilder content: @escaping () -> Content
@@ -383,11 +397,15 @@ extension TabContent {
             for placements: Set<UniTabCustomizationPlacement> = [.tabBar]
         ) -> some TabContent<TabValue> {
             let mapped: TabCustomizationBehavior
+            #if os(macOS)
+            mapped = .automatic
+            #else
             switch behavior {
             case .automatic: mapped = .automatic
             case .reorderable: mapped = .reorderable
             case .disabled: mapped = .disabled
             }
+            #endif
             if placements.contains(.tabBar) {
                 return customizationBehavior(mapped, for: .tabBar)
             }

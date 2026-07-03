@@ -38,7 +38,7 @@ To integrate **ExploreSwiftUI** into your project, add the following dependency 
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/namhoangdev31/ExploreSwiftUI.git", from: "1.0.0")
+    .package(url: "https://github.com/namhoangdev31/ExploreSwiftUI.git", from: "1.0.1")
 ]
 ```
 

@@ -45,19 +45,59 @@ public struct UniDisclosureGroup<Label: View, Content: View>: View {
         self.label = { Text(titleKey) }
     }
 
+    /// Creates an uni disclosure group with a localized title resource.
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)
+    public init(
+        _ titleResource: LocalizedStringResource,
+        isExpanded: Binding<Bool>? = nil,
+        @ViewBuilder content: @escaping () -> Content
+    ) where Label == Text {
+        self.isExpanded = isExpanded
+        self.content = content
+        self.label = { Text(titleResource) }
+    }
+
+    /// Creates an uni disclosure group with a title string.
+    public init<S: StringProtocol>(
+        _ title: S,
+        isExpanded: Binding<Bool>? = nil,
+        @ViewBuilder content: @escaping () -> Content
+    ) where Label == Text {
+        self.isExpanded = isExpanded
+        self.content = content
+        self.label = { Text(title) }
+    }
+
     public var body: some View {
-        if #available(iOS 14.0, macOS 11.0, visionOS 1.0, *) {
-            if let isExpanded {
-                DisclosureGroup(isExpanded: isExpanded, content: content, label: label)
+        #if os(iOS) || os(macOS) || os(visionOS)
+            if #available(iOS 14.0, macOS 11.0, visionOS 1.0, *) {
+                if let isExpanded {
+                    DisclosureGroup(isExpanded: isExpanded) {
+                        content()
+                    } label: {
+                        label()
+                    }
+                } else {
+                    // DisclosureGroup without Binding<Bool> is iOS 14.0+ / macOS 11.0+
+                    DisclosureGroup {
+                        content()
+                    } label: {
+                        label()
+                    }
+                }
             } else {
-                DisclosureGroup(content: content, label: label)
+                fallbackView
             }
-        } else {
-            // Fallback for older OS: simple VStack (no built-in collapse/expand animation available easily)
-            VStack(alignment: .leading) {
-                label().font(.headline)
-                content()
-            }
+        #else
+            fallbackView
+        #endif
+    }
+
+    private var fallbackView: some View {
+        // Fallback for older OS: simple VStack (no built-in collapse/expand animation available easily)
+        VStack(alignment: .leading) {
+            label().font(.headline)
+            content()
         }
     }
 }

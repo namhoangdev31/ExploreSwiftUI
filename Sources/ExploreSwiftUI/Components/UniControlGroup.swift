@@ -79,15 +79,23 @@ public struct UniControlGroup<Content: View, Label: View>: View {
         private var nativeGroup: some View {
             if let label = label {
                 if #available(iOS 16.0, macOS 13.0, tvOS 17.0, *) {
-                    ControlGroup(content: content, label: label)
+                    ControlGroup {
+                        content()
+                    } label: {
+                        label()
+                    }
                 } else {
                     VStack(alignment: .leading, spacing: 4) {
                         label()
-                        ControlGroup(content: content)
+                        ControlGroup {
+                            content()
+                        }
                     }
                 }
             } else {
-                ControlGroup(content: content)
+                ControlGroup {
+                    content()
+                }
             }
         }
     #endif

@@ -56,7 +56,21 @@ extension Text {
             return self
         }
     }
+
+    /// Applies an underline with pattern and color support on iOS 16+, falling back to a standard underline on older OS versions.
+    public func uniUnderline(
+        _ active: Bool = true,
+        pattern: UniLineStylePattern = .solid,
+        color: Color? = nil
+    ) -> Text {
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            return self.underline(active, pattern: pattern.native, color: color)
+        } else {
+            return self.underline(active)
+        }
+    }
 }
+
 
 extension View {
 
@@ -134,4 +148,26 @@ extension View {
             self
         }
     }
+
+    /// Applies an underline style to the view.
+    ///
+    /// - **iOS 16+**: Leverages the native `.underline(_:pattern:color:)` view modifier.
+    /// - **iOS 15**: Degrades to a no-op fallback on generic Views (since `.underline()` was a Text-only modifier on older OS versions).
+    @ViewBuilder
+    public func uniUnderline(
+        _ active: Bool = true,
+        pattern: UniLineStylePattern = .solid,
+        color: Color? = nil
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            self.underline(active, pattern: pattern.native, color: color)
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
+    }
 }
+

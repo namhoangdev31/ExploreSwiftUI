@@ -251,11 +251,52 @@ extension View {
         // to attach future swipe-to-back polyfills seamlessly.
         self.navigationBarBackButtonHidden(hidden)
     }
+
+    /// Controls the visibility of system toolbars with iOS 16+ support and iOS 15 fallback.
+    ///
+    /// - **iOS 16+**: Uses the native `.toolbar(_:for:)` modifier.
+    /// - **iOS 15**: 
+    ///   - For `.navigationBar`, falls back to `.navigationBarHidden(visibility == .hidden)`.
+    ///   - For `.tabBar`, degrades to a no-op fallback.
+    @ViewBuilder
+    public func uniToolbarVisibility(
+        _ visibility: UniToolbarVisibility,
+        for placement: UniToolbarPlacement
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            self.toolbar(visibility.native, for: placement.native)
+        } else {
+            switch placement {
+            case .navigationBar:
+                self.navigationBarHidden(visibility == .hidden)
+            case .tabBar:
+                self
+            }
+        }
+        #else
+        self
+        #endif
+    }
 }
 
 /// Helper enum to map Toolbar Placement securely.
-public enum UniToolbarPlacement {
-    case automatic
+public enum UniToolbarPlacement: Sendable {
     case navigationBar
-    case bottomBar
+    case tabBar
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    var native: ToolbarPlacement {
+        switch self {
+        case .navigationBar:
+            return .navigationBar
+        case .tabBar:
+            #if os(iOS) || os(tvOS)
+            return .tabBar
+            #else
+            return .automatic
+            #endif
+        }
+    }
 }
+

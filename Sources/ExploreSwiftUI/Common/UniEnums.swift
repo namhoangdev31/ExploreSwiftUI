@@ -416,3 +416,42 @@ public enum UniTabCustomizationBehavior: Sendable {
 public enum UniTabRole: Sendable {
     case automatic, search
 }
+
+// MARK: - Toolbar & Text Decoration Adaptability Enums
+
+/// A platform-agnostic toolbar visibility representation.
+public enum UniToolbarVisibility: Sendable {
+    case automatic
+    case visible
+    case hidden
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    var native: Visibility {
+        switch self {
+        case .automatic: return .automatic
+        case .visible: return .visible
+        case .hidden: return .hidden
+        }
+    }
+}
+
+/// A platform-agnostic line style pattern for text underlines.
+public enum UniLineStylePattern: Sendable {
+    case solid
+    case dot
+    case dash
+    case dashDot
+    case dashDotDot
+
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
+    var native: Text.LineStyle.Pattern {
+        switch self {
+        case .solid: return .solid
+        case .dot: return .dot
+        case .dash: return .dash
+        case .dashDot: return .dashDot
+        case .dashDotDot: return .dashDotDot
+        }
+    }
+}
+

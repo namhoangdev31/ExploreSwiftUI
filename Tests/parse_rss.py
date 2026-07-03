@@ -13,8 +13,18 @@ def parse_rss(xml_file):
             'content': 'http://purl.org/rss/1.0/modules/content/'
         }
         
-        tree = ET.parse(xml_file)
-        root = tree.getroot()
+        try:
+            tree = ET.parse(xml_file)
+            root = tree.getroot()
+        except ET.ParseError as pe:
+            with open(xml_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            last_item_idx = content.rfind('</item>')
+            if last_item_idx == -1:
+                raise pe
+            fixed_xml = content[:last_item_idx + len('</item>')] + '\n</channel>\n</rss>'
+            root = ET.fromstring(fixed_xml)
+            
         channel = root.find('channel')
         
         group_descriptions = {
@@ -45,7 +55,10 @@ def parse_rss(xml_file):
             "Labels": "Label với system image/custom image và label styles.",
             "Labeled Content": "cặp “title-value” cho form/list, có formatted value và custom content.",
             "Concentric Rectangles": "shape iOS 26 với concentric corners (uniform/non-uniform) cho style mới.",
-            "Sheets": "các API liên quan đến hiển thị sheet/popover, quản lý detent (kích thước), cấm vuốt để đóng (interactiveDismissDisabled), background và cornerRadius."
+            "Sheets": "các API liên quan đến hiển thị sheet/popover, quản lý detent (kích thước), cấm vuốt để đóng (interactiveDismissDisabled), background và cornerRadius.",
+            "Alerts": "Các API hiển thị thông báo alert, hỗ trợ binding lỗi (error), hiển thị message chi tiết, các button hành động và quản lý trạng thái hiển thị.",
+            "Async Images": "Tải và hiển thị hình ảnh bất đồng bộ từ URL, hỗ trợ custom placeholder, xử lý các phase tải (empty/success/failure), và custom URL session.",
+            "Product Views": "Hiển thị thông tin sản phẩm từ App Store trực tiếp trong ứng dụng, hỗ trợ compact/regular/large styles và custom placeholder/icon."
         }
 
         feed_info = {
@@ -98,7 +111,10 @@ def parse_rss(xml_file):
                         'label': "Labels",
                         'labeledcontent': "Labeled Content",
                         'concentricrectangle': "Concentric Rectangles",
-                        'sheet': "Sheets"
+                        'sheet': "Sheets",
+                        'alert': "Alerts",
+                        'asyncimage': "Async Images",
+                        'productview': "Product Views"
                     }
                     if group_raw in group_map:
                         group = group_map[group_raw]

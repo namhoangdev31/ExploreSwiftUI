@@ -174,4 +174,243 @@ extension View {
             #endif
         }
     }
+
+    // MARK: - New Alert Modifiers (Error & Item bindings)
+
+    /// Presents an alert when an error is present.
+    ///
+    /// Example:
+    /// ```swift
+    /// Text("Hello")
+    ///     .uniAlert(error: $error) {
+    ///         Button("OK") {}
+    ///     }
+    /// ```
+    @ViewBuilder
+    public func uniAlert<E: LocalizedError, A: View>(
+        error: Binding<E?>,
+        @ViewBuilder actions: @escaping () -> A
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, tvOS 27.0, *) {
+                self.alert(error: error, actions: actions)
+            } else {
+                let isPresented = Binding<Bool>(
+                    get: { error.wrappedValue != nil },
+                    set: { if !$0 { error.wrappedValue = nil } }
+                )
+                if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *) {
+                    self.alert(
+                        error.wrappedValue?.errorDescription ?? "Error",
+                        isPresented: isPresented,
+                        presenting: error.wrappedValue,
+                        actions: { _ in actions() }
+                    )
+                } else {
+                    self.alert(isPresented: isPresented) {
+                        Alert(
+                            title: Text(error.wrappedValue?.errorDescription ?? "Error"),
+                            message: nil,
+                            dismissButton: nil
+                        )
+                    }
+                }
+            }
+        #else
+            let isPresented = Binding<Bool>(
+                get: { error.wrappedValue != nil },
+                set: { if !$0 { error.wrappedValue = nil } }
+            )
+            self.alert(isPresented: isPresented) {
+                Alert(
+                    title: Text(error.wrappedValue?.errorDescription ?? "Error"),
+                    message: nil,
+                    dismissButton: nil
+                )
+            }
+        #endif
+    }
+
+    /// Presents an alert with a message when an error is present.
+    ///
+    /// Example:
+    /// ```swift
+    /// Text("Hello")
+    ///     .uniAlert(error: $error, actions: { _ in
+    ///         Button("Retry") {}
+    ///     }, message: { error in
+    ///         Text(error.localizedDescription)
+    ///     })
+    /// ```
+    @ViewBuilder
+    public func uniAlert<E: LocalizedError, A: View, M: View>(
+        error: Binding<E?>,
+        @ViewBuilder actions: @escaping (E) -> A,
+        @ViewBuilder message: @escaping (E) -> M
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, tvOS 27.0, *) {
+                self.alert(error: error, actions: actions, message: message)
+            } else {
+                let isPresented = Binding<Bool>(
+                    get: { error.wrappedValue != nil },
+                    set: { if !$0 { error.wrappedValue = nil } }
+                )
+                if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *) {
+                    self.alert(
+                        error.wrappedValue?.errorDescription ?? "Error",
+                        isPresented: isPresented,
+                        presenting: error.wrappedValue,
+                        actions: actions,
+                        message: message
+                    )
+                } else {
+                    self.alert(isPresented: isPresented) {
+                        Alert(
+                            title: Text(error.wrappedValue?.errorDescription ?? "Error"),
+                            message: nil,
+                            dismissButton: nil
+                        )
+                    }
+                }
+            }
+        #else
+            let isPresented = Binding<Bool>(
+                get: { error.wrappedValue != nil },
+                set: { if !$0 { error.wrappedValue = nil } }
+            )
+            self.alert(isPresented: isPresented) {
+                Alert(
+                    title: Text(error.wrappedValue?.errorDescription ?? "Error"),
+                    message: nil,
+                    dismissButton: nil
+                )
+            }
+        #endif
+    }
+
+    /// Presents an alert using the given data to produce the alert’s content.
+    ///
+    /// Example:
+    /// ```swift
+    /// Text("Hello")
+    ///     .uniAlert("Purchase", item: $selectedItem) { item in
+    ///         Button("Buy \(item.name)") {}
+    ///     }
+    /// ```
+    @ViewBuilder
+    public func uniAlert<Item, A: View>(
+        _ titleKey: LocalizedStringKey,
+        item: Binding<Item?>,
+        @ViewBuilder actions: @escaping (Item) -> A
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, tvOS 27.0, *) {
+                self.alert(titleKey, item: item, actions: actions)
+            } else {
+                let isPresented = Binding<Bool>(
+                    get: { item.wrappedValue != nil },
+                    set: { if !$0 { item.wrappedValue = nil } }
+                )
+                if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *) {
+                    self.alert(
+                        titleKey,
+                        isPresented: isPresented,
+                        presenting: item.wrappedValue,
+                        actions: actions
+                    )
+                } else {
+                    self.alert(isPresented: isPresented) {
+                        Alert(title: Text(titleKey))
+                    }
+                }
+            }
+        #else
+            let isPresented = Binding<Bool>(
+                get: { item.wrappedValue != nil },
+                set: { if !$0 { item.wrappedValue = nil } }
+            )
+            self.alert(isPresented: isPresented) {
+                Alert(title: Text(titleKey))
+            }
+        #endif
+    }
+
+    /// Presents an alert with a message using the given data to produce the alert’s content.
+    @ViewBuilder
+    public func uniAlert<Item, A: View, M: View>(
+        _ titleKey: LocalizedStringKey,
+        item: Binding<Item?>,
+        @ViewBuilder actions: @escaping (Item) -> A,
+        @ViewBuilder message: @escaping (Item) -> M
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, tvOS 27.0, *) {
+                self.alert(titleKey, item: item, actions: actions, message: message)
+            } else {
+                let isPresented = Binding<Bool>(
+                    get: { item.wrappedValue != nil },
+                    set: { if !$0 { item.wrappedValue = nil } }
+                )
+                if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *) {
+                    self.alert(
+                        titleKey,
+                        isPresented: isPresented,
+                        presenting: item.wrappedValue,
+                        actions: actions,
+                        message: message
+                    )
+                } else {
+                    self.alert(isPresented: isPresented) {
+                        Alert(title: Text(titleKey))
+                    }
+                }
+            }
+        #else
+            let isPresented = Binding<Bool>(
+                get: { item.wrappedValue != nil },
+                set: { if !$0 { item.wrappedValue = nil } }
+            )
+            self.alert(isPresented: isPresented) {
+                Alert(title: Text(titleKey))
+            }
+        #endif
+    }
+
+    /// Presents an alert using the given data to produce the alert’s content.
+    @ViewBuilder
+    public func uniAlert<S: StringProtocol, Item, A: View>(
+        _ title: S,
+        item: Binding<Item?>,
+        @ViewBuilder actions: @escaping (Item) -> A
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, tvOS 27.0, *) {
+                self.alert(title, item: item, actions: actions)
+            } else {
+                self.uniAlert(LocalizedStringKey(String(title)), item: item, actions: actions)
+            }
+        #else
+            self.uniAlert(LocalizedStringKey(String(title)), item: item, actions: actions)
+        #endif
+    }
+
+    /// Presents an alert with a message using the given data to produce the alert’s content.
+    @ViewBuilder
+    public func uniAlert<S: StringProtocol, Item, A: View, M: View>(
+        _ title: S,
+        item: Binding<Item?>,
+        @ViewBuilder actions: @escaping (Item) -> A,
+        @ViewBuilder message: @escaping (Item) -> M
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, tvOS 27.0, *) {
+                self.alert(title, item: item, actions: actions, message: message)
+            } else {
+                self.uniAlert(LocalizedStringKey(String(title)), item: item, actions: actions, message: message)
+            }
+        #else
+            self.uniAlert(LocalizedStringKey(String(title)), item: item, actions: actions, message: message)
+        #endif
+    }
 }

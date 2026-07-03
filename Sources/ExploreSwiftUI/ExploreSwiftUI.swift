@@ -21,6 +21,7 @@ public enum UniOSGeneration: Int, CaseIterable, Sendable {
     case v17 = 17
     case v18 = 18
     case v26 = 26
+    case v27 = 27
 }
 
 public enum UniPlatformVersion {
@@ -123,6 +124,10 @@ public enum UniPlatformVersion {
 
     public static var supportsWWDC25Design: Bool {
         isAvailable(iOS: 26, macOS: 26, tvOS: 26, watchOS: 26, visionOS: 26)
+    }
+
+    public static var supportsWWDC26Design: Bool {
+        isAvailable(iOS: 27, macOS: 27, tvOS: 27, watchOS: 27, visionOS: 27)
     }
 
     public static var supportsTabContentAPI: Bool {

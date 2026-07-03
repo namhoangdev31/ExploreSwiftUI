@@ -40,13 +40,23 @@ public struct UniOutlineGroup<
     }
 
     public var body: some View {
-        if #available(iOS 14.0, macOS 11.0, visionOS 1.0, *) {
-            OutlineGroup(data, children: children, content: content)
-        } else {
-            // Fallback for older OS: simple flat list representation without nested expanding support.
-            ForEach(data) { item in
-                content(item)
+        #if os(iOS) || os(macOS) || os(visionOS)
+            if #available(iOS 14.0, macOS 11.0, visionOS 1.0, *) {
+                OutlineGroup(data, children: children) { item in
+                    content(item)
+                }
+            } else {
+                fallbackView
             }
+        #else
+            fallbackView
+        #endif
+    }
+
+    private var fallbackView: some View {
+        // Fallback for older OS: simple flat list representation without nested expanding support.
+        ForEach(data) { item in
+            content(item)
         }
     }
 }

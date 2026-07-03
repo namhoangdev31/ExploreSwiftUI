@@ -2,7 +2,7 @@
   "title": "Explore SwiftUI",
   "link": "https://exploreswiftui.com",
   "description": "Latest SwiftUI elements added to the library",
-  "lastBuildDate": "Sat, 18 Apr 2026 11:27:46 GMT",
+  "lastBuildDate": "Sat, 27 Jun 2026 15:43:10 GMT",
   "group_descriptions": {
     "Buttons": "API xoay quanh Button, buttonStyle, buttonBorderShape, role, tint, RenameButton, PasteButton; iOS 26 thêm buttonSizing và glass/glassProminent style.",
     "Toolbars": "API mới iOS 26 cho title placement (.title/.subtitle/.largeTitle/.largeSubtitle), ToolbarSpacer(.fixed/.flexible), và sharedBackgroundVisibility.",
@@ -31,11 +31,312 @@
     "Labels": "Label với system image/custom image và label styles.",
     "Labeled Content": "cặp “title-value” cho form/list, có formatted value và custom content.",
     "Concentric Rectangles": "shape iOS 26 với concentric corners (uniform/non-uniform) cho style mới.",
-    "Sheets": "các API liên quan đến hiển thị sheet/popover, quản lý detent (kích thước), cấm vuốt để đóng (interactiveDismissDisabled), background và cornerRadius."
+    "Sheets": "các API liên quan đến hiển thị sheet/popover, quản lý detent (kích thước), cấm vuốt để đóng (interactiveDismissDisabled), background và cornerRadius.",
+    "Alerts": "Các API hiển thị thông báo alert, hỗ trợ binding lỗi (error), hiển thị message chi tiết, các button hành động và quản lý trạng thái hiển thị.",
+    "Async Images": "Tải và hiển thị hình ảnh bất đồng bộ từ URL, hỗ trợ custom placeholder, xử lý các phase tải (empty/success/failure), và custom URL session.",
+    "Product Views": "Hiển thị thông tin sản phẩm từ App Store trực tiếp trong ứng dụng, hỗ trợ compact/regular/large styles và custom placeholder/icon."
   },
   "items": [
     {
       "index": 1,
+      "group": "Product Views",
+      "title": "CompactProductViewStyle",
+      "link": "https://exploreswiftui.com/library/productview/compactproductviewstyle",
+      "description": "A style for a product view that’s suitable for layouts with less available space, or for displaying more items in a small amount of space.",
+      "pubDate": "Sat, 27 Jun 2026 15:43:10 GMT",
+      "guid": "https://exploreswiftui.com/elements/207",
+      "compatibility": {
+        "iOS": "17.0",
+        "iPadOS": "17.0",
+        "macOS": "14.0",
+        "tvOS": "17.0"
+      },
+      "code": "ProductView(id: \"auto_renewable_subscription_1\", prefersPromotionalIcon: true)\n    .productViewStyle(.compact)",
+      "image_url": null
+    },
+    {
+      "index": 2,
+      "group": "Product Views",
+      "title": "RegularProductViewStyle",
+      "link": "https://exploreswiftui.com/library/productview/regularproductviewstyle",
+      "description": "A style for a product view that uses a standard, platform-appropriate layout.",
+      "pubDate": "Sat, 27 Jun 2026 14:15:50 GMT",
+      "guid": "https://exploreswiftui.com/elements/206",
+      "compatibility": {
+        "iOS": "17.0",
+        "iPadOS": "17.0",
+        "macOS": "14.0",
+        "watchOS": "10.0",
+        "tvOS": "17.0",
+        "visionOS": "1.0"
+      },
+      "code": "ProductView(id: \"auto_renewable_subscription_1\", prefersPromotionalIcon: true)\n    .productViewStyle(.regular)",
+      "image_url": null
+    },
+    {
+      "index": 3,
+      "group": "Product Views",
+      "title": "LargeProductViewStyle",
+      "link": "https://exploreswiftui.com/library/productview/largeproductviewstyle",
+      "description": "A style for a product view that’s suitable for layouts where the in-app purchase content is prominent.",
+      "pubDate": "Sat, 27 Jun 2026 14:11:18 GMT",
+      "guid": "https://exploreswiftui.com/elements/205",
+      "compatibility": {
+        "iOS": "17.0",
+        "iPadOS": "17.0",
+        "macOS": "14.0",
+        "visionOS": "1.0"
+      },
+      "code": "ProductView(id: \"auto_renewable_subscription_1\", prefersPromotionalIcon: true)\n    .productViewStyle(.large)",
+      "image_url": null
+    },
+    {
+      "index": 4,
+      "group": "Product Views",
+      "title": "Placeholder Icon Product View",
+      "link": "https://exploreswiftui.com/library/productview/placeholder-icon-product-view",
+      "description": "Creates a view to load an individual product from the App Store, and merchandise it using its promotional image and a custom placeholder icon.",
+      "pubDate": "Sat, 27 Jun 2026 13:24:05 GMT",
+      "guid": "https://exploreswiftui.com/elements/204",
+      "compatibility": {
+        "iOS": "17.0",
+        "iPadOS": "17.0",
+        "macOS": "14.0",
+        "watchOS": "10.0",
+        "tvOS": "17.0",
+        "visionOS": "1.0"
+      },
+      "code": "ProductView(id: \"\") {\n    Image(systemName: \"cat\")\n} placeholderIcon: {\n    ProgressView()\n}",
+      "image_url": null
+    },
+    {
+      "index": 5,
+      "group": "Product Views",
+      "title": "Custom Icon Product View",
+      "link": "https://exploreswiftui.com/library/productview/custom-icon-product-view",
+      "description": "Creates a view to load an individual product from the App Store and merchandise it using a custom icon.",
+      "pubDate": "Sat, 27 Jun 2026 13:15:25 GMT",
+      "guid": "https://exploreswiftui.com/elements/203",
+      "compatibility": {
+        "iOS": "17.0",
+        "iPadOS": "17.0",
+        "macOS": "14.0",
+        "watchOS": "10.0",
+        "tvOS": "17.0",
+        "visionOS": "1.0"
+      },
+      "code": "ProductView(id: \"auto_renewable_subscription_1\") {\n    Image(systemName: \"cat\")\n}",
+      "image_url": null
+    },
+    {
+      "index": 6,
+      "group": "Product Views",
+      "title": "Product View",
+      "link": "https://exploreswiftui.com/library/productview/product-view",
+      "description": "Creates a view to load and merchandise an individual product from the App Store.",
+      "pubDate": "Fri, 26 Jun 2026 17:17:02 GMT",
+      "guid": "https://exploreswiftui.com/elements/202",
+      "compatibility": {
+        "iOS": "17.0",
+        "iPadOS": "17.0",
+        "macOS": "14.0",
+        "watchOS": "10.0",
+        "tvOS": "17.0",
+        "visionOS": "1.0"
+      },
+      "code": "ProductView(id: \"auto_renewable_subscription_1\")\nProductView(id: \"auto_renewable_subscription_1\", prefersPromotionalIcon: true)",
+      "image_url": null
+    },
+    {
+      "index": 7,
+      "group": "Views",
+      "title": "Swipe Container",
+      "link": "https://exploreswiftui.com/library/view/swipe-container",
+      "description": "Only allows a single active swipe within a container.",
+      "pubDate": "Thu, 18 Jun 2026 20:52:56 GMT",
+      "guid": "https://exploreswiftui.com/elements/201",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "VStack {\n    Section(\"Group1\") {\n        Text(\"Foo1\")\n            .swipeActions {\n                Button(role: .destructive, action: action)\n            }\n            Text(\"Bar1\")\n                .swipeActions {\n                    Button(role: .destructive, action: action)\n                }\n            }\n            .swipeActionsContainer()\n            Text(\"Foo2\")\n                .swipeActions {\n                    Button(role: .destructive, action: action)\n                }\n                Text(\"Bar2\")\n                    .swipeActions {\n                        Button(role: .destructive, action: action)\n                    }\n                }",
+      "image_url": null
+    },
+    {
+      "index": 8,
+      "group": "Views",
+      "title": "Swipe Action",
+      "link": "https://exploreswiftui.com/library/view/swipe-action",
+      "description": "Adds custom swipe actions to a row in a list or container, notifying you when the actions are revealed or dismissed.",
+      "pubDate": "Thu, 18 Jun 2026 20:18:47 GMT",
+      "guid": "https://exploreswiftui.com/elements/200",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "@State private var isSwiped = false\n\nvar body: some View {\n    VStack {\n        Text(\"Trailing Swipe\")\n            .swipeActions {\n                Button(role: .destructive, action: action)\n            }\n         Text(\"Leading Swipe\")\n             .swipeActions(edge: .leading) {\n                 Button(role: .destructive, action: action)\n             }\n          Text(\"Stateful Swipe\")\n              .swipeActions {\n                  Button(role: .destructive, action: action)\n              } onPresentationChanged: {\n                  isSwiped = $0\n              }\n           Text(\"Swipe state: \\(isSwiped ? \"active\" : \"inactive\")\")\n    }\n}",
+      "image_url": null
+    },
+    {
+      "index": 9,
+      "group": "Alerts",
+      "title": "Message Error Alert",
+      "link": "https://exploreswiftui.com/library/alert/message-error-alert",
+      "description": "Presents an alert with a message when an error is present.",
+      "pubDate": "Tue, 09 Jun 2026 19:06:51 GMT",
+      "guid": "https://exploreswiftui.com/elements/199",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "enum FooError: LocalizedError {\n    case bar\n\n    var errorDescription: String? {\n        switch self {\n            case .bar:\n            return \"Bar error occurred.\"\n        }\n    }\n\n    var message: String {\n        switch self {\n            case .bar:\n            return \"This is a message for the Bar error.\"\n        }\n    }\n}\n\n@State private var error: FooError? = .bar\n\nvar body: some View {\n    Text(\"Foo\")\n        .alert(error: $error) { errorItem in\n            Button(\"OK\") {\n                print(\"\\(errorItem) nilled\")\n            }\n        } message: { errorItem in\n            Text(errorItem.message)\n        }\n}",
+      "image_url": null
+    },
+    {
+      "index": 10,
+      "group": "Alerts",
+      "title": "Message Item Alert",
+      "link": "https://exploreswiftui.com/library/alert/message-item-alert",
+      "description": "Presents an alert with a message using the given data to produce the alert’s content and a localized string key for a title.",
+      "pubDate": "Tue, 09 Jun 2026 19:03:50 GMT",
+      "guid": "https://exploreswiftui.com/elements/198",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "struct Item {\n    let message: String\n}\n\n@State var item: Item? = .init(message: \"Foo\")\n\nvar body: some View {\n    Text(\"Foo\")\n        .alert(\"Title\", item: $item) { alertItem in\n            Button(\"Ok\") {\n                print(\"Item nilled\")\n            }\n        } message: { alertItem in\n            Text(alertItem.message)\n        }\n}",
+      "image_url": null
+    },
+    {
+      "index": 11,
+      "group": "Alerts",
+      "title": "Item Alert",
+      "link": "https://exploreswiftui.com/library/alert/item-alert",
+      "description": "Presents an alert using the given data to produce the alert’s content and a text view as a title.\n",
+      "pubDate": "Tue, 09 Jun 2026 18:59:10 GMT",
+      "guid": "https://exploreswiftui.com/elements/197",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "struct Item {}\n\n@State var item: Item? = .init()\n\nvar body: some View {\n    Text(\"Foo\")\n        .alert(\"Title\", item: $item) { alertItem in\n            Button(\"Ok\") {\n                print(\"Item nilled\")\n            }\n        }\n}",
+      "image_url": null
+    },
+    {
+      "index": 12,
+      "group": "Alerts",
+      "title": "Error Alert",
+      "link": "https://exploreswiftui.com/library/alert/error-alert",
+      "description": "Presents an alert when an error is present.\n",
+      "pubDate": "Tue, 09 Jun 2026 18:31:55 GMT",
+      "guid": "https://exploreswiftui.com/elements/196",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "enum FooError: LocalizedError {\n    case bar\n\n    var errorDescription: String? {\n        switch self {\n            case .bar:\n            return \"Bar error occurred.\"\n        }\n    }\n}\n\n@State private var error: FooError? = .bar\n\nvar body: some View {\n    Text(\"Foo\")\n        .alert(error: $error) {\n            Button(\"OK\") {\n                print(\"Error nilled\")\n            }\n        }\n}",
+      "image_url": null
+    },
+    {
+      "index": 13,
+      "group": "Async Images",
+      "title": "Custom Session Async URL Image",
+      "link": "https://exploreswiftui.com/library/asyncimage/custom-session-async-url-image",
+      "description": "A modifier that adds a URL session for asynchronous images contained in the view to use when fetching image data.",
+      "pubDate": "Tue, 09 Jun 2026 18:07:42 GMT",
+      "guid": "https://exploreswiftui.com/elements/195",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "let imageURL = URL(string: \"https://exploreswiftui.com/images/cats.jpg\")!\nlet imageSession: URLSession = {\n    let configuration = URLSessionConfiguration.default\n    configuration.httpAdditionalHeaders = [\n        \"X-Custom-Header\": \"CustomValue\"\n    ]\n\n    return URLSession(configuration: configuration)\n}()\n\nvar body: some View {\n    AsyncImage(request: URLRequest(url: imageURL)) { image in\n        image\n    } placeholder: {\n        ProgressView()\n    }\n    .asyncImageURLSession(imageSession)\n}",
+      "image_url": null
+    },
+    {
+      "index": 14,
+      "group": "Async Images",
+      "title": "Custom Placeholder Async URL Image",
+      "link": "https://exploreswiftui.com/library/asyncimage/custom-placeholder-async-url-image",
+      "description": "Loads and displays a modifiable image from the specified URL load request using a custom placeholder until the image loads.",
+      "pubDate": "Mon, 08 Jun 2026 23:30:06 GMT",
+      "guid": "https://exploreswiftui.com/elements/194",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "VStack {\n            AsyncImage(request: URLRequest(url: slowURL)) { image in\n                image.resizable(resizingMode: .tile)\n                    .resizable()\n                    .scaledToFit()\n            } placeholder: {\n                ProgressView()\n            }\n\n            AsyncImage(request: URLRequest(url: imageURL)) { image in\n                image.resizable(resizingMode: .tile)\n                    .resizable()\n                    .scaledToFit()\n            } placeholder: {\n                ProgressView()\n            }\n            .frame(height: 100)\n        }",
+      "image_url": null
+    },
+    {
+      "index": 15,
+      "group": "Async Images",
+      "title": "Custom Phases Async URL Image",
+      "link": "https://exploreswiftui.com/library/asyncimage/custom-phases-async-url-image",
+      "description": "Loads and displays a modifiable image from the specified URL load request in phases.",
+      "pubDate": "Mon, 08 Jun 2026 23:19:46 GMT",
+      "guid": "https://exploreswiftui.com/elements/193",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "VStack {\n    AsyncImage(url: URL(string: \"http://slowww.rf.gd\")!) { phase in\n        if let image = phase.image {\n            image\n        } else if phase.error != nil {\n            Color.red\n        } else {\n            ProgressView()\n        }\n    }\n    AsyncImage(url: URL(string: \"https://exploreswiftui.com\")!) { phase in\n        if let image = phase.image {\n            image\n        } else if phase.error != nil {\n            Color.red\n        } else {\n            ProgressView()\n        }\n    }\n    .frame(height: 100)\n    AsyncImage(url: URL(string: \"https://exploreswiftui.com/images/cats.jpg\")!) { phase in\n        if let image = phase.image {\n            image\n                .resizable()\n                .scaledToFit()\n        } else if phase.error != nil {\n            Color.red\n        } else {\n            ProgressView()\n        }\n    }\n    .frame(height: 100)\n}",
+      "image_url": null
+    },
+    {
+      "index": 16,
+      "group": "Async Images",
+      "title": "Async URL Image",
+      "link": "https://exploreswiftui.com/library/asyncimage/async-url-image",
+      "description": "Loads and displays an image from the specified URL load request.",
+      "pubDate": "Mon, 08 Jun 2026 23:08:24 GMT",
+      "guid": "https://exploreswiftui.com/elements/191",
+      "compatibility": {
+        "iOS": "27.0",
+        "iPadOS": "27.0",
+        "macOS": "27.0",
+        "watchOS": "27.0",
+        "tvOS": "27.0",
+        "visionOS": "27.0"
+      },
+      "code": "let imageURL = URL(string: \"https://exploreswiftui.com/images/cats.jpg\")!\n\nvar body: some View {\n    AsyncImage(request: URLRequest(url: imageURL))\n}",
+      "image_url": null
+    },
+    {
+      "index": 17,
       "group": "Buttons",
       "title": "Button Sizing",
       "link": "https://exploreswiftui.com/library/button/button-sizing",
@@ -54,7 +355,7 @@
       "image_url": null
     },
     {
-      "index": 2,
+      "index": 18,
       "group": "Tab Views",
       "title": "Tab View Customization Behavior",
       "link": "https://exploreswiftui.com/library/tabview/tab-view-customization-behavior",
@@ -71,7 +372,7 @@
       "image_url": null
     },
     {
-      "index": 3,
+      "index": 19,
       "group": "Tab Views",
       "title": "Tab View Customization",
       "link": "https://exploreswiftui.com/library/tabview/tab-view-customization",
@@ -88,7 +389,7 @@
       "image_url": null
     },
     {
-      "index": 4,
+      "index": 20,
       "group": "Tab Views",
       "title": "Tab View Side Bar Footer",
       "link": "https://exploreswiftui.com/library/tabview/tab-view-side-bar-footer",
@@ -105,7 +406,7 @@
       "image_url": null
     },
     {
-      "index": 5,
+      "index": 21,
       "group": "Tab Views",
       "title": "Tab View Side Bar Bottom Bar",
       "link": "https://exploreswiftui.com/library/tabview/tab-view-side-bar-bottom-bar",
@@ -121,7 +422,7 @@
       "image_url": null
     },
     {
-      "index": 6,
+      "index": 22,
       "group": "Tab Views",
       "title": "Default Adaptable Tab Bar Placement",
       "link": "https://exploreswiftui.com/library/tabview/default-adaptable-tab-bar-placement",
@@ -136,7 +437,7 @@
       "image_url": null
     },
     {
-      "index": 7,
+      "index": 23,
       "group": "Tab Views",
       "title": "Tab Bar Section Actions",
       "link": "https://exploreswiftui.com/library/tabview/tab-bar-section-actions",
@@ -154,7 +455,7 @@
       "image_url": null
     },
     {
-      "index": 8,
+      "index": 24,
       "group": "Tab Views",
       "title": "Tab View Side Bar Header",
       "link": "https://exploreswiftui.com/library/tabview/tab-view-side-bar-header",
@@ -171,7 +472,7 @@
       "image_url": null
     },
     {
-      "index": 9,
+      "index": 25,
       "group": "Tab Views",
       "title": "GroupedTabViewStyle",
       "link": "https://exploreswiftui.com/library/tabview/groupedtabviewstyle",
@@ -185,7 +486,7 @@
       "image_url": null
     },
     {
-      "index": 10,
+      "index": 26,
       "group": "Tab Views",
       "title": "Tab Badge",
       "link": "https://exploreswiftui.com/library/tabview/tab-badge",
@@ -202,7 +503,7 @@
       "image_url": "https://exploreswiftui.com/api/images/156/ios?v=1775910362744"
     },
     {
-      "index": 11,
+      "index": 27,
       "group": "Tab Views",
       "title": "Hidden Index PageTabViewStyle",
       "link": "https://exploreswiftui.com/library/tabview/hidden-index-pagetabviewstyle",
@@ -220,7 +521,7 @@
       "image_url": "https://exploreswiftui.com/api/images/189/ios?v=1775909742218"
     },
     {
-      "index": 12,
+      "index": 28,
       "group": "Tab Views",
       "title": "PageTabViewStyle",
       "link": "https://exploreswiftui.com/library/tabview/pagetabviewstyle",
@@ -238,7 +539,7 @@
       "image_url": "https://exploreswiftui.com/api/images/161/ios?v=1775909636772"
     },
     {
-      "index": 13,
+      "index": 29,
       "group": "Tab Views",
       "title": "VerticalPageTabViewStyle",
       "link": "https://exploreswiftui.com/library/tabview/verticalpagetabviewstyle",
@@ -252,7 +553,7 @@
       "image_url": null
     },
     {
-      "index": 14,
+      "index": 30,
       "group": "Tab Views",
       "title": "SidebarAdaptableTabViewStyle",
       "link": "https://exploreswiftui.com/library/tabview/sidebaradaptabletabviewstyle",
@@ -270,7 +571,7 @@
       "image_url": null
     },
     {
-      "index": 15,
+      "index": 31,
       "group": "Tab Views",
       "title": "TabSection",
       "link": "https://exploreswiftui.com/library/tabview/tabsection",
@@ -289,7 +590,7 @@
       "image_url": null
     },
     {
-      "index": 16,
+      "index": 32,
       "group": "Tab Views",
       "title": "TabBarOnlyTabViewStyle",
       "link": "https://exploreswiftui.com/library/tabview/tabbaronlytabviewstyle",
@@ -307,7 +608,7 @@
       "image_url": "https://exploreswiftui.com/api/images/159/ios?v=1775906796092"
     },
     {
-      "index": 17,
+      "index": 33,
       "group": "Tab Views",
       "title": "TabView",
       "link": "https://exploreswiftui.com/library/tabview/tabview",
@@ -326,7 +627,7 @@
       "image_url": "https://exploreswiftui.com/api/images/155/ios?v=1775906476424"
     },
     {
-      "index": 18,
+      "index": 34,
       "group": "Tab Views",
       "title": "Search Tab Role",
       "link": "https://exploreswiftui.com/library/tabview/search-tab-role",
@@ -345,7 +646,7 @@
       "image_url": "https://exploreswiftui.com/api/images/163/ios?v=1775898290880"
     },
     {
-      "index": 19,
+      "index": 35,
       "group": "Tab Views",
       "title": "Value Tab View",
       "link": "https://exploreswiftui.com/library/tabview/value-tab-view",
@@ -364,7 +665,7 @@
       "image_url": "https://exploreswiftui.com/api/images/165/ios?v=1775897896898"
     },
     {
-      "index": 20,
+      "index": 36,
       "group": "Pickers",
       "title": "Wheel Picker Item Height",
       "link": "https://exploreswiftui.com/library/picker/wheel-picker-item-height",
@@ -378,7 +679,7 @@
       "image_url": null
     },
     {
-      "index": 21,
+      "index": 37,
       "group": "Pickers",
       "title": "Horizontal Radio Group Layout",
       "link": "https://exploreswiftui.com/library/picker/horizontal-radio-group-layout",
@@ -392,7 +693,7 @@
       "image_url": null
     },
     {
-      "index": 22,
+      "index": 38,
       "group": "Pickers",
       "title": "WheelPickerStyle",
       "link": "https://exploreswiftui.com/library/picker/wheelpickerstyle",
@@ -409,7 +710,7 @@
       "image_url": "https://exploreswiftui.com/api/images/186/ios?v=1775375686572"
     },
     {
-      "index": 23,
+      "index": 39,
       "group": "Pickers",
       "title": "SegmentedPickerStyle",
       "link": "https://exploreswiftui.com/library/picker/segmentedpickerstyle",
@@ -427,7 +728,7 @@
       "image_url": "https://exploreswiftui.com/api/images/185/ios?v=1775371746115"
     },
     {
-      "index": 24,
+      "index": 40,
       "group": "Pickers",
       "title": "PalettePickerStyle",
       "link": "https://exploreswiftui.com/library/picker/palettepickerstyle",
@@ -444,7 +745,7 @@
       "image_url": "https://exploreswiftui.com/api/images/184/ios?v=1775371520517"
     },
     {
-      "index": 25,
+      "index": 41,
       "group": "Pickers",
       "title": "RadioGroupPickerStyle",
       "link": "https://exploreswiftui.com/library/picker/radiogrouppickerstyle",
@@ -458,7 +759,7 @@
       "image_url": null
     },
     {
-      "index": 26,
+      "index": 42,
       "group": "Pickers",
       "title": "NavigationLinkPickerStyle",
       "link": "https://exploreswiftui.com/library/picker/navigationlinkpickerstyle",
@@ -476,7 +777,7 @@
       "image_url": "https://exploreswiftui.com/api/images/181/ios?v=1775371050851"
     },
     {
-      "index": 27,
+      "index": 43,
       "group": "Pickers",
       "title": "MenuPickerStyle",
       "link": "https://exploreswiftui.com/library/picker/menupickerstyle",
@@ -494,7 +795,7 @@
       "image_url": "https://exploreswiftui.com/api/images/180/ios?v=1775370659007"
     },
     {
-      "index": 28,
+      "index": 44,
       "group": "Pickers",
       "title": "InlinePickerStyle",
       "link": "https://exploreswiftui.com/library/picker/inlinepickerstyle",
@@ -513,7 +814,7 @@
       "image_url": "https://exploreswiftui.com/api/images/179/ios?v=1775370402803"
     },
     {
-      "index": 29,
+      "index": 45,
       "group": "Pickers",
       "title": "Picker Section",
       "link": "https://exploreswiftui.com/library/picker/picker-section",
@@ -532,7 +833,7 @@
       "image_url": "https://exploreswiftui.com/api/images/178/ios?v=1775304597990"
     },
     {
-      "index": 30,
+      "index": 46,
       "group": "Pickers",
       "title": "Picker Divider",
       "link": "https://exploreswiftui.com/library/picker/picker-divider",
@@ -551,7 +852,7 @@
       "image_url": "https://exploreswiftui.com/api/images/177/ios?v=1775304425415"
     },
     {
-      "index": 31,
+      "index": 47,
       "group": "Pickers",
       "title": "Custom Value Label Picker",
       "link": "https://exploreswiftui.com/library/picker/custom-value-label-picker",
@@ -570,7 +871,7 @@
       "image_url": "https://exploreswiftui.com/api/images/176/ios?v=1775302654224"
     },
     {
-      "index": 32,
+      "index": 48,
       "group": "Pickers",
       "title": "Multiple Sources Picker",
       "link": "https://exploreswiftui.com/library/picker/multiple-sources-picker",
@@ -589,7 +890,7 @@
       "image_url": "https://exploreswiftui.com/api/images/175/ios?v=1775299124488"
     },
     {
-      "index": 33,
+      "index": 49,
       "group": "Pickers",
       "title": "Picker",
       "link": "https://exploreswiftui.com/library/picker/picker",
@@ -608,7 +909,7 @@
       "image_url": "https://exploreswiftui.com/api/images/174/ipados?v=1775296367615"
     },
     {
-      "index": 34,
+      "index": 50,
       "group": "Views",
       "title": "Navigation Split View Container Background",
       "link": "https://exploreswiftui.com/library/view/navigation-split-view-container-background",
@@ -624,7 +925,7 @@
       "image_url": null
     },
     {
-      "index": 35,
+      "index": 51,
       "group": "Views",
       "title": "Navigation Container Background",
       "link": "https://exploreswiftui.com/library/view/navigation-container-background",
@@ -643,7 +944,7 @@
       "image_url": null
     },
     {
-      "index": 36,
+      "index": 52,
       "group": "Concentric Rectangles",
       "title": "Uniform Concentric Rectangle",
       "link": "https://exploreswiftui.com/library/concentricrectangle/uniform-concentric-rectangle",
@@ -662,7 +963,7 @@
       "image_url": null
     },
     {
-      "index": 37,
+      "index": 53,
       "group": "Concentric Rectangles",
       "title": "Concentric Rectangle",
       "link": "https://exploreswiftui.com/library/concentricrectangle/concentric-rectangle",
@@ -681,7 +982,7 @@
       "image_url": null
     },
     {
-      "index": 38,
+      "index": 54,
       "group": "Labeled Content",
       "title": "Custom Labeled Content",
       "link": "https://exploreswiftui.com/library/labeledcontent/custom-labeled-content",
@@ -700,7 +1001,7 @@
       "image_url": null
     },
     {
-      "index": 39,
+      "index": 55,
       "group": "Labeled Content",
       "title": "Formatted Labeled Content",
       "link": "https://exploreswiftui.com/library/labeledcontent/formatted-labeled-content",
@@ -719,7 +1020,7 @@
       "image_url": null
     },
     {
-      "index": 40,
+      "index": 56,
       "group": "Labeled Content",
       "title": "Labeled Content",
       "link": "https://exploreswiftui.com/library/labeledcontent/labeled-content",
@@ -738,7 +1039,7 @@
       "image_url": null
     },
     {
-      "index": 41,
+      "index": 57,
       "group": "Labels",
       "title": "Label Styles",
       "link": "https://exploreswiftui.com/library/label/label-styles",
@@ -757,7 +1058,7 @@
       "image_url": null
     },
     {
-      "index": 42,
+      "index": 58,
       "group": "Labels",
       "title": "Custom Label",
       "link": "https://exploreswiftui.com/library/label/custom-label",
@@ -776,7 +1077,7 @@
       "image_url": null
     },
     {
-      "index": 43,
+      "index": 59,
       "group": "Labels",
       "title": "Image Label",
       "link": "https://exploreswiftui.com/library/label/image-label",
@@ -795,7 +1096,7 @@
       "image_url": null
     },
     {
-      "index": 44,
+      "index": 60,
       "group": "Labels",
       "title": "System Image Label",
       "link": "https://exploreswiftui.com/library/label/system-image-label",
@@ -814,7 +1115,7 @@
       "image_url": null
     },
     {
-      "index": 45,
+      "index": 61,
       "group": "Sheets",
       "title": "Disable Sheet Dismiss Swipe",
       "link": "https://exploreswiftui.com/library/sheet/disable-sheet-dismiss-swipe",
@@ -833,7 +1134,7 @@
       "image_url": null
     },
     {
-      "index": 46,
+      "index": 62,
       "group": "Sheets",
       "title": "Page Screen Sheet Size",
       "link": "https://exploreswiftui.com/library/sheet/page-screen-sheet-size",
@@ -852,7 +1153,7 @@
       "image_url": null
     },
     {
-      "index": 47,
+      "index": 63,
       "group": "Sheets",
       "title": "Fitted Sheet Sizing",
       "link": "https://exploreswiftui.com/library/sheet/fitted-sheet-sizing",
@@ -871,7 +1172,7 @@
       "image_url": null
     },
     {
-      "index": 48,
+      "index": 64,
       "group": "Sheets",
       "title": "Sheet Corner Radius",
       "link": "https://exploreswiftui.com/library/sheet/sheet-corner-radius",
@@ -890,7 +1191,7 @@
       "image_url": null
     },
     {
-      "index": 49,
+      "index": 65,
       "group": "Sheets",
       "title": "Prioritize Sheet Content Scrolling",
       "link": "https://exploreswiftui.com/library/sheet/prioritize-sheet-content-scrolling",
@@ -909,7 +1210,7 @@
       "image_url": null
     },
     {
-      "index": 50,
+      "index": 66,
       "group": "Sheets",
       "title": "Sheet Background Interaction",
       "link": "https://exploreswiftui.com/library/sheet/sheet-background-interaction",
@@ -928,7 +1229,7 @@
       "image_url": null
     },
     {
-      "index": 51,
+      "index": 67,
       "group": "Sheets",
       "title": "Sheet Background",
       "link": "https://exploreswiftui.com/library/sheet/sheet-background",
@@ -947,7 +1248,7 @@
       "image_url": null
     },
     {
-      "index": 52,
+      "index": 68,
       "group": "Sheets",
       "title": "Sheet Drag Indicator Visibility",
       "link": "https://exploreswiftui.com/library/sheet/sheet-drag-indicator-visibility",
@@ -957,7 +1258,7 @@
       "compatibility": {
         "iOS": "16.0",
         "iPadOS": "16.0",
-        "macOS": "113.0",
+        "macOS": "13.0",
         "watchOS": "9.0",
         "tvOS": "16.0",
         "visionOS": "1.0"
@@ -966,7 +1267,7 @@
       "image_url": null
     },
     {
-      "index": 53,
+      "index": 69,
       "group": "Sheets",
       "title": "Sheet Size",
       "link": "https://exploreswiftui.com/library/sheet/sheet-size",
@@ -985,7 +1286,7 @@
       "image_url": null
     },
     {
-      "index": 54,
+      "index": 70,
       "group": "Sheets",
       "title": "Item Sheet",
       "link": "https://exploreswiftui.com/library/sheet/item-sheet",
@@ -1004,7 +1305,7 @@
       "image_url": "https://exploreswiftui.com/api/images/136/ios?v=1769870666391"
     },
     {
-      "index": 55,
+      "index": 71,
       "group": "Sheets",
       "title": "Boolean Sheet",
       "link": "https://exploreswiftui.com/library/sheet/boolean-sheet",
@@ -1023,7 +1324,7 @@
       "image_url": "https://exploreswiftui.com/api/images/135/ios?v=1769868525059"
     },
     {
-      "index": 56,
+      "index": 72,
       "group": "Buttons",
       "title": "Role Button With Default Label",
       "link": "https://exploreswiftui.com/library/button/role-button-with-default-label",
@@ -1042,7 +1343,7 @@
       "image_url": null
     },
     {
-      "index": 57,
+      "index": 73,
       "group": "Sliders",
       "title": "SliderTickContentForEach",
       "link": "https://exploreswiftui.com/library/slider/slidertickcontentforeach",
@@ -1060,7 +1361,7 @@
       "image_url": null
     },
     {
-      "index": 58,
+      "index": 74,
       "group": "Lists",
       "title": "Outline Group",
       "link": "https://exploreswiftui.com/library/list/outline-group",
@@ -1077,7 +1378,7 @@
       "image_url": "https://exploreswiftui.com/api/images/132/ios?v=1754891920918"
     },
     {
-      "index": 59,
+      "index": 75,
       "group": "Lists",
       "title": "Disclosure Group",
       "link": "https://exploreswiftui.com/library/list/disclosure-group",
@@ -1094,7 +1395,7 @@
       "image_url": "https://exploreswiftui.com/api/images/131/ios?v=1754891091113"
     },
     {
-      "index": 60,
+      "index": 76,
       "group": "Lists",
       "title": "Edit Button",
       "link": "https://exploreswiftui.com/library/list/edit-button",
@@ -1110,7 +1411,7 @@
       "image_url": "https://exploreswiftui.com/api/images/130/ios?v=1754890426152"
     },
     {
-      "index": 61,
+      "index": 77,
       "group": "Lists",
       "title": "Section Index Label and Visibility",
       "link": "https://exploreswiftui.com/library/list/section-index-label-and-visibility",
@@ -1129,7 +1430,7 @@
       "image_url": null
     },
     {
-      "index": 62,
+      "index": 78,
       "group": "Lists",
       "title": "Move Disabled",
       "link": "https://exploreswiftui.com/library/list/move-disabled",
@@ -1148,7 +1449,7 @@
       "image_url": "https://exploreswiftui.com/api/images/128/ios?v=1754849522657"
     },
     {
-      "index": 63,
+      "index": 79,
       "group": "Lists",
       "title": "Delete Disabled",
       "link": "https://exploreswiftui.com/library/list/delete-disabled",
@@ -1167,7 +1468,7 @@
       "image_url": "https://exploreswiftui.com/api/images/127/ios?v=1754849172087"
     },
     {
-      "index": 64,
+      "index": 80,
       "group": "Lists",
       "title": "Refreshable List",
       "link": "https://exploreswiftui.com/library/list/refreshable-list",
@@ -1186,7 +1487,7 @@
       "image_url": "https://exploreswiftui.com/api/images/126/ios?v=1754848039221"
     },
     {
-      "index": 65,
+      "index": 81,
       "group": "Lists",
       "title": "Swipe Action",
       "link": "https://exploreswiftui.com/library/list/swipe-action",
@@ -1204,7 +1505,7 @@
       "image_url": "https://exploreswiftui.com/api/images/125/ios?v=1754845886734"
     },
     {
-      "index": 66,
+      "index": 82,
       "group": "Lists",
       "title": "List Badge Prominence",
       "link": "https://exploreswiftui.com/library/list/list-badge-prominence",
@@ -1221,7 +1522,7 @@
       "image_url": "https://exploreswiftui.com/api/images/124/ios?v=1754845388668"
     },
     {
-      "index": 67,
+      "index": 83,
       "group": "Lists",
       "title": "List Badge",
       "link": "https://exploreswiftui.com/library/list/list-badge",
@@ -1238,7 +1539,7 @@
       "image_url": "https://exploreswiftui.com/api/images/123/ios?v=1754844784597"
     },
     {
-      "index": 68,
+      "index": 84,
       "group": "Lists",
       "title": "List Background Prominence",
       "link": "https://exploreswiftui.com/library/list/list-background-prominence",
@@ -1257,7 +1558,7 @@
       "image_url": "https://exploreswiftui.com/api/images/122/macos?v=1754844110476"
     },
     {
-      "index": 69,
+      "index": 85,
       "group": "Lists",
       "title": "List Row Background",
       "link": "https://exploreswiftui.com/library/list/list-row-background",
@@ -1276,7 +1577,7 @@
       "image_url": "https://exploreswiftui.com/api/images/121/ios?v=1754841453474"
     },
     {
-      "index": 70,
+      "index": 86,
       "group": "Lists",
       "title": "Hidden List Row Separator",
       "link": "https://exploreswiftui.com/library/list/hidden-list-row-separator",
@@ -1293,7 +1594,7 @@
       "image_url": "https://exploreswiftui.com/api/images/120/ios?v=1754841344479"
     },
     {
-      "index": 71,
+      "index": 87,
       "group": "Lists",
       "title": "Hidden List Section Separator",
       "link": "https://exploreswiftui.com/library/list/hidden-list-section-separator",
@@ -1310,7 +1611,7 @@
       "image_url": "https://exploreswiftui.com/api/images/119/ios?v=1754841224406"
     },
     {
-      "index": 72,
+      "index": 88,
       "group": "Lists",
       "title": "List Section Separator Tint",
       "link": "https://exploreswiftui.com/library/list/list-section-separator-tint",
@@ -1327,7 +1628,7 @@
       "image_url": "https://exploreswiftui.com/api/images/118/ios?v=1754840838200"
     },
     {
-      "index": 73,
+      "index": 89,
       "group": "Lists",
       "title": "List Row Separator Tint",
       "link": "https://exploreswiftui.com/library/list/list-row-separator-tint",
@@ -1344,7 +1645,7 @@
       "image_url": "https://exploreswiftui.com/api/images/117/ios?v=1754839871741"
     },
     {
-      "index": 74,
+      "index": 90,
       "group": "Lists",
       "title": "List Item Tint",
       "link": "https://exploreswiftui.com/library/list/list-item-tint",
@@ -1363,7 +1664,7 @@
       "image_url": "https://exploreswiftui.com/api/images/116/ios?v=1754571507625"
     },
     {
-      "index": 75,
+      "index": 91,
       "group": "Lists",
       "title": "List Section Margins",
       "link": "https://exploreswiftui.com/library/list/list-section-margins",
@@ -1379,7 +1680,7 @@
       "image_url": null
     },
     {
-      "index": 76,
+      "index": 92,
       "group": "Lists",
       "title": "Compact List Section Spacing",
       "link": "https://exploreswiftui.com/library/list/compact-list-section-spacing",
@@ -1396,7 +1697,7 @@
       "image_url": "https://exploreswiftui.com/api/images/114/ios?v=1754488036749"
     },
     {
-      "index": 77,
+      "index": 93,
       "group": "Lists",
       "title": "Custom List Section Spacing",
       "link": "https://exploreswiftui.com/library/list/custom-list-section-spacing",
@@ -1413,7 +1714,7 @@
       "image_url": "https://exploreswiftui.com/api/images/113/ios?v=1754487685124"
     },
     {
-      "index": 78,
+      "index": 94,
       "group": "Lists",
       "title": "List Row Spacing",
       "link": "https://exploreswiftui.com/library/list/list-row-spacing",
@@ -1429,7 +1730,7 @@
       "image_url": "https://exploreswiftui.com/api/images/112/ios?v=1754487183105"
     },
     {
-      "index": 79,
+      "index": 95,
       "group": "Lists",
       "title": "Default Min List Header Height",
       "link": "https://exploreswiftui.com/library/list/default-min-list-header-height",
@@ -1448,7 +1749,7 @@
       "image_url": "https://exploreswiftui.com/api/images/111/ios?v=1754486887144"
     },
     {
-      "index": 80,
+      "index": 96,
       "group": "Lists",
       "title": "Default Min List Row Height",
       "link": "https://exploreswiftui.com/library/list/default-min-list-row-height",
@@ -1467,7 +1768,7 @@
       "image_url": "https://exploreswiftui.com/api/images/110/ios?v=1754486650584"
     },
     {
-      "index": 81,
+      "index": 97,
       "group": "Lists",
       "title": "List Row Insets",
       "link": "https://exploreswiftui.com/library/list/list-row-insets",
@@ -1486,7 +1787,7 @@
       "image_url": "https://exploreswiftui.com/api/images/109/ios?v=1754484936476"
     },
     {
-      "index": 82,
+      "index": 98,
       "group": "Lists",
       "title": "Increased Header Prominence",
       "link": "https://exploreswiftui.com/library/list/increased-header-prominence",
@@ -1505,7 +1806,7 @@
       "image_url": "https://exploreswiftui.com/api/images/108/ios?v=1754483520541"
     },
     {
-      "index": 83,
+      "index": 99,
       "group": "Lists",
       "title": "SidebarListStyle",
       "link": "https://exploreswiftui.com/library/list/sidebarliststyle",
@@ -1522,7 +1823,7 @@
       "image_url": "https://exploreswiftui.com/api/images/107/ios?v=1754483121269"
     },
     {
-      "index": 84,
+      "index": 100,
       "group": "Lists",
       "title": "InsetGroupedListStyle",
       "link": "https://exploreswiftui.com/library/list/insetgroupedliststyle",
@@ -1538,7 +1839,7 @@
       "image_url": "https://exploreswiftui.com/api/images/106/ios?v=1754483021752"
     },
     {
-      "index": 85,
+      "index": 101,
       "group": "Lists",
       "title": "InsetGroupedListStyle",
       "link": "https://exploreswiftui.com/library/list/insetgroupedliststyle",
@@ -1554,7 +1855,7 @@
       "image_url": "https://exploreswiftui.com/api/images/105/ios?v=1754482942960"
     },
     {
-      "index": 86,
+      "index": 102,
       "group": "Lists",
       "title": "InsetListStyle",
       "link": "https://exploreswiftui.com/library/list/insetliststyle",
@@ -1571,7 +1872,7 @@
       "image_url": "https://exploreswiftui.com/api/images/104/ios?v=1754482860240"
     },
     {
-      "index": 87,
+      "index": 103,
       "group": "Lists",
       "title": "EllipticalListStyle",
       "link": "https://exploreswiftui.com/library/list/ellipticalliststyle",
@@ -1585,7 +1886,7 @@
       "image_url": "https://exploreswiftui.com/api/images/103/watchos?v=1754482625041"
     },
     {
-      "index": 88,
+      "index": 104,
       "group": "Lists",
       "title": "CarouselListStyle",
       "link": "https://exploreswiftui.com/library/list/carouselliststyle",
@@ -1599,7 +1900,7 @@
       "image_url": "https://exploreswiftui.com/api/images/102/watchos?v=1754482549461"
     },
     {
-      "index": 89,
+      "index": 105,
       "group": "Lists",
       "title": "BorderedListStyle",
       "link": "https://exploreswiftui.com/library/list/borderedliststyle",
@@ -1613,7 +1914,7 @@
       "image_url": "https://exploreswiftui.com/api/images/101/macos?v=1754475530897"
     },
     {
-      "index": 90,
+      "index": 106,
       "group": "Text",
       "title": "Text Format",
       "link": "https://exploreswiftui.com/library/text/text-format",
@@ -1632,7 +1933,7 @@
       "image_url": "https://exploreswiftui.com/api/images/99/ios?v=1753111309606"
     },
     {
-      "index": 91,
+      "index": 107,
       "group": "Shapes",
       "title": "ContainerRelativeShape",
       "link": "https://exploreswiftui.com/library/shapes/containerrelativeshape",
@@ -1651,7 +1952,7 @@
       "image_url": "https://exploreswiftui.com/api/images/98/ios?v=1749746111684"
     },
     {
-      "index": 92,
+      "index": 108,
       "group": "Views",
       "title": "ControlSize",
       "link": "https://exploreswiftui.com/library/view/controlsize",
@@ -1670,7 +1971,7 @@
       "image_url": "https://exploreswiftui.com/api/images/97/ios?v=1749745204740"
     },
     {
-      "index": 93,
+      "index": 109,
       "group": "Glass Effect Containers",
       "title": "Glass Effect Container",
       "link": "https://exploreswiftui.com/library/glasseffectcontainer/glass-effect-container",
@@ -1688,7 +1989,7 @@
       "image_url": null
     },
     {
-      "index": 94,
+      "index": 110,
       "group": "Toolbars",
       "title": "Title Toolbar Item Placement",
       "link": "https://exploreswiftui.com/library/toolbars/title-toolbar-item-placement",
@@ -1703,7 +2004,7 @@
       "image_url": null
     },
     {
-      "index": 95,
+      "index": 111,
       "group": "Navigation",
       "title": "Navigation Subtitle",
       "link": "https://exploreswiftui.com/library/navigation/navigation-subtitle",
@@ -1719,7 +2020,7 @@
       "image_url": null
     },
     {
-      "index": 96,
+      "index": 112,
       "group": "Toolbars",
       "title": "ToolbarItem Shared Background Visibility",
       "link": "https://exploreswiftui.com/library/toolbars/toolbaritem-shared-background-visibility",
@@ -1735,7 +2036,7 @@
       "image_url": null
     },
     {
-      "index": 97,
+      "index": 113,
       "group": "Views",
       "title": "Background Extension Effect",
       "link": "https://exploreswiftui.com/library/view/background-extension-effect",
@@ -1754,7 +2055,7 @@
       "image_url": null
     },
     {
-      "index": 98,
+      "index": 114,
       "group": "Tab Views",
       "title": "TabView Bottom Accessory Placement",
       "link": "https://exploreswiftui.com/library/tabview/tabview-bottom-accessory-placement",
@@ -1773,7 +2074,7 @@
       "image_url": null
     },
     {
-      "index": 99,
+      "index": 115,
       "group": "Tab Views",
       "title": "Bottom Accessory",
       "link": "https://exploreswiftui.com/library/tabview/bottom-accessory",
@@ -1788,7 +2089,7 @@
       "image_url": null
     },
     {
-      "index": 100,
+      "index": 116,
       "group": "Tab Views",
       "title": "Hide Tab Bar On Scroll Down",
       "link": "https://exploreswiftui.com/library/tabview/hide-tab-bar-on-scroll-down",
@@ -1803,7 +2104,7 @@
       "image_url": null
     },
     {
-      "index": 101,
+      "index": 117,
       "group": "Buttons",
       "title": "Glass Button Styles",
       "link": "https://exploreswiftui.com/library/button/glass-button-styles",
@@ -1822,7 +2123,7 @@
       "image_url": null
     },
     {
-      "index": 102,
+      "index": 118,
       "group": "Sliders",
       "title": "Custom Slider Ticks",
       "link": "https://exploreswiftui.com/library/slider/custom-slider-ticks",
@@ -1840,7 +2141,7 @@
       "image_url": null
     },
     {
-      "index": 103,
+      "index": 119,
       "group": "Views",
       "title": "Glass effect",
       "link": "https://exploreswiftui.com/library/view/glass-effect",
@@ -1858,7 +2159,7 @@
       "image_url": "https://exploreswiftui.com/api/images/85/ios?v=1749536002295"
     },
     {
-      "index": 104,
+      "index": 120,
       "group": "Scroll Views",
       "title": "Hard ScrollEdgeEffect",
       "link": "https://exploreswiftui.com/library/scrollview/hard-scrolledgeeffect",
@@ -1876,7 +2177,7 @@
       "image_url": null
     },
     {
-      "index": 105,
+      "index": 121,
       "group": "Toolbars",
       "title": "ToolbarSpacer",
       "link": "https://exploreswiftui.com/library/toolbars/toolbarspacer",
@@ -1892,7 +2193,7 @@
       "image_url": null
     },
     {
-      "index": 106,
+      "index": 122,
       "group": "Progress Views",
       "title": "ProgressView Colors",
       "link": "https://exploreswiftui.com/library/progressview/progressview-colors",
@@ -1911,7 +2212,7 @@
       "image_url": "https://exploreswiftui.com/api/images/81/ios?v=1749137903724"
     },
     {
-      "index": 107,
+      "index": 123,
       "group": "Progress Views",
       "title": "CircularProgressViewStyle",
       "link": "https://exploreswiftui.com/library/progressview/circularprogressviewstyle",
@@ -1929,7 +2230,7 @@
       "image_url": "https://exploreswiftui.com/api/images/80/ios?v=1749136933972"
     },
     {
-      "index": 108,
+      "index": 124,
       "group": "Progress Views",
       "title": "LinearProgressViewStyle",
       "link": "https://exploreswiftui.com/library/progressview/linearprogressviewstyle",
@@ -1947,7 +2248,7 @@
       "image_url": "https://exploreswiftui.com/api/images/79/ios?v=1749136754752"
     },
     {
-      "index": 109,
+      "index": 125,
       "group": "Progress Views",
       "title": "ProgressView",
       "link": "https://exploreswiftui.com/library/progressview/progressview",
@@ -1966,7 +2267,7 @@
       "image_url": "https://exploreswiftui.com/api/images/78/ios?v=1749133299868"
     },
     {
-      "index": 110,
+      "index": 126,
       "group": "Links",
       "title": "HelpLink",
       "link": "https://exploreswiftui.com/library/link/helplink",
@@ -1980,7 +2281,7 @@
       "image_url": "https://exploreswiftui.com/api/images/77/macos?v=1749126826188"
     },
     {
-      "index": 111,
+      "index": 127,
       "group": "Links",
       "title": "TextFieldLink",
       "link": "https://exploreswiftui.com/library/link/textfieldlink",
@@ -1994,7 +2295,7 @@
       "image_url": "https://exploreswiftui.com/api/images/76/ios?v=1749126478208"
     },
     {
-      "index": 112,
+      "index": 128,
       "group": "Links",
       "title": "Custom Preview Item ShareLink ",
       "link": "https://exploreswiftui.com/library/link/custom-preview-item-sharelink-",
@@ -2012,7 +2313,7 @@
       "image_url": "https://exploreswiftui.com/api/images/75/ios?v=1749126127619"
     },
     {
-      "index": 113,
+      "index": 129,
       "group": "Links",
       "title": "ShareLink",
       "link": "https://exploreswiftui.com/library/link/sharelink",
@@ -2030,7 +2331,7 @@
       "image_url": "https://exploreswiftui.com/api/images/74/ios?v=1749124626832"
     },
     {
-      "index": 114,
+      "index": 130,
       "group": "Links",
       "title": "Link",
       "link": "https://exploreswiftui.com/library/link/link",
@@ -2049,7 +2350,7 @@
       "image_url": "https://exploreswiftui.com/api/images/73/ios?v=1749124158884"
     },
     {
-      "index": 115,
+      "index": 131,
       "group": "Dividers",
       "title": "Divider Height",
       "link": "https://exploreswiftui.com/library/divider/divider-height",
@@ -2068,7 +2369,7 @@
       "image_url": "https://exploreswiftui.com/api/images/72/ios?v=1749123252913"
     },
     {
-      "index": 116,
+      "index": 132,
       "group": "Dividers",
       "title": "Divider Color",
       "link": "https://exploreswiftui.com/library/divider/divider-color",
@@ -2087,7 +2388,7 @@
       "image_url": "https://exploreswiftui.com/api/images/71/ios?v=1749121243031"
     },
     {
-      "index": 117,
+      "index": 133,
       "group": "Dividers",
       "title": "Vertical Divider",
       "link": "https://exploreswiftui.com/library/divider/vertical-divider",
@@ -2106,7 +2407,7 @@
       "image_url": "https://exploreswiftui.com/api/images/70/ios?v=1749121069613"
     },
     {
-      "index": 118,
+      "index": 134,
       "group": "Dividers",
       "title": "Divider",
       "link": "https://exploreswiftui.com/library/divider/divider",
@@ -2125,7 +2426,7 @@
       "image_url": "https://exploreswiftui.com/api/images/69/ios?v=1749120885399"
     },
     {
-      "index": 119,
+      "index": 135,
       "group": "Date Pickers",
       "title": "Future DatePicker",
       "link": "https://exploreswiftui.com/library/datepicker/future-datepicker",
@@ -2141,7 +2442,7 @@
       "image_url": "https://exploreswiftui.com/api/images/68/ios?v=1749060766159"
     },
     {
-      "index": 120,
+      "index": 136,
       "group": "Date Pickers",
       "title": "MultiDatePicker",
       "link": "https://exploreswiftui.com/library/datepicker/multidatepicker",
@@ -2157,7 +2458,7 @@
       "image_url": "https://exploreswiftui.com/api/images/67/ios?v=1749060463798"
     },
     {
-      "index": 121,
+      "index": 137,
       "group": "Date Pickers",
       "title": "DatePicker Colors",
       "link": "https://exploreswiftui.com/library/datepicker/datepicker-colors",
@@ -2175,7 +2476,7 @@
       "image_url": "https://exploreswiftui.com/api/images/66/ios?v=1749059893464"
     },
     {
-      "index": 122,
+      "index": 138,
       "group": "Date Pickers",
       "title": "FieldDatePickerStyle",
       "link": "https://exploreswiftui.com/library/datepicker/fielddatepickerstyle",
@@ -2189,7 +2490,7 @@
       "image_url": "https://exploreswiftui.com/api/images/65/macos?v=1749059009686"
     },
     {
-      "index": 123,
+      "index": 139,
       "group": "Date Pickers",
       "title": "StepperFieldDatePickerStyle",
       "link": "https://exploreswiftui.com/library/datepicker/stepperfielddatepickerstyle",
@@ -2203,7 +2504,7 @@
       "image_url": "https://exploreswiftui.com/api/images/64/macos?v=1749058304888"
     },
     {
-      "index": 124,
+      "index": 140,
       "group": "Date Pickers",
       "title": "WheelDatePickerStyle",
       "link": "https://exploreswiftui.com/library/datepicker/wheeldatepickerstyle",
@@ -2220,7 +2521,7 @@
       "image_url": "https://exploreswiftui.com/api/images/63/ios?v=1749057896768"
     },
     {
-      "index": 125,
+      "index": 141,
       "group": "Date Pickers",
       "title": "GraphicalDatePickerStyle",
       "link": "https://exploreswiftui.com/library/datepicker/graphicaldatepickerstyle",
@@ -2237,7 +2538,7 @@
       "image_url": "https://exploreswiftui.com/api/images/62/ios?v=1749057552656"
     },
     {
-      "index": 126,
+      "index": 142,
       "group": "Date Pickers",
       "title": "Hour Minute Seconds DatePicker",
       "link": "https://exploreswiftui.com/library/datepicker/hour-minute-seconds-datepicker",
@@ -2251,7 +2552,7 @@
       "image_url": "https://exploreswiftui.com/api/images/61/watchos?v=1749051163572"
     },
     {
-      "index": 127,
+      "index": 143,
       "group": "Date Pickers",
       "title": "Future DatePicker",
       "link": "https://exploreswiftui.com/library/datepicker/future-datepicker",
@@ -2269,7 +2570,7 @@
       "image_url": "https://exploreswiftui.com/api/images/60/ios?v=1749050608021"
     },
     {
-      "index": 128,
+      "index": 144,
       "group": "Date Pickers",
       "title": "DatePicker Components ",
       "link": "https://exploreswiftui.com/library/datepicker/datepicker-components-",
@@ -2287,7 +2588,7 @@
       "image_url": "https://exploreswiftui.com/api/images/59/ios?v=1749050142450"
     },
     {
-      "index": 129,
+      "index": 145,
       "group": "Date Pickers",
       "title": "DatePicker",
       "link": "https://exploreswiftui.com/library/datepicker/datepicker",
@@ -2305,7 +2606,7 @@
       "image_url": "https://exploreswiftui.com/api/images/58/ios?v=1749049875060"
     },
     {
-      "index": 130,
+      "index": 146,
       "group": "Control Groups",
       "title": "PaletteControlGroupStyle",
       "link": "https://exploreswiftui.com/library/controlgroup/palettecontrolgroupstyle",
@@ -2322,7 +2623,7 @@
       "image_url": "https://exploreswiftui.com/api/images/57/ios?v=1749041204192"
     },
     {
-      "index": 131,
+      "index": 147,
       "group": "Control Groups",
       "title": "NavigationControlGroupStyle",
       "link": "https://exploreswiftui.com/library/controlgroup/navigationcontrolgroupstyle",
@@ -2339,7 +2640,7 @@
       "image_url": "https://exploreswiftui.com/api/images/56/ios?v=1749040623809"
     },
     {
-      "index": 132,
+      "index": 148,
       "group": "Control Groups",
       "title": "MenuControlGroupStyle",
       "link": "https://exploreswiftui.com/library/controlgroup/menucontrolgroupstyle",
@@ -2357,7 +2658,7 @@
       "image_url": "https://exploreswiftui.com/api/images/55/ios?v=1749040210914"
     },
     {
-      "index": 133,
+      "index": 149,
       "group": "Control Groups",
       "title": "CompactMenuControlGroupStyle",
       "link": "https://exploreswiftui.com/library/controlgroup/compactmenucontrolgroupstyle",
@@ -2374,7 +2675,7 @@
       "image_url": "https://exploreswiftui.com/api/images/54/ios?v=1749039641812"
     },
     {
-      "index": 134,
+      "index": 150,
       "group": "Control Groups",
       "title": "ControlGroup",
       "link": "https://exploreswiftui.com/library/controlgroup/controlgroup",
@@ -2392,7 +2693,7 @@
       "image_url": "https://exploreswiftui.com/api/images/53/ios?v=1749039259222"
     },
     {
-      "index": 135,
+      "index": 151,
       "group": "Sliders",
       "title": "Slider Color",
       "link": "https://exploreswiftui.com/library/slider/slider-color",
@@ -2410,7 +2711,7 @@
       "image_url": "https://exploreswiftui.com/api/images/52/ios?v=1749030859285"
     },
     {
-      "index": 136,
+      "index": 152,
       "group": "Sliders",
       "title": "Stepped Min Max Label Slider",
       "link": "https://exploreswiftui.com/library/slider/stepped-min-max-label-slider",
@@ -2428,7 +2729,7 @@
       "image_url": "https://exploreswiftui.com/api/images/51/ios?v=1749028645804"
     },
     {
-      "index": 137,
+      "index": 153,
       "group": "Sliders",
       "title": "Stepped Slider",
       "link": "https://exploreswiftui.com/library/slider/stepped-slider",
@@ -2446,7 +2747,7 @@
       "image_url": "https://exploreswiftui.com/api/images/50/ios?v=1749024292636"
     },
     {
-      "index": 138,
+      "index": 154,
       "group": "Sliders",
       "title": "Slider",
       "link": "https://exploreswiftui.com/library/slider/slider",
@@ -2464,7 +2765,7 @@
       "image_url": "https://exploreswiftui.com/api/images/49/ios?v=1749023915382"
     },
     {
-      "index": 139,
+      "index": 155,
       "group": "Gauges",
       "title": "Gauge Colors",
       "link": "https://exploreswiftui.com/library/gauge/gauge-colors",
@@ -2482,7 +2783,7 @@
       "image_url": "https://exploreswiftui.com/api/images/48/ios?v=1748980285491"
     },
     {
-      "index": 140,
+      "index": 156,
       "group": "Gauges",
       "title": "CircularGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/circulargaugestyle",
@@ -2496,7 +2797,7 @@
       "image_url": "https://exploreswiftui.com/api/images/47/ios?v=1748979151845"
     },
     {
-      "index": 141,
+      "index": 157,
       "group": "Gauges",
       "title": " LinearGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/-lineargaugestyle",
@@ -2510,7 +2811,7 @@
       "image_url": "https://exploreswiftui.com/api/images/46/ios?v=1748978982445"
     },
     {
-      "index": 142,
+      "index": 158,
       "group": "Gauges",
       "title": "AccessoryLinearCapacityGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/accessorylinearcapacitygaugestyle",
@@ -2528,7 +2829,7 @@
       "image_url": "https://exploreswiftui.com/api/images/45/ios?v=1748978829286"
     },
     {
-      "index": 143,
+      "index": 159,
       "group": "Gauges",
       "title": "AccessoryLinearGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/accessorylineargaugestyle",
@@ -2546,7 +2847,7 @@
       "image_url": "https://exploreswiftui.com/api/images/44/ios?v=1748978666161"
     },
     {
-      "index": 144,
+      "index": 160,
       "group": "Gauges",
       "title": "LinearCapacityGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/linearcapacitygaugestyle",
@@ -2564,7 +2865,7 @@
       "image_url": "https://exploreswiftui.com/api/images/43/ios?v=1748977605868"
     },
     {
-      "index": 145,
+      "index": 161,
       "group": "Gauges",
       "title": "AccessoryCircularCapacityGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/accessorycircularcapacitygaugestyle",
@@ -2582,7 +2883,7 @@
       "image_url": "https://exploreswiftui.com/api/images/42/ios?v=1748977369671"
     },
     {
-      "index": 146,
+      "index": 162,
       "group": "Gauges",
       "title": "AccessoryCircularGaugeStyle",
       "link": "https://exploreswiftui.com/library/gauge/accessorycirculargaugestyle",
@@ -2600,7 +2901,7 @@
       "image_url": "https://exploreswiftui.com/api/images/41/ios?v=1748977064455"
     },
     {
-      "index": 147,
+      "index": 163,
       "group": "Gauges",
       "title": "Min Max Current Value Gauge",
       "link": "https://exploreswiftui.com/library/gauge/min-max-current-value-gauge",
@@ -2618,7 +2919,7 @@
       "image_url": "https://exploreswiftui.com/api/images/40/ios?v=1748976481918"
     },
     {
-      "index": 148,
+      "index": 164,
       "group": "Gauges",
       "title": "Current Value Gauge ",
       "link": "https://exploreswiftui.com/library/gauge/current-value-gauge-",
@@ -2636,7 +2937,7 @@
       "image_url": "https://exploreswiftui.com/api/images/39/ios?v=1748966680847"
     },
     {
-      "index": 149,
+      "index": 165,
       "group": "Gauges",
       "title": "Gauge",
       "link": "https://exploreswiftui.com/library/gauge/gauge",
@@ -2654,7 +2955,7 @@
       "image_url": "https://exploreswiftui.com/api/images/38/ios?v=1748966246776"
     },
     {
-      "index": 150,
+      "index": 166,
       "group": "Buttons",
       "title": "RenameButton",
       "link": "https://exploreswiftui.com/library/button/renamebutton",
@@ -2673,7 +2974,7 @@
       "image_url": "https://exploreswiftui.com/api/images/37/ios?v=1748963869393"
     },
     {
-      "index": 151,
+      "index": 167,
       "group": "Buttons",
       "title": "EditButton",
       "link": "https://exploreswiftui.com/library/button/editbutton",
@@ -2689,7 +2990,7 @@
       "image_url": "https://exploreswiftui.com/api/images/36/ios?v=1748960896568"
     },
     {
-      "index": 152,
+      "index": 168,
       "group": "Buttons",
       "title": "PasteButton",
       "link": "https://exploreswiftui.com/library/button/pastebutton",
@@ -2706,7 +3007,7 @@
       "image_url": "https://exploreswiftui.com/api/images/35/ios?v=1748615582634"
     },
     {
-      "index": 153,
+      "index": 169,
       "group": "Buttons",
       "title": "Button Tint",
       "link": "https://exploreswiftui.com/library/button/button-tint",
@@ -2725,7 +3026,7 @@
       "image_url": "https://exploreswiftui.com/api/images/34/ios?v=1748613629025"
     },
     {
-      "index": 154,
+      "index": 170,
       "group": "Buttons",
       "title": "Button Roles",
       "link": "https://exploreswiftui.com/library/button/button-roles",
@@ -2744,7 +3045,7 @@
       "image_url": "https://exploreswiftui.com/api/images/33/ios?v=1748613444161"
     },
     {
-      "index": 155,
+      "index": 171,
       "group": "Buttons",
       "title": "Button Border Shape",
       "link": "https://exploreswiftui.com/library/button/button-border-shape",
@@ -2763,7 +3064,7 @@
       "image_url": "https://exploreswiftui.com/api/images/32/ios?v=1748613191820"
     },
     {
-      "index": 156,
+      "index": 172,
       "group": "Buttons",
       "title": "Button Styles",
       "link": "https://exploreswiftui.com/library/button/button-styles",
@@ -2782,7 +3083,7 @@
       "image_url": "https://exploreswiftui.com/api/images/31/ios?v=1748612921493"
     },
     {
-      "index": 157,
+      "index": 173,
       "group": "Buttons",
       "title": "Button",
       "link": "https://exploreswiftui.com/library/button/button",
@@ -2801,7 +3102,7 @@
       "image_url": "https://exploreswiftui.com/api/images/30/ios?v=1748612484646"
     },
     {
-      "index": 158,
+      "index": 174,
       "group": "Group Boxes",
       "title": "GroupBox Background",
       "link": "https://exploreswiftui.com/library/groupbox/groupbox-background",
@@ -2820,7 +3121,7 @@
       "image_url": "https://exploreswiftui.com/api/images/29/ios?v=1748608471665"
     },
     {
-      "index": 159,
+      "index": 175,
       "group": "Group Boxes",
       "title": "GroupBox With Label",
       "link": "https://exploreswiftui.com/library/groupbox/groupbox-with-label",
@@ -2837,7 +3138,7 @@
       "image_url": "https://exploreswiftui.com/api/images/28/ios?v=1748604369510"
     },
     {
-      "index": 160,
+      "index": 176,
       "group": "Group Boxes",
       "title": "GroupBox",
       "link": "https://exploreswiftui.com/library/groupbox/groupbox",
@@ -2854,7 +3155,7 @@
       "image_url": "https://exploreswiftui.com/api/images/27/ios?v=1748604198637"
     },
     {
-      "index": 161,
+      "index": 177,
       "group": "Material",
       "title": "Materials",
       "link": "https://exploreswiftui.com/library/material/materials",
@@ -2873,7 +3174,7 @@
       "image_url": "https://exploreswiftui.com/api/images/26/ios?v=1748598854733"
     },
     {
-      "index": 162,
+      "index": 178,
       "group": "Menus",
       "title": "Context Menu Preview",
       "link": "https://exploreswiftui.com/library/menu/context-menu-preview",
@@ -2891,7 +3192,7 @@
       "image_url": "https://exploreswiftui.com/api/images/25/ios?v=1748593502210"
     },
     {
-      "index": 163,
+      "index": 179,
       "group": "Menus",
       "title": "Menu Action Button",
       "link": "https://exploreswiftui.com/library/menu/menu-action-button",
@@ -2909,7 +3210,7 @@
       "image_url": "https://exploreswiftui.com/api/images/23/ios?v=1748592321849"
     },
     {
-      "index": 164,
+      "index": 180,
       "group": "Menus",
       "title": "Context Menu",
       "link": "https://exploreswiftui.com/library/menu/context-menu",
@@ -2927,7 +3228,7 @@
       "image_url": "https://exploreswiftui.com/api/images/22/ios?v=1748591789875"
     },
     {
-      "index": 165,
+      "index": 181,
       "group": "Menus",
       "title": "Nested Menu",
       "link": "https://exploreswiftui.com/library/menu/nested-menu",
@@ -2945,7 +3246,7 @@
       "image_url": "https://exploreswiftui.com/api/images/21/ios?v=1748586302415"
     },
     {
-      "index": 166,
+      "index": 182,
       "group": "Menus",
       "title": "Menu Divider",
       "link": "https://exploreswiftui.com/library/menu/menu-divider",
@@ -2964,7 +3265,7 @@
       "image_url": "https://exploreswiftui.com/api/images/20/ios?v=1748585923330"
     },
     {
-      "index": 167,
+      "index": 183,
       "group": "Menus",
       "title": "Menu Section",
       "link": "https://exploreswiftui.com/library/menu/menu-section",
@@ -2983,7 +3284,7 @@
       "image_url": "https://exploreswiftui.com/api/images/19/ios?v=1748585395506"
     },
     {
-      "index": 168,
+      "index": 184,
       "group": "Menus",
       "title": "Menu Fixed Order",
       "link": "https://exploreswiftui.com/library/menu/menu-fixed-order",
@@ -3002,7 +3303,7 @@
       "image_url": "https://exploreswiftui.com/api/images/18/ios?v=1748585074969"
     },
     {
-      "index": 169,
+      "index": 185,
       "group": "Menus",
       "title": "Menu",
       "link": "https://exploreswiftui.com/library/menu/menu",
@@ -3020,7 +3321,7 @@
       "image_url": "https://exploreswiftui.com/api/images/17/ios?v=1748584446686"
     },
     {
-      "index": 170,
+      "index": 186,
       "group": "Colors",
       "title": "Color Opacity",
       "link": "https://exploreswiftui.com/library/color/color-opacity",
@@ -3039,7 +3340,7 @@
       "image_url": "https://exploreswiftui.com/api/images/16/ios?v=1748518824153"
     },
     {
-      "index": 171,
+      "index": 187,
       "group": "Colors",
       "title": "Color Gradient",
       "link": "https://exploreswiftui.com/library/color/color-gradient",
@@ -3058,7 +3359,7 @@
       "image_url": "https://exploreswiftui.com/api/images/15/ios?v=1748518270283"
     },
     {
-      "index": 172,
+      "index": 188,
       "group": "Colors",
       "title": "UIKit Separator Colors",
       "link": "https://exploreswiftui.com/library/color/uikit-separator-colors",
@@ -3075,7 +3376,7 @@
       "image_url": "https://exploreswiftui.com/api/images/14/ios?v=1748517425461"
     },
     {
-      "index": 173,
+      "index": 189,
       "group": "Colors",
       "title": "UIKit Content Background colors",
       "link": "https://exploreswiftui.com/library/color/uikit-content-background-colors",
@@ -3091,7 +3392,7 @@
       "image_url": "https://exploreswiftui.com/api/images/13/ios?v=1748514012336"
     },
     {
-      "index": 174,
+      "index": 190,
       "group": "Colors",
       "title": "UIKit Text Colors",
       "link": "https://exploreswiftui.com/library/color/uikit-text-colors",
@@ -3108,7 +3409,7 @@
       "image_url": "https://exploreswiftui.com/api/images/12/ios?v=1748510701404"
     },
     {
-      "index": 175,
+      "index": 191,
       "group": "Colors",
       "title": "UIKit Fill Colors",
       "link": "https://exploreswiftui.com/library/color/uikit-fill-colors",
@@ -3124,7 +3425,7 @@
       "image_url": "https://exploreswiftui.com/api/images/11/ios?v=1748510148506"
     },
     {
-      "index": 176,
+      "index": 192,
       "group": "Colors",
       "title": "UIKit Label Colors",
       "link": "https://exploreswiftui.com/library/color/uikit-label-colors",
@@ -3141,7 +3442,7 @@
       "image_url": "https://exploreswiftui.com/api/images/10/ios?v=1748509780807"
     },
     {
-      "index": 177,
+      "index": 193,
       "group": "Colors",
       "title": "Color Variants",
       "link": "https://exploreswiftui.com/library/color/color-variants",
@@ -3160,7 +3461,7 @@
       "image_url": "https://exploreswiftui.com/api/images/9/ios?v=1748508867867"
     },
     {
-      "index": 178,
+      "index": 194,
       "group": "Colors",
       "title": "Semantic Colors",
       "link": "https://exploreswiftui.com/library/color/semantic-colors",
@@ -3178,7 +3479,7 @@
       "image_url": "https://exploreswiftui.com/api/images/8/ios?v=1748508544933"
     },
     {
-      "index": 179,
+      "index": 195,
       "group": "Colors",
       "title": "Standard Colors",
       "link": "https://exploreswiftui.com/library/color/standard-colors",
@@ -3197,7 +3498,7 @@
       "image_url": "https://exploreswiftui.com/api/images/7/ios?v=1748507631377"
     },
     {
-      "index": 180,
+      "index": 196,
       "group": "View That Fits",
       "title": "ViewThatFits Vertical",
       "link": "https://exploreswiftui.com/library/viewthatfits/viewthatfits-vertical",
@@ -3216,7 +3517,7 @@
       "image_url": "https://exploreswiftui.com/api/images/6/ios?v=1748506630282"
     },
     {
-      "index": 181,
+      "index": 197,
       "group": "View That Fits",
       "title": "ViewThatFits",
       "link": "https://exploreswiftui.com/library/viewthatfits/viewthatfits",
@@ -3235,7 +3536,7 @@
       "image_url": "https://exploreswiftui.com/api/images/5/ios?v=1748505683868"
     },
     {
-      "index": 182,
+      "index": 198,
       "group": "Content Unavailable Views",
       "title": "Content Unavailable",
       "link": "https://exploreswiftui.com/library/contentunavailableview/content-unavailable",
@@ -3254,7 +3555,7 @@
       "image_url": "https://exploreswiftui.com/api/images/4/ios?v=1748500208655"
     },
     {
-      "index": 183,
+      "index": 199,
       "group": "Content Unavailable Views",
       "title": "Content Unavailable Search Text",
       "link": "https://exploreswiftui.com/library/contentunavailableview/content-unavailable-search-text",
@@ -3273,7 +3574,7 @@
       "image_url": "https://exploreswiftui.com/api/images/3/ios?v=1748460848653"
     },
     {
-      "index": 184,
+      "index": 200,
       "group": "Content Unavailable Views",
       "title": "Content Unavailable Search",
       "link": "https://exploreswiftui.com/library/contentunavailableview/content-unavailable-search",

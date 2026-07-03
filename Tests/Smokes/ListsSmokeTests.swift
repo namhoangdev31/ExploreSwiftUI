@@ -29,11 +29,11 @@ private struct ListsSmokeView: View {
             .uniSectionIndexLabel("S")
             .uniListSectionSeparator(.visible)
 
-            UniDisclosureGroup("Disclosure") {
+            UniDisclosureGroup<Text, Text>("Disclosure") {
                 Text("Nested")
             }
 
-            UniOutlineGroup([Item(name: "A", children: nil)], children: \.children) { item in
+            UniOutlineGroup<[Item], UUID, Text, EmptyView>([Item(name: "A", children: nil)], children: \.children) { item in
                 Text(item.name)
             }
         }

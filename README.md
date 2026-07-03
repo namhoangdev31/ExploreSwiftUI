@@ -1,8 +1,10 @@
 # ExploreSwiftUI 🚀
 
-ExploreSwiftUI is a state-of-the-art, high-fidelity compatibility and uni layout library for SwiftUI. It provides an enterprise-ready, unified API surface to seamlessly leverage modern SwiftUI capabilities (from **iOS 18+** all the way up to **iOS 26+ / WWDC25**) while guaranteeing elegant, high-fidelity fallbacks on older platforms (down to **iOS 15**, **macOS 12**, **tvOS 15**, **watchOS 8**, and **visionOS 1**).
+ExploreSwiftUI is a state-of-the-art, high-fidelity compatibility and uni layout library for SwiftUI. It provides an enterprise-ready, unified API surface to seamlessly leverage modern SwiftUI capabilities (from **iOS 18+** through **iOS 26+ / WWDC25** and up to **iOS 27+ / WWDC26**) while guaranteeing elegant, high-fidelity fallbacks on older platforms (down to **iOS 15**, **macOS 12**, **tvOS 15**, **watchOS 8**, and **visionOS 1**).
 
 With ExploreSwiftUI, you write clean, future-proof SwiftUI code once, and it automatically scales down to legacy operating systems without triggering build-time availability warnings or cluttering your codebase with nested `#if os(...)` and `if #available(...)` blocks.
+
+> 📖 **For AI Agents & Integrators**: See [`DESIGN.md`](DESIGN.md) for the complete, exhaustive API catalog optimized for code generation.
 
 ---
 
@@ -10,21 +12,23 @@ With ExploreSwiftUI, you write clean, future-proof SwiftUI code once, and it aut
 
 | Platform | Deployment Target (Min) | Fully Leverages Modern APIs (Max) |
 | :--- | :--- | :--- |
-| **iOS** | iOS 15.0 | iOS 26.0+ |
-| **macOS** | macOS 12.0 (macOS 15.0 for TabContent) | macOS 26.0+ |
-| **tvOS** | tvOS 15.0 | tvOS 26.0+ |
-| **watchOS** | watchOS 8.0 | watchOS 26.0+ |
-| **visionOS** | visionOS 1.0 | visionOS 2.0+ |
+| **iOS** | iOS 15.0 | iOS 27.0+ |
+| **macOS** | macOS 12.0 (macOS 15.0 for TabContent) | macOS 27.0+ |
+| **tvOS** | tvOS 15.0 | tvOS 27.0+ |
+| **watchOS** | watchOS 8.0 | watchOS 27.0+ |
+| **visionOS** | visionOS 1.0 | visionOS 27.0+ |
 
 ---
 
 ## ✨ Features
 
-- 🛠️ **Polymorphic DSLs**: Write unified structures (like `UniTabView`) that dynamically compiles to modern `TabContent` structures on newer systems and legacy View-based structures on older OS versions.
+- 🛠️ **Polymorphic DSLs**: Write unified structures (like `UniTabView`) that dynamically compile to modern `TabContent` structures on newer systems and legacy View-based structures on older OS versions.
 - ⚙️ **Smart Availability Flow**: Dynamically evaluate platform capabilities via simple parameters, completely bypassing verbose runtime compiler blocks.
 - 🎨 **Unified Design Tokens**: Modern Glassmorphic, Prominent, and Tinted styling tokens with native fallbacks on older systems.
 - 🔍 **Safe Formatting Polyfills**: High-fidelity formatters for Text (currencies, floats, percentages) that automatically choose native formatters or robust fallback formatters.
 - ⚡ **Zero-Change Modifier System**: Call standard modifiers like `.uniForegroundStyle()` or `.uniButtonBorderShape()` safely on any target deployment platform.
+- 🆕 **iOS 27+ / WWDC26 Bridges**: First-class support for `SwipeActionsContainer`, `Slider` ticks, `AsyncImage` with `URLRequest`, reordering APIs, and more.
+- 🧩 **60+ Components & 100+ Modifiers**: Covers Buttons, Navigation, TabViews, Lists, Pickers, Gauges, Sliders, Alerts, Materials, Glass Effects, Shapes, and more.
 
 ---
 
@@ -235,6 +239,8 @@ Image(systemName: "wifi")
     .uniSymbolEffect(.bounce, isActive: isBouncing) // Simulates bounce via spring scale on iOS 15-16
 ```
 
+Supported effects: `.bounce`, `.pulse`, `.variableColor`, `.breathe`, `.rotate`, `.wiggle`.
+
 ### 9. Unified Alerts & Dialogs (`uniAlert` & `uniConfirmationDialog`)
 
 Unify the messy, ever-changing alert API syntax across iOS releases.
@@ -248,28 +254,176 @@ Unify the messy, ever-changing alert API syntax across iOS releases.
 }
 ```
 
+Also supports error-based alerts (`uniAlert(error:actions:)`), item-based alerts, and `uniConfirmationDialog` with the same overloads.
+
+### 10. Glass Effects & Materials (`uniGlassEffect` & `UniGlassEffectContainer`)
+
+iOS 26+ introduced native glass materials. ExploreSwiftUI bridges these with automatic material fallbacks.
+
+```swift
+// Glass effect on any view
+Card()
+    .uniGlassEffect()
+
+// Glass container with custom shape
+UniGlassEffectContainer {
+    HStack {
+        Image(systemName: "star.fill")
+        Text("Featured")
+    }
+}
+
+// Glass button variants
+UniButton("Action") { doSomething() }
+    .uniGlassButton(variant: .prominent)
+```
+
+### 11. Gauges (`UniGauge`)
+
+Unified gauge display with 8 visual styles, bridging iOS 16+ `Gauge` with `ProgressView` fallback.
+
+```swift
+UniGauge(value: 0.75, style: .accessoryCircular) {
+    Text("Battery")
+} currentValueLabel: {
+    Text("75%")
+}
+.uniGaugeTint(.green)
+```
+
+### 12. Disclosure & Outline Groups
+
+Hierarchical data views with platform-guarded native APIs and graceful fallbacks.
+
+```swift
+// Expandable section
+UniDisclosureGroup("Advanced Options", isExpanded: $expanded) {
+    Toggle("Enable Debug Mode", isOn: $debug)
+    Toggle("Verbose Logging", isOn: $verbose)
+}
+
+// Tree data
+UniOutlineGroup(fileSystem, children: \.children) { item in
+    Label(item.name, systemImage: item.isDirectory ? "folder" : "doc")
+}
+```
+
+### 13. Reordering (iOS 27+)
+
+Bridge the new iOS 27 reordering APIs with `onMove` fallback on older platforms.
+
+```swift
+List {
+    ForEach(items) { item in
+        Text(item.name)
+    }
+    .uniReorderable()
+}
+.uniReorderContainer(for: Item.self) { item, destination in
+    moveItem(item, to: destination)
+}
+```
+
+### 14. Sliders with Tick Marks (`UniSlider`)
+
+iOS 27+ native slider ticks with visual fallback on older platforms.
+
+```swift
+UniSlider(value: $temperature, in: 60...90, step: 5) {
+    Text("Temperature")
+} minimumValueLabel: {
+    Text("60°")
+} maximumValueLabel: {
+    Text("90°")
+} ticks: {
+    UniSliderTick(65) { Text("65") }
+    UniSliderTick(75) { Text("75") }
+    UniSliderTick(85) { Text("85") }
+}
+```
+
+### 15. Swipe Actions Container (iOS 27+)
+
+Ensure only one active swipe within a container using the new `swipeActionsContainer` API.
+
+```swift
+List {
+    ForEach(items) { item in
+        Text(item.name)
+            .uniSwipeActions {
+                Button(role: .destructive) { delete(item) } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            }
+    }
+}
+.uniSwipeActionsContainer()
+```
+
 ---
 
 ## 🛠️ Complete Uni Components Reference
 
-| Component / Modifier | Modern SwiftUI Counterpart | Fallback Behavior on Legacy Systems |
+### View Components (32)
+
+| Component | Modern SwiftUI Counterpart | Fallback Behavior |
 | :--- | :--- | :--- |
 | `UniButton` | `Button(role:action:)` | Resolves custom destructive/close roles, caps bounds, and maps layout sizes. |
-| `UniScrollView` | `ScrollView` | Wraps layout axes and sets up margin trackers. |
+| `UniRoleButton` | `Button(role:)` | Semantic roles (cancel, close, confirm, destructive) with auto localized titles. |
+| `UniRenameButton` | `RenameButton` | Native on iOS 16+, custom button fallback. |
+| `UniPasteButton` | `PasteButton` | Native on iOS 16+, clipboard-reading fallback. |
+| `UniEditButton` | `EditButton` | Native on all platforms. |
+| `UniMenuActionButton` | `Menu` with `primaryAction` | Menu with optional primary action. |
 | `UniText` | `Text(value, format:)` | Standardizes number formatters and safely applies text tracking/kerning. |
-| `UniPicker` | `Picker` | Correctly resolves styles (menus, segmented, wheels) based on compatibility. |
+| `UniLabel` | `Label` | Platform-agnostic label with icon and title rendering. |
+| `UniLabeledContent` | `LabeledContent` (iOS 16+) | `HStack` fallback on iOS 15. |
+| `UniNavigationStack` | `NavigationStack` | Falls back to `NavigationView` on iOS 15. |
+| `UniNavigationSplitView` | `NavigationSplitView` | Falls back to `NavigationView` with sidebar. |
+| `UniNavigationSplitView3` | `NavigationSplitView` (3-column) | Falls back to `NavigationView`. |
+| `UniTabView` | `TabView` + `Tab` (iOS 18) | Bridges `TabContent` down to `.tabItem` + `.tag`. |
+| `UniList` | `List` | Styled list with automatic platform adaptation. |
+| `UniDisclosureGroup` | `DisclosureGroup` (iOS 14+) | `VStack` fallback on tvOS/watchOS. |
+| `UniOutlineGroup` | `OutlineGroup` (iOS 14+) | Flat `ForEach` fallback on tvOS/watchOS. |
+| `UniGroupBox` | `GroupBox` | Styled group box container. |
+| `UniControlGroup` | `ControlGroup` (iOS 15+) | Grouped controls. |
+| `UniScrollView` | `ScrollView` | Wraps layout axes and sets up margin trackers. |
+| `UniViewThatFits` | `ViewThatFits` (iOS 16+) | Falls back to scrollable layout. |
+| `UniAsyncImage` | `AsyncImage` | URLRequest support (iOS 27+ native), custom loader fallback. |
+| `UniPicker` | `Picker` | Correctly resolves styles (menus, segmented, wheels). |
 | `UniDatePicker` | `DatePicker` | Maps date styles cleanly. |
+| `UniMultiDatePicker` | `MultiDatePicker` (iOS 16+) | Multi-date selection. |
+| `UniSlider` | `Slider` + ticks (iOS 27+) | Slider with tick marks and tint. |
 | `UniProgressView` | `ProgressView` | Standardizes progress layouts across platforms. |
-| `UniTabView` | `TabView` + `Tab` (iOS 18) | Bridges `TabContent` down to classic `.tabItem` + `.tag`. |
-| `UniContentUnavailableView` | `ContentUnavailableView` | Generates a high-fidelity vertically stacked fallback with standard buttons. |
-| `UniViewThatFits` | `ViewThatFits` | Falls back to dynamic Scrolling layouts on older OS versions. |
-| `UniGlassEffectContainer` | `.background(.ultraThinMaterial)` | Polyfills high-definition glass materials with semi-transparent tinted styling. |
-| `UniNavigationStack` / `UniNavigationSplitView` | `NavigationStack` / `NavigationSplitView` | Falls back to traditional `NavigationView` and standard active links. |
-| `UniShareLink` | `ShareLink` | Triggers UIKit's `UIActivityViewController` on iOS 15 or `NSSharingServicePicker` on macOS. |
-| `.uniScrollTargetBehavior(_:)` | `.scrollTargetBehavior` | Gracefully ignored. |
-| `.uniScrollPosition(id:anchor:)` | `.scrollPosition` | Leverages internal `ScrollViewReader` to scroll programmatically. |
-| `.uniSymbolEffect(_:isActive:)` | `.symbolEffect` | Simulates bounce (spring scale) and pulse (opacity animations). |
-| `.uniAlert(...)` / `.uniConfirmationDialog(...)` | `.alert(...)` / `.confirmationDialog(...)` | Wraps closure-based DSL and falls back to legacy `Alert` and `ActionSheet` types. |
+| `UniGauge` | `Gauge` (iOS 16+) | 8 visual styles with `ProgressView` fallback. |
+| `UniContentUnavailableView` | `ContentUnavailableView` (iOS 17+) | High-fidelity VStack fallback. |
+| `UniShareLink` | `ShareLink` (iOS 16+) | `UIActivityViewController` on iOS 15. |
+| `UniMenu` | `Menu` | Menu with primary action support. |
+| `UniGlassEffectContainer` | Glass material (iOS 26+) | Material background polyfill. |
+| `UniProductView` | `ProductView` (StoreKit, iOS 17+) | StoreKit product view bridge. |
+
+### Bridge Modifiers (26 files, 100+ modifiers)
+
+| Category | Key Modifiers |
+| :--- | :--- |
+| **Alerts** | `.uniAlert(...)`, `.uniConfirmationDialog(...)` — 14 overloads |
+| **Buttons** | `.uniButtonStyle(...)`, `.uniButtonSizing(...)`, `.uniButtonBorderShape(...)`, `.uniButtonTint(...)` |
+| **Colors** | `.uniForegroundStyle(color:hierarchy:gradient:opacity:)` |
+| **Glass** | `.uniGlassEffect()`, `.uniGlass(in:)`, `.uniGlassButton(variant:)`, `.uniBackgroundExtension(...)` |
+| **Lists** | `.uniListStyle(...)`, `.uniBadge(...)`, `.uniSwipeActions(...)`, `.uniSwipeActionsContainer()`, `.uniRefreshable(...)` — 20+ modifiers |
+| **Materials** | `.uniBackgroundMaterial(...)`, `.uniForegroundMaterial(...)` |
+| **Menus** | `.uniMenuOrder(...)`, `.uniContextMenu(menuItems:preview:)` |
+| **Navigation** | `.uniNavigationTitle(...)`, `.uniContainerBackground(...)`, `.uniToolbarBackground(...)` |
+| **Pickers** | `.uniPickerStyle(...)`, `.uniHorizontalRadioGroupLayout(...)` |
+| **Progress** | `.uniProgressViewStyle(...)`, `.uniProgressTint(...)` |
+| **Gauges** | `.uniGaugeStyle(...)`, `.uniGaugeTint(...)` |
+| **Reorderings** | `.uniReorderable()`, `.uniReorderContainer(for:move:)` — iOS 27+ native, `onMove` fallback |
+| **Scroll** | `.uniScrollTargetBehavior(...)`, `.uniScrollPosition(id:)`, `.uniScrollEdgeEffectStyle(...)` |
+| **Sheets** | `.uniPresentationDetents(...)`, `.uniPresentationSizing(...)`, `.uniPresentationCornerRadius(...)` — 9 modifiers |
+| **Sliders** | `.uniSliderTint(...)`, `.uniSliderTicks(...)` |
+| **Symbols** | `.uniSymbolEffect(...)` — bounce, pulse, variableColor, breathe, rotate, wiggle |
+| **TabViews** | `.uniTabViewStyle(...)`, `.uniTabBarMinimizeBehavior(...)`, `.uniTabViewCustomization(...)` — 10+ modifiers |
+| **Text** | `.uniTracking(...)`, `.uniKerning(...)`, `.uniBold(...)`, `.uniSemi(...)`, `.uniItalic(...)` |
+| **Toolbars** | `ToolbarItemPlacement.uni(...)`, `.uniNavigationSubtitle(...)`, `.uniToolbar(removing:)` |
 
 ---
 
@@ -295,6 +449,16 @@ swift test --disable-sandbox
 
 ---
 
+## 📚 Documentation
+
+- **[`DESIGN.md`](DESIGN.md)** — Exhaustive API reference for AI agents and integrators. Lists every public struct, enum, modifier, and static property with usage examples.
+- **Source Code** — `Sources/ExploreSwiftUI/` with clear directory structure:
+  - `Components/` — 32 concrete `View` structs
+  - `Bridges/` — 26 files of `View` modifier extensions
+  - `Common/` — Shared enums and design tokens
+
+---
+
 ## 🤝 Credits & Acknowledgements
 
 This library and its API references are compiled and synthesized based on information and resources from [ExploreSwiftUI](https://exploreswiftui.com/).
@@ -304,4 +468,3 @@ This library and its API references are compiled and synthesized based on inform
 ## 📄 License
 
 ExploreSwiftUI is available under the **MIT License**. See the `LICENSE` file for details.
-

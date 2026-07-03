@@ -54,7 +54,11 @@ public struct UniGroupBox<Label: View, Content: View>: View {
     public var body: some View {
         if #available(iOS 14.0, macOS 10.15, tvOS 16.0, watchOS 9.0, visionOS 1.0, *) {
             if hasLabel {
-                GroupBox(content: content, label: label)
+                GroupBox {
+                    content()
+                } label: {
+                    label()
+                }
             } else {
                 // Initializer without label is iOS 14.0+, macOS 10.15+
                 GroupBox {

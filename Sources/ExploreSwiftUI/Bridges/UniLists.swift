@@ -213,8 +213,8 @@ extension View {
     /// Sets margins for list sections (iOS 26+).
     @ViewBuilder
     public func uniListSectionMargins(_ edges: Edge.Set, _ length: CGFloat?) -> some View {
-        #if os(iOS) || os(visionOS) || os(watchOS) || os(tvOS)
-            if #available(iOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
+        #if os(iOS)
+            if #available(iOS 26.0, *) {
                 self.listSectionMargins(edges, length)
             } else {
                 self
@@ -256,6 +256,33 @@ extension View {
 
     // MARK: - Interactions
 
+    /// Configures a container that only allows a single active swipe action at a time.
+    ///
+    /// Example:
+    /// ```swift
+    /// ScrollView {
+    ///     LazyVStack {
+    ///         ForEach(items) { item in
+    ///             ItemRow(item)
+    ///                 .uniSwipeActions { Button("Delete") {} }
+    ///         }
+    ///     }
+    /// }
+    /// .uniSwipeActionsContainer()
+    /// ```
+    @ViewBuilder
+    public func uniSwipeActionsContainer() -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, *) {
+                self.swipeActionsContainer()
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
+
     /// Adds swipe actions to a list row.
     ///
     /// Example:
@@ -270,8 +297,39 @@ extension View {
         edge: HorizontalEdge = .trailing, allowsFullSwipe: Bool = true,
         @ViewBuilder content: () -> T
     ) -> some View {
-        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
-            if #available(iOS 15.0, macOS 12.0, watchOS 8.0, visionOS 1.0, *) {
+        #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *) {
+                self.swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe, content: content)
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
+
+    /// Adds swipe actions to a list row, notifying you when actions are revealed or dismissed.
+    ///
+    /// Example:
+    /// ```swift
+    /// Text("Item")
+    ///     .uniSwipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+    ///         Button("Delete") {}
+    ///     }, onPresentationChanged: { isPresented in
+    ///         print("Swipe actions visible: \(isPresented)")
+    ///     })
+    /// ```
+    @ViewBuilder
+    public func uniSwipeActions<T: View>(
+        edge: HorizontalEdge = .trailing,
+        allowsFullSwipe: Bool = true,
+        @ViewBuilder content: () -> T,
+        onPresentationChanged: @escaping (Bool) -> Void
+    ) -> some View {
+        #if os(iOS) || os(macOS) || os(watchOS)
+            if #available(iOS 27.0, macOS 27.0, watchOS 27.0, *) {
+                self.swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe, content: content, onPresentationChanged: onPresentationChanged)
+            } else if #available(iOS 15.0, macOS 12.0, watchOS 8.0, *) {
                 self.swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe, content: content)
             } else {
                 self
@@ -407,8 +465,8 @@ extension View {
     /// Sets the visibility of the list section index (iOS 26+).
     @ViewBuilder
     public func uniListSectionIndexVisibility(_ visibility: Visibility) -> some View {
-        #if os(iOS) || os(watchOS) || os(tvOS) || os(visionOS)
-            if #available(iOS 26.0, watchOS 26.0, tvOS 26.0, visionOS 26.0, *) {
+        #if os(iOS) || os(watchOS)
+            if #available(iOS 26.0, watchOS 26.0, *) {
                 self.listSectionIndexVisibility(visibility)
             } else {
                 self

@@ -15,18 +15,24 @@ import SwiftUI
 ///
 /// Example:
 /// ```swift
-/// UniTab("Home", systemImage: "house", value: "home") {
+/// UniTab("Today", systemImage: "sparkles", value: 0) {
 ///     HomeView()
 /// }
 ///
-/// UniTab("Search", systemImage: "magnifyingglass", value: "search", role: .search) {
+/// UniTab("Search", systemImage: "magnifyingglass", value: 4, role: .search) {
 ///     SearchView()
 /// }
 /// ```
+///
+/// - Parameters:
+///   - titleKey: The localized title of the tab.
+///   - systemImage: The SF Symbol name for the tab icon.
+///   - value: The selection value associated with this tab.
+///   - role: The semantic role of the tab (e.g., `.search` for iOS 18+ integrations).
+///   - content: A view builder producing the content for this tab.
 public func UniTab<Value: Hashable, Content: View>(
     _ titleKey: LocalizedStringKey,
-    systemImage: String? = nil,
-    image: String? = nil,
+    systemImage: String,
     value: Value,
     role: UniTabRole = .automatic,
     @ViewBuilder content: @escaping () -> Content
@@ -34,7 +40,6 @@ public func UniTab<Value: Hashable, Content: View>(
     _UniTabDescriptor(
         titleKey: titleKey,
         systemImage: systemImage,
-        image: image,
         value: value,
         role: role,
         content: AnyView(content())
@@ -48,13 +53,9 @@ public func UniTab<Value: Hashable, Content: View>(
 ///
 /// Example:
 /// ```swift
-/// UniTabSection("Personal") {
-///     UniTab("Search", systemImage: "magnifyingglass", value: "search") {
-///         SearchView()
-///     }
-///     UniTab("Profile", systemImage: "person", value: "profile") {
-///         ProfileView()
-///     }
+/// UniTabSection("Account") {
+///     UniTab("Profile", systemImage: "person", value: 1) { ProfileView() }
+///     UniTab("Settings", systemImage: "gear", value: 2) { SettingsView() }
 /// }
 /// ```
 public func UniTabSection<Value: Hashable>(
@@ -71,18 +72,17 @@ public func UniTabSection<Value: Hashable>(
 
 /// A container view that displays multiple tabs, adapting to platform standards.
 ///
-/// `UniTabView` provides a unified tab interface. On iOS 18+ / macOS 15+, it renders using the modern native `TabView` structure.
-/// On older systems (iOS 15-17), it falls back to the legacy tab structure with `.tabItem` and `.tag`.
+/// `UniTabView` intelligently switches between the modern `TabView` API (iOS 18+)
+/// and the legacy view-based API (iOS 15-17) to provide the best user experience
+/// on every OS version.
 ///
 /// Example:
 /// ```swift
+/// @State private var selection = 1
+///
 /// UniTabView(selection: $selection) {
-///     UniTab("Home", systemImage: "house", value: Tab.home) {
-///         HomeView()
-///     }
-///     UniTab("Settings", systemImage: "gear", value: Tab.settings) {
-///         SettingsView()
-///     }
+///     UniTab("Home", systemImage: "house", value: 1) { HomeView() }
+///     UniTab("Profile", systemImage: "person", value: 2) { ProfileView() }
 /// }
 /// ```
 public struct UniTabView<Selection: Hashable>: View {
@@ -91,14 +91,9 @@ public struct UniTabView<Selection: Hashable>: View {
 
     /// Creates an uni tab view with a selection binding.
     ///
-    /// Example:
-    /// ```swift
-    /// UniTabView(selection: $selection) {
-    ///     UniTab("Home", systemImage: "house", value: Tab.home) {
-    ///         HomeView()
-    ///     }
-    /// }
-    /// ```
+    /// - Parameters:
+    ///   - selection: A binding to the selected tab value.
+    ///   - content: A builder that produces the tabs using `UniTab`.
     public init(
         selection: Binding<Selection>,
         @UniTabBuilder<Selection> content: @escaping () -> [_UniTabDescriptor<Selection>]
@@ -123,7 +118,7 @@ public struct UniTabView<Selection: Hashable>: View {
     private var modernTabView: some View {
         TabView(selection: $selection) {
             ForEach(tabs(), id: \.value) { descriptor in
-                descriptor
+                descriptor.modernTab
             }
         }
     }
@@ -140,281 +135,42 @@ public struct UniTabView<Selection: Hashable>: View {
 // MARK: - Internal Descriptors
 
 /// Internal descriptor used to bridge between different TabView implementations.
-public struct _UniTabDescriptor<Value: Hashable>: Identifiable, Hashable {
+/// This pattern avoids protocol conflicts between `View` and `TabContent`.
+public struct _UniTabDescriptor<Value: Hashable>: Identifiable {
     public var id: Value { value }
 
     let titleKey: LocalizedStringKey
-    let systemImage: String?
-    let image: String?
+    let systemImage: String
     let value: Value
     let role: UniTabRole
     let content: AnyView
-    var customizationID: String? = nil
-    var badgeInt: Int? = nil
-    var badgeString: String? = nil
-    var customizationBehavior: UniTabCustomizationBehavior? = nil
-    var customizationPlacements: Set<UniTabCustomizationPlacement>? = nil
-
-    public static func == (lhs: _UniTabDescriptor<Value>, rhs: _UniTabDescriptor<Value>) -> Bool {
-        lhs.value == rhs.value
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-    }
-
-    /// Creates a tab descriptor.
-    ///
-    /// Example:
-    /// ```swift
-    /// _UniTabDescriptor("Search", systemImage: "magnifyingglass", value: "search", role: .search) {
-    ///     SearchView()
-    /// }
-    /// ```
-    public init(
-        _ titleKey: LocalizedStringKey,
-        systemImage: String? = nil,
-        image: String? = nil,
-        value: Value,
-        role: UniTabRole = .automatic,
-        @ViewBuilder content: @escaping () -> some View
-    ) {
-        self.titleKey = titleKey
-        self.systemImage = systemImage
-        self.image = image
-        self.value = value
-        self.role = role
-        self.content = AnyView(content())
-    }
-
-    init(
-        titleKey: LocalizedStringKey,
-        systemImage: String?,
-        image: String?,
-        value: Value,
-        role: UniTabRole,
-        content: AnyView,
-        customizationID: String? = nil,
-        badgeInt: Int? = nil,
-        badgeString: String? = nil,
-        customizationBehavior: UniTabCustomizationBehavior? = nil,
-        customizationPlacements: Set<UniTabCustomizationPlacement>? = nil
-    ) {
-        self.titleKey = titleKey
-        self.systemImage = systemImage
-        self.image = image
-        self.value = value
-        self.role = role
-        self.content = content
-        self.customizationID = customizationID
-        self.badgeInt = badgeInt
-        self.badgeString = badgeString
-        self.customizationBehavior = customizationBehavior
-        self.customizationPlacements = customizationPlacements
-    }
-
-    // Modifiers returning modified copies
-
-    /// Sets a customization identifier for the tab.
-    ///
-    /// Example:
-    /// ```swift
-    /// UniTab("Home", systemImage: "house", value: "home") {
-    ///     HomeView()
-    /// }
-    /// .uniCustomizationID("tab.home")
-    /// ```
-    public func uniCustomizationID(_ id: String) -> Self {
-        var copy = self
-        copy.customizationID = id
-        return copy
-    }
-
-    /// Sets an integer badge value for the tab.
-    ///
-    /// Example:
-    /// ```swift
-    /// UniTab("Inbox", systemImage: "tray", value: "inbox") {
-    ///     InboxView()
-    /// }
-    /// .uniTabBadge(5)
-    /// ```
-    public func uniTabBadge(_ value: Int) -> Self {
-        var copy = self
-        copy.badgeInt = value
-        return copy
-    }
-
-    /// Sets a string badge value for the tab.
-    ///
-    /// Example:
-    /// ```swift
-    /// UniTab("Inbox", systemImage: "tray", value: "inbox") {
-    ///     InboxView()
-    /// }
-    /// .uniTabBadge("New")
-    /// ```
-    public func uniTabBadge(_ value: String) -> Self {
-        var copy = self
-        copy.badgeString = value
-        return copy
-    }
-
-    /// Configures the customization behavior for the tab in specific placements.
-    ///
-    /// Example:
-    /// ```swift
-    /// UniTab("Home", systemImage: "house", value: "home") {
-    ///     HomeView()
-    /// }
-    /// .uniCustomizationBehavior(.disabled, for: [.sidebar])
-    /// ```
-    public func uniCustomizationBehavior(
-        _ behavior: UniTabCustomizationBehavior = .automatic,
-        for placements: Set<UniTabCustomizationPlacement> = [.sidebar, .tabBar]
-    ) -> Self {
-        var copy = self
-        copy.customizationBehavior = behavior
-        copy.customizationPlacements = placements
-        return copy
-    }
 
     @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
     var modernTab: some TabContent<Value> {
-        let baseTab: AnyTabContent<Value>
-        if let systemImage = systemImage {
-            if role == .search {
-                baseTab = AnyTabContent(Tab(titleKey, systemImage: systemImage, value: value, role: .search) {
-                    content
-                })
-            } else {
-                baseTab = AnyTabContent(Tab(titleKey, systemImage: systemImage, value: value) {
-                    content
-                })
+        if role == .search {
+            return Tab(titleKey, systemImage: systemImage, value: value, role: .search) {
+                content
             }
-        } else if let image = image {
-            baseTab = AnyTabContent(Tab(titleKey, image: image, value: value) {
-                content
-            })
         } else {
-            baseTab = AnyTabContent(Tab(value: value) {
+            return Tab(titleKey, systemImage: systemImage, value: value) {
                 content
-            } label: {
-                Label(titleKey, systemImage: "photo")
-            })
+            }
         }
-
-        var resolvedTab = baseTab
-        if let customizationID = customizationID {
-            resolvedTab = AnyTabContent(resolvedTab.customizationID(customizationID))
-        }
-
-        if let badgeInt = badgeInt {
-            resolvedTab = AnyTabContent(resolvedTab.badge(badgeInt))
-        } else if let badgeString = badgeString {
-            resolvedTab = AnyTabContent(resolvedTab.badge(badgeString))
-        }
-
-        if let customizationBehavior = customizationBehavior {
-            let placements = customizationPlacements ?? [.sidebar, .tabBar]
-            let mappedBehavior: TabCustomizationBehavior = {
-                switch customizationBehavior {
-                case .automatic: return .automatic
-                case .reorderable:
-                    #if os(iOS) || os(visionOS)
-                    return .reorderable
-                    #else
-                    return .automatic
-                    #endif
-                case .disabled:
-                    #if os(iOS) || os(visionOS)
-                    return .disabled
-                    #else
-                    return .automatic
-                    #endif
-                }
-            }()
-
-            #if os(iOS) || os(visionOS)
-                if placements.contains(.sidebar) && placements.contains(.tabBar) {
-                    resolvedTab = AnyTabContent(resolvedTab.customizationBehavior(mappedBehavior, for: AdaptableTabBarPlacement.sidebar, AdaptableTabBarPlacement.tabBar))
-                } else if placements.contains(.sidebar) {
-                    resolvedTab = AnyTabContent(resolvedTab.customizationBehavior(mappedBehavior, for: AdaptableTabBarPlacement.sidebar))
-                } else if placements.contains(.tabBar) {
-                    resolvedTab = AnyTabContent(resolvedTab.customizationBehavior(mappedBehavior, for: AdaptableTabBarPlacement.tabBar))
-                }
-            #elseif os(macOS)
-                if placements.contains(.tabBar) {
-                    resolvedTab = AnyTabContent(resolvedTab.customizationBehavior(mappedBehavior, for: AdaptableTabBarPlacement.tabBar))
-                }
-            #endif
-        }
-
-        return resolvedTab
     }
 
     var legacyTab: some View {
         content
             .tabItem {
-                if let systemImage = systemImage {
-                    Label(titleKey, systemImage: systemImage)
-                } else if let image = image {
-                    Label(titleKey, image: image)
-                } else {
-                    Text(titleKey)
-                }
+                Label(titleKey, systemImage: systemImage)
             }
             .tag(value)
     }
 }
 
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension _UniTabDescriptor: TabContent {
-    public typealias TabValue = Value
-
-    @MainActor
-    @preconcurrency
-    public var body: some TabContent<Value> {
-        modernTab
-    }
-}
-
 /// Internal descriptor for tab grouping.
-public struct _UniTabSectionDescriptor<Value: Hashable>: Hashable {
+public struct _UniTabSectionDescriptor<Value: Hashable> {
     let titleKey: LocalizedStringKey?
     let children: [_UniTabDescriptor<Value>]
-
-    public static func == (lhs: _UniTabSectionDescriptor<Value>, rhs: _UniTabSectionDescriptor<Value>) -> Bool {
-        lhs.children == rhs.children
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(children)
-    }
-}
-
-@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension _UniTabSectionDescriptor: TabContent {
-    public typealias TabValue = Value
-
-    @TabContentBuilder<Value>
-    @MainActor
-    @preconcurrency
-    public var body: some TabContent<Value> {
-        if let titleKey = titleKey {
-            TabSection(titleKey) {
-                ForEach(children, id: \.value) { child in
-                    child
-                }
-            }
-        } else {
-            TabSection {
-                ForEach(children, id: \.value) { child in
-                    child
-                }
-            }
-        }
-    }
 }
 
 // MARK: - Result Builder

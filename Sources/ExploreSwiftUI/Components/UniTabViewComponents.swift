@@ -114,29 +114,11 @@ public struct UniTabView<Selection: Hashable>: View {
         #endif
     }
 
-    private var hasSearchTab: Bool {
-        tabs().contains { $0.role == .search }
-    }
-
     @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
     private var modernTabView: some View {
-        let tabView = TabView(selection: $selection) {
+        TabView(selection: $selection) {
             ForEach(tabs(), id: \.value) { descriptor in
                 descriptor.modernTab
-            }
-        }
-        // iOS 26+ (WWDC25 redesign) tightened Tab(role: .search) morphing behavior.
-        // Without .tabViewSearchActivation(.searchTabSelection), selecting the search
-        // tab no longer activates the .searchable modifier — the search box won't appear.
-        return Group {
-            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, *) {
-                if hasSearchTab {
-                    tabView.tabViewSearchActivation(.searchTabSelection)
-                } else {
-                    tabView
-                }
-            } else {
-                tabView
             }
         }
     }

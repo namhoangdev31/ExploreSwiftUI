@@ -325,6 +325,31 @@ extension View {
             self
         #endif
     }
+
+    /// Configures the search activation behavior for tab views with a search tab (iOS 26+).
+    ///
+    /// When a `Tab` has `role: .search`, this modifier controls how the search
+    /// interface is activated. On iOS 26+, use `.searchTabSelection` to ensure
+    /// the search field morphs correctly when the search tab is selected.
+    ///
+    /// Example:
+    /// ```swift
+    /// TabView { ... }
+    ///     .searchable(text: $searchText)
+    ///     .uniTabViewSearchActivation()
+    /// ```
+    @ViewBuilder
+    public func uniTabViewSearchActivation() -> some View {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+                self.tabViewSearchActivation(.searchTabSelection)
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

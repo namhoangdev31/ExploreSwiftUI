@@ -107,4 +107,22 @@ extension UniDatePicker {
             Text(titleKey)
         }
     }
+
+    /// Creates an uni date picker with a localized title key and a partial range from a start date.
+    public init(
+        _ titleKey: LocalizedStringKey,
+        selection: Binding<Date>,
+        in range: PartialRangeFrom<Date>,
+        displayedComponents: DatePickerComponents = [.date, .hourAndMinute],
+        style: UniDatePickerStyle = .automatic
+    ) where Label == Text {
+        self.init(
+            selection: selection,
+            in: range,
+            displayedComponents: displayedComponents,
+            style: style
+        ) {
+            Text(titleKey)
+        }
+    }
 }

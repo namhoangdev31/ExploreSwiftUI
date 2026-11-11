@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import UniSwiftUi
+@testable import ExploreSwiftUI
 
 final class ListsSmokeTests: XCTestCase {
     @MainActor

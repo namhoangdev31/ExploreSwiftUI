@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import UniSwiftUi
+@testable import ExploreSwiftUI
 
 final class ToolbarsSmokeTests: XCTestCase {
     @MainActor
@@ -46,7 +46,25 @@ private struct ToolbarsSmokeView: View {
                     }
                     .uniSharedBackgroundVisibility(.visible)
                 #endif
+
+                ToolbarItem(placement: .uniTopBarPinnedTrailing) {
+                    Button("Pinned") {}
+                }
+                .uniVisibilityPriority(.high)
+                .uniAxisBehavior(.horizontalOnly)
+                .uniContentMarginsRemoved(true)
+                .uniHidden(false)
+
+                UniToolbarOverflowMenu {
+                    Button("Aux 1") {}
+                    Button("Aux 2") {}
+                }
             }
+            .uniToolbarTitleAlignment(.center)
+            .uniToolbarVerticalCompressionBehavior(.prefersToolbarItems)
+            .uniToolbarMinimizationBehavior(.onScrollDown)
+            .uniToolbarMinimizationSafeAreaAdjustment(.disabled)
+            .uniToolbarMinimizationRestoration(.atScrollEdge)
         }
     }
 }

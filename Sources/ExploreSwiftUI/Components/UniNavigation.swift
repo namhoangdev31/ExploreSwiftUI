@@ -32,28 +32,69 @@ public struct UniNavigationStack<Root: View>: View {
 /// A uni layout component that dynamically bridges `NavigationSplitView` (iOS 16+)
 /// and `NavigationView` (iOS 15).
 public struct UniNavigationSplitView<Sidebar: View, Detail: View>: View {
+    private var preferredCompactColumn: Binding<UniPreferredCompactColumn>?
     @ViewBuilder public var sidebar: () -> Sidebar
     @ViewBuilder public var detail: () -> Detail
     
     public init(
+        preferredCompactColumn: Binding<UniPreferredCompactColumn>? = nil,
         @ViewBuilder sidebar: @escaping () -> Sidebar,
         @ViewBuilder detail: @escaping () -> Detail
     ) {
+        self.preferredCompactColumn = preferredCompactColumn
         self.sidebar = sidebar
         self.detail = detail
     }
     
     public var body: some View {
-        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-            NavigationSplitView {
-                sidebar()
-            } detail: {
-                detail()
-            }
-        } else {
-            NavigationView {
-                sidebar()
-                detail()
+        Group {
+            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                if let compactBinding = preferredCompactColumn {
+                    let nativeBinding = Binding<NavigationSplitViewColumn>(
+                        get: {
+                            switch compactBinding.wrappedValue {
+                            case .sidebar: return .sidebar
+                            case .content: return .content
+                            case .detail: return .detail
+                            }
+                        },
+                        set: { val in
+                            if val == .sidebar { compactBinding.wrappedValue = .sidebar }
+                            else if val == .content { compactBinding.wrappedValue = .content }
+                            else if val == .detail { compactBinding.wrappedValue = .detail }
+                        }
+                    )
+                    AnyView(
+                        NavigationSplitView(preferredCompactColumn: nativeBinding) {
+                            sidebar()
+                        } detail: {
+                            detail()
+                        }
+                    )
+                } else {
+                    AnyView(
+                        NavigationSplitView {
+                            sidebar()
+                        } detail: {
+                            detail()
+                        }
+                    )
+                }
+            } else if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                AnyView(
+                    NavigationSplitView {
+                        sidebar()
+                    } detail: {
+                        detail()
+                    }
+                )
+            } else {
+                AnyView(
+                    NavigationView {
+                        sidebar()
+                        detail()
+                    }
+                )
             }
         }
     }
@@ -62,34 +103,79 @@ public struct UniNavigationSplitView<Sidebar: View, Detail: View>: View {
 /// A three-column uni layout component that dynamically bridges `NavigationSplitView` (iOS 16+)
 /// and `NavigationView` (iOS 15).
 public struct UniNavigationSplitView3<Sidebar: View, Content: View, Detail: View>: View {
+    private var preferredCompactColumn: Binding<UniPreferredCompactColumn>?
     @ViewBuilder public var sidebar: () -> Sidebar
     @ViewBuilder public var content: () -> Content
     @ViewBuilder public var detail: () -> Detail
     
     public init(
+        preferredCompactColumn: Binding<UniPreferredCompactColumn>? = nil,
         @ViewBuilder sidebar: @escaping () -> Sidebar,
         @ViewBuilder content: @escaping () -> Content,
         @ViewBuilder detail: @escaping () -> Detail
     ) {
+        self.preferredCompactColumn = preferredCompactColumn
         self.sidebar = sidebar
         self.content = content
         self.detail = detail
     }
     
     public var body: some View {
-        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-            NavigationSplitView {
-                sidebar()
-            } content: {
-                content()
-            } detail: {
-                detail()
-            }
-        } else {
-            NavigationView {
-                sidebar()
-                content()
-                detail()
+        Group {
+            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                if let compactBinding = preferredCompactColumn {
+                    let nativeBinding = Binding<NavigationSplitViewColumn>(
+                        get: {
+                            switch compactBinding.wrappedValue {
+                            case .sidebar: return .sidebar
+                            case .content: return .content
+                            case .detail: return .detail
+                            }
+                        },
+                        set: { val in
+                            if val == .sidebar { compactBinding.wrappedValue = .sidebar }
+                            else if val == .content { compactBinding.wrappedValue = .content }
+                            else if val == .detail { compactBinding.wrappedValue = .detail }
+                        }
+                    )
+                    AnyView(
+                        NavigationSplitView(preferredCompactColumn: nativeBinding) {
+                            sidebar()
+                        } content: {
+                            content()
+                        } detail: {
+                            detail()
+                        }
+                    )
+                } else {
+                    AnyView(
+                        NavigationSplitView {
+                            sidebar()
+                        } content: {
+                            content()
+                        } detail: {
+                            detail()
+                        }
+                    )
+                }
+            } else if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+                AnyView(
+                    NavigationSplitView {
+                        sidebar()
+                    } content: {
+                        content()
+                    } detail: {
+                        detail()
+                    }
+                )
+            } else {
+                AnyView(
+                    NavigationView {
+                        sidebar()
+                        content()
+                        detail()
+                    }
+                )
             }
         }
     }

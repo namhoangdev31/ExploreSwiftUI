@@ -27,7 +27,10 @@ let package = Package(
         ),
         .testTarget(
             name: "ExploreSwiftUITests",
-            dependencies: ["ExploreSwiftUI"]
+            dependencies: ["ExploreSwiftUI"],
+            path: "Tests",
+            exclude: ["parse_rss.py", "SwiftUI"],
+            resources: [.copy("Fixtures")]
         ),
     ]
 )

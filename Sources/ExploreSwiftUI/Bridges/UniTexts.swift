@@ -169,5 +169,44 @@ extension View {
         self
         #endif
     }
+
+    /// Sets the border shape for text input controls (iOS 27+, macOS 27+).
+    @ViewBuilder
+    public func uniTextInputBorderShape(_ shape: UniTextInputBorderShape) -> some View {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+            if #available(iOS 27.0, macOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *) {
+                let nativeShape: TextInputBorderShape = {
+                    switch shape {
+                    case .automatic: return .automatic
+                    case .capsule: return .capsule
+                    case .roundedRectangle: return .roundedRectangle
+                    }
+                }()
+                self.textInputBorderShape(nativeShape)
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
+}
+
+// MARK: - UniFormattedText
+
+/// An uni formatted text component that supports FormatStyle (iOS 15+).
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
+public struct UniFormattedText<F: FormatStyle>: View where F.FormatInput: Equatable, F.FormatOutput == String {
+    private let value: F.FormatInput
+    private let format: F
+
+    public init(_ value: F.FormatInput, format: F) {
+        self.value = value
+        self.format = format
+    }
+
+    public var body: some View {
+        Text(value, format: format)
+    }
 }
 

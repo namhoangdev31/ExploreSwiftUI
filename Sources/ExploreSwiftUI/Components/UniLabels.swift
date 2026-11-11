@@ -61,6 +61,18 @@ extension UniLabel where Title == Text, Icon == Image {
     }
 }
 
+extension UniLabel where Title == Text {
+    /// Creates an uni label using a localized title key and a custom icon view.
+    public init(_ titleKey: LocalizedStringKey, @ViewBuilder icon: () -> Icon) {
+        self.init(title: { Text(titleKey) }, icon: icon)
+    }
+
+    /// Creates an uni label using a string title and a custom icon view.
+    public init<S: StringProtocol>(_ title: S, @ViewBuilder icon: () -> Icon) {
+        self.init(title: { Text(title) }, icon: icon)
+    }
+}
+
 extension UniLabel where Title == Text, Icon == Image {
     /// Creates an uni label using a title string and a system image name.
     public init<S: StringProtocol>(_ title: S, systemImage: String) {

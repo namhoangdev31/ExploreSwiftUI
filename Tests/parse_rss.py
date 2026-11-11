@@ -3,8 +3,9 @@ import json
 import os
 import re
 
-file_path = '/Users/hoangnam/Developer/ExploreSwiftUI/Tests/Fixtures/exploreswiftui_feed.xml'
-output_path = '/Users/hoangnam/Developer/ExploreSwiftUI/Tests/Fixtures/exploreswiftui_feed.json'
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, 'Fixtures/exploreswiftui_feed.xml')
+output_path = os.path.join(base_dir, 'Fixtures/exploreswiftui_feed.json')
 
 def parse_rss(xml_file):
     try:
@@ -58,7 +59,13 @@ def parse_rss(xml_file):
             "Sheets": "các API liên quan đến hiển thị sheet/popover, quản lý detent (kích thước), cấm vuốt để đóng (interactiveDismissDisabled), background và cornerRadius.",
             "Alerts": "Các API hiển thị thông báo alert, hỗ trợ binding lỗi (error), hiển thị message chi tiết, các button hành động và quản lý trạng thái hiển thị.",
             "Async Images": "Tải và hiển thị hình ảnh bất đồng bộ từ URL, hỗ trợ custom placeholder, xử lý các phase tải (empty/success/failure), và custom URL session.",
-            "Product Views": "Hiển thị thông tin sản phẩm từ App Store trực tiếp trong ứng dụng, hỗ trợ compact/regular/large styles và custom placeholder/icon."
+            "Product Views": "Hiển thị thông tin sản phẩm từ App Store trực tiếp trong ứng dụng, hỗ trợ compact/regular/large styles và custom placeholder/icon.",
+            "Toggles": "Toggle cơ bản, hỗ trợ nhiều data sources (multiple sources), và các style như switch, button, checkbox (macOS).",
+            "Store Views": "StoreView và StoreKit components hiển thị in-app purchases, tùy biến placeholder icon, icon phases, nút phục hồi giao dịch (restorePurchases) và nút hủy (cancellation).",
+            "Subscription Store Views": "SubscriptionStoreView hiển thị gói đăng ký (In-App Subscriptions) tự động hoặc theo nhóm tùy biến, hỗ trợ lọc quan hệ nâng cấp (visibleRelationships: .upgrade).",
+            "Text Fields": "TextField và các modifier tạo hình dáng viền như .textInputBorderShape(.capsule) (macOS).",
+            "Arrangement Views": "ArrangementView thiết kế cho thiết bị gập/hai màn hình (như iPhone Duo), hỗ trợ overlay style với zIndex/edge, split style với layout ratio, và split theo trục ngang/dọc.",
+            "Geometry Readers": "GeometryReader mở rộng với proxy.reservedRegions(kind:) giúp nhận biết khu vực bản lề, nếp gấp, hoặc vùng bị che khuất (division / occlusion)."
         }
 
         feed_info = {
@@ -114,7 +121,13 @@ def parse_rss(xml_file):
                         'sheet': "Sheets",
                         'alert': "Alerts",
                         'asyncimage': "Async Images",
-                        'productview': "Product Views"
+                        'productview': "Product Views",
+                        'toggle': "Toggles",
+                        'storeview': "Store Views",
+                        'subscriptionstoreview': "Subscription Store Views",
+                        'textfield': "Text Fields",
+                        'arrangementview': "Arrangement Views",
+                        'geometryreader': "Geometry Readers"
                     }
                     if group_raw in group_map:
                         group = group_map[group_raw]

@@ -157,6 +157,18 @@ extension View {
             #else
                 self
             #endif
+        case .tabs:
+            #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+                if #available(iOS 27.0, macOS 27.0, tvOS 27.0, visionOS 27.0, *) {
+                    self.pickerStyle(.tabs)
+                } else if #available(iOS 13.0, macOS 10.15, tvOS 13.0, visionOS 1.0, *) {
+                    self.pickerStyle(.segmented)
+                } else {
+                    self
+                }
+            #else
+                self
+            #endif
         }
     }
 

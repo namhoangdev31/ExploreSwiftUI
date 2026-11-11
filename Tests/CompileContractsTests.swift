@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import XCTest
 
-@testable import UniSwiftUi
+@testable import ExploreSwiftUI
 
 final class CompileContractsTests: XCTestCase {
     func testOSGenerationOrdering() {
@@ -23,22 +23,25 @@ final class CompileContractsTests: XCTestCase {
         let xmlData = try loadExploreSwiftUIRSSFixtureData()
         let feed = try ExploreSwiftUIRSSParser.parse(data: xmlData)
 
-        XCTAssertEqual(feed.lastBuildDate, "Sat, 18 Apr 2026 11:27:46 GMT")
-        XCTAssertEqual(feed.items.count, 184, "RSS must include all published cases from snapshot.")
+        XCTAssertEqual(feed.lastBuildDate, "Tue, 03 Nov 2026 11:16:15 GMT")
+        XCTAssertEqual(feed.items.count, 249, "RSS must include all published cases from snapshot.")
         XCTAssertTrue(
             feed.items.allSatisfy(\.hasRequiredCoreFields),
             "Every RSS case must contain core fields: title/link/guid/pubDate/content."
         )
         XCTAssertEqual(
             feed.items.filter { !$0.summary.isEmpty }.count,
-            181,
-            "Snapshot currently has 181 item descriptions and 3 empty descriptions."
+            246,
+            "Snapshot currently has 246 item descriptions and 3 empty descriptions."
         )
         XCTAssertEqual(
-            Set(feed.items.map(\.guid)).count, 184, "Each RSS case must have a unique guid.")
+            Set(feed.items.map(\.guid)).count, 249, "Each RSS case must have a unique guid.")
 
         let componentCounts = Dictionary(grouping: feed.items, by: \.component).mapValues(\.count)
         let expectedComponentCounts: [String: Int] = [
+            "alert": 4,
+            "arrangementview": 6,
+            "asyncimage": 4,
             "button": 11,
             "color": 10,
             "concentricrectangle": 2,
@@ -47,6 +50,7 @@ final class CompileContractsTests: XCTestCase {
             "datepicker": 11,
             "divider": 4,
             "gauge": 11,
+            "geometryreader": 1,
             "glasseffectcontainer": 1,
             "groupbox": 3,
             "label": 4,
@@ -55,24 +59,29 @@ final class CompileContractsTests: XCTestCase {
             "list": 32,
             "material": 1,
             "menu": 8,
-            "navigation": 1,
-            "picker": 14,
+            "navigation": 6,
+            "picker": 15,
+            "productview": 6,
             "progressview": 4,
             "scrollview": 1,
             "shapes": 1,
-            "sheet": 11,
+            "sheet": 12,
             "slider": 6,
-            "tabview": 21,
+            "storeview": 6,
+            "subscriptionstoreview": 6,
+            "tabview": 24,
             "text": 1,
-            "toolbars": 3,
-            "view": 5,
+            "textfield": 1,
+            "toggle": 5,
+            "toolbars": 9,
+            "view": 15,
             "viewthatfits": 2,
         ]
 
         XCTAssertEqual(
             componentCounts, expectedComponentCounts,
             "Component coverage differs from RSS snapshot.")
-        XCTAssertEqual(componentCounts.count, 28, "RSS must contain all expected components.")
+        XCTAssertEqual(componentCounts.count, 37, "RSS must contain all expected components.")
     }
 }
 
@@ -119,12 +128,14 @@ final class ExploreSwiftUIRSSParser: NSObject, XMLParserDelegate {
 
     static func parse(data: Data) throws -> ExploreSwiftUIRSSFeed {
         let delegate = ExploreSwiftUIRSSParser()
+        delegate.items.reserveCapacity(260)
+        delegate.currentTextValue.reserveCapacity(2048)
         let parser = XMLParser(data: data)
         parser.delegate = delegate
         parser.shouldProcessNamespaces = true
 
         guard parser.parse() else {
-            throw parser.parserError ?? NSError(domain: "UniSwiftUiTests", code: 2)
+            throw parser.parserError ?? NSError(domain: "ExploreSwiftUITests", code: 2)
         }
 
         return ExploreSwiftUIRSSFeed(
@@ -145,7 +156,7 @@ final class ExploreSwiftUIRSSParser: NSObject, XMLParserDelegate {
             namespaceURI: namespaceURI,
             qualifiedName: qName
         )
-        currentTextValue = ""
+        currentTextValue.removeAll(keepingCapacity: true)
 
         if currentElementName == "item" {
             isInsideItem = true
@@ -195,7 +206,7 @@ final class ExploreSwiftUIRSSParser: NSObject, XMLParserDelegate {
             lastBuildDate = normalizedValue
         }
 
-        currentTextValue = ""
+        currentTextValue.removeAll(keepingCapacity: true)
     }
 
     private func normalizedName(
@@ -228,7 +239,7 @@ func loadExploreSwiftUIRSSFixtureData() throws -> Data {
         )
 
     guard let fixtureURL else {
-        throw NSError(domain: "UniSwiftUiTests", code: 1)
+        throw NSError(domain: "ExploreSwiftUITests", code: 1)
     }
 
     return try Data(contentsOf: fixtureURL)

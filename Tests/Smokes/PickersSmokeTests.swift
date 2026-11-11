@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import UniSwiftUi
+@testable import ExploreSwiftUI
 
 final class PickersSmokeTests: XCTestCase {
     @MainActor
@@ -19,6 +19,12 @@ private struct PickersSmokeView: View {
                 Text("B").tag(2)
             }
             .uniPickerStyle(.menu)
+
+            UniPicker("Tabs", selection: $selection) {
+                Text("Tab 1").tag(1)
+                Text("Tab 2").tag(2)
+            }
+            .uniPickerStyle(.tabs)
 
             UniPicker("Radio", selection: $selection) {
                 Text("1").tag(1)

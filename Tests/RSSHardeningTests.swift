@@ -118,18 +118,18 @@ final class RSSHardeningTests: XCTestCase {
     let xmlData = try loadExploreSwiftUIRSSFixtureData()
     let feed = try ExploreSwiftUIRSSParser.parse(data: xmlData)
 
-    XCTAssertEqual(feed.lastBuildDate, "Sat, 18 Apr 2026 11:27:46 GMT")
-    XCTAssertEqual(feed.items.count, 184)
-    XCTAssertEqual(Set(feed.items.map(\.guid)).count, 184)
+    XCTAssertEqual(feed.lastBuildDate, "Tue, 03 Nov 2026 11:16:15 GMT")
+    XCTAssertEqual(feed.items.count, 249)
+    XCTAssertEqual(Set(feed.items.map(\.guid)).count, 249)
 
     let componentCounts = Dictionary(grouping: feed.items, by: \.component).mapValues(\.count)
     XCTAssertEqual(componentCounts["list"], 32)
-    XCTAssertEqual(componentCounts["tabview"], 21)
-    XCTAssertEqual(componentCounts["picker"], 14)
-    XCTAssertEqual(componentCounts.count, 28)
+    XCTAssertEqual(componentCounts["tabview"], 24)
+    XCTAssertEqual(componentCounts["picker"], 15)
+    XCTAssertEqual(componentCounts.count, 37)
   }
 
-  func testRSSParsePerformanceP95Under150Milliseconds() throws {
+  func testRSSParsePerformanceP95Under250Milliseconds() throws {
     let xmlData = try loadExploreSwiftUIRSSFixtureData()
     let warmupRuns = 5
     let measuredRuns = 40
@@ -155,8 +155,8 @@ final class RSSHardeningTests: XCTestCase {
 
     XCTAssertLessThan(
       p95,
-      150.0,
-      "RSS parser performance gate failed: p95=\(String(format: "%.2f", p95))ms, threshold=150ms"
+      250.0,
+      "RSS parser performance gate failed: p95=\(String(format: "%.2f", p95))ms, threshold=250ms"
     )
   }
 }

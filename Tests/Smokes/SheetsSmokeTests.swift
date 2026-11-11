@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import UniSwiftUi
+@testable import ExploreSwiftUI
 
 final class SheetsSmokeTests: XCTestCase {
     @MainActor
@@ -55,6 +55,7 @@ private struct SheetsSmokeView: View {
                     .padding()
                     // Sizing (iOS 18+)
                     .uniPresentationSizing(.fitted)
+                    .uniPresentationPlacement(.leading)
                     // Visuals
                     .uniPresentationCornerRadius(32)
                     // Interactions

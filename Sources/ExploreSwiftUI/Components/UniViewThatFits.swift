@@ -32,6 +32,14 @@ public struct UniViewThatFits<Content: View>: View {
         self.content = content
     }
 
+    /// Creates an uni view that fits with `axes:` parameter label.
+    public init(
+        axes: UniViewThatFitsAxes = .horizontal,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.init(in: axes, content: content)
+    }
+
     public var body: some View {
         #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
             if #available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, visionOS 1.0, *) {

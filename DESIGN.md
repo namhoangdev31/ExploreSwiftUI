@@ -25,11 +25,17 @@ Sources/ExploreSwiftUI/
 ├── Components/                # Concrete View structs (drop-in replacements)
 │   ├── UniButton.swift
 │   ├── UniAsyncImage.swift
-│   ├── ... (32 files)
+│   ├── UniArrangementView.swift
+│   ├── UniStoreView.swift
+│   ├── UniToggle.swift
+│   ├── ... (35 files)
 └── Bridges/                   # View modifier extensions on View, Text, etc.
     ├── UniAlerts.swift
     ├── UniButtons.swift
-    ├── ... (26 files)
+    ├── UniArrangementViews.swift
+    ├── UniStoreViews.swift
+    ├── UniToggles.swift
+    ├── ... (29 files)
 ```
 
 ### Design Principles
@@ -124,8 +130,10 @@ Text("Hello").if(condition, then: { $0.bold() }, else: { $0.italic() })
 | `UniButtonRole` | `.cancel`, `.close`, `.confirm`, `.destructive` |
 | `UniButtonSizing` | `.automatic`, `.fitted`, `.flexible` |
 | `UniButtonStyle` | `.automatic`, `.plain`, `.borderless`, `.bordered`, `.borderedProminent`, `.glass`, `.glassProminent` |
+| `UniToggleStyle` | `.automatic`, `.switch`, `.button`, `.checkbox` |
 | `UniControlSize` | `.mini`, `.small`, `.regular`, `.large`, `.extraLarge` |
 | `UniButtonBorderShape` | `.automatic`, `.roundedRectangle`, `.capsule`, `.circle`, `.roundedRectangleRadius(CGFloat)` |
+| `UniTextInputBorderShape` | `.automatic`, `.roundedRectangle`, `.capsule` |
 | `UniHierarchicalVariant` | `.primary`, `.secondary`, `.tertiary`, `.quaternary`, `.quinary` |
 
 ### Material & Effect
@@ -143,7 +151,25 @@ Text("Hello").if(condition, then: { $0.bold() }, else: { $0.italic() })
 |:---|:---|
 | `UniViewThatFitsAxes` | `.horizontal`, `.vertical`, `.all` |
 | `UniContainerBackgroundPlacement` | `.navigation`, `.navigationSplitView` |
+| `UniContentMarginGuide` | `.automatic`, `.scrollContent`, `.container` |
 | `UniScrollEdgeEffectStyle` | `.hard` |
+
+### Foldable Displays & Multi-Pane Arrangements (iPhone Duo)
+
+| Enum | Cases |
+|:---|:---|
+| `UniArrangementStyle` | `.automatic`, `.split`, `.overlay` |
+| `UniArrangementEdge` | `.automatic`, `.top`, `.bottom`, `.leading`, `.trailing` |
+| `UniReservedRegionKind` | `.division`, `.occlusion` |
+| `UniHingeStatus` | `.unknown`, `.flat`, `.halfOpened`, `.closed` |
+
+### StoreKit & Subscriptions
+
+| Enum | Cases |
+|:---|:---|
+| `UniStoreButtonKind` | `.automatic`, `.cancellation`, `.restorePurchases`, `.redeemCode`, `.signIn`, `.policies` |
+| `UniStoreButtonVisibility` | `.automatic`, `.visible`, `.hidden` |
+| `UniSubscriptionRelationship` | `.upgrade`, `.downgrade`, `.crossgrade` |
 
 ### Component Styles
 
@@ -153,7 +179,7 @@ Text("Hello").if(condition, then: { $0.bold() }, else: { $0.italic() })
 | `UniMenuOrder` | `.automatic`, `.fixed`, `.priority` |
 | `UniControlGroupStyle` | `.automatic`, `.navigation`, `.menu`, `.compactMenu`, `.palette` |
 | `UniDatePickerStyle` | `.automatic`, `.wheel`, `.graphical`, `.field`, `.stepperField` |
-| `UniPickerStyle` | `.automatic`, `.menu`, `.inline`, `.navigationLink`, `.palette`, `.segmented`, `.wheel`, `.radioGroup` |
+| `UniPickerStyle` | `.automatic`, `.menu`, `.inline`, `.navigationLink`, `.palette`, `.segmented`, `.wheel`, `.radioGroup`, `.tabs` |
 | `UniGaugeStyle` | `.automatic`, `.linear`, `.linearCapacity`, `.circular`, `.accessoryLinear`, `.accessoryLinearCapacity`, `.accessoryCircular`, `.accessoryCircularCapacity` |
 | `UniProductViewStyle` | `.automatic`, `.large`, `.regular`, `.compact` |
 
@@ -166,18 +192,37 @@ Text("Hello").if(condition, then: { $0.bold() }, else: { $0.italic() })
 | `UniBackgroundProminence` | `.standard`, `.increased` |
 | `UniBadgeProminence` | `.standard`, `.increased` |
 | `UniSheetSizing` | `.automatic`, `.fitted`, `.page` |
+| `UniPresentationPlacement` | `.automatic`, `.compact`, `.regular` |
 | `UniPresentationDetent` | `.medium`, `.large`, `.fraction(CGFloat)`, `.height(CGFloat)` |
 | `UniPresentationBackgroundInteraction` | `.automatic`, `.enabled`, `.disabled`, `.enabledUpThrough(UniPresentationDetent)` |
 | `UniPresentationContentInteraction` | `.automatic`, `.scrolls`, `.resizes` |
+
+### Navigation & Split Views
+
+| Enum | Cases |
+|:---|:---|
+| `UniPreferredCompactColumn` | `.sidebar`, `.content`, `.detail` |
+| `UniNavigationTransition` | `.automatic`, `.crossFade`, `.zoom` |
 
 ### Toolbar & TabView
 
 | Enum | Cases |
 |:---|:---|
 | `UniToolbarTitlePlacement` | `.automatic`, `.title`, `.subtitle`, `.largeTitle`, `.largeSubtitle` |
+| `UniToolbarTitleAlignment` | `.automatic`, `.center`, `.leading`, `.trailing` |
+| `UniToolbarItemVisibilityPriority` | `.automatic`, `.defaultPriority`, `.low`, `.high`, `.lowerThan(UniToolbarItemVisibilityPriority)`, `.higherThan(UniToolbarItemVisibilityPriority)` |
+| `UniToolbarAxisBehavior` | `.automatic`, `.horizontalOnly`, `.verticalPreferred` |
+| `UniToolbarVerticalCompressionBehavior` | `.automatic`, `.prefersToolbarItems`, `.prefersTabBar` |
+| `UniToolbarVerticalBehavior` | `.automatic`, `.compact`, `.regular` |
+| `UniToolbarVerticalEdge` | `.automatic`, `.top`, `.bottom` |
+| `UniToolbarMinimizationBehavior` | `.automatic`, `.onScrollDown`, `.onScrollUp` |
+| `UniToolbarMinimizationSafeAreaAdjustment` | `.automatic`, `.disabled` |
+| `UniToolbarMinimizationRestoration` | `.automatic`, `.atScrollEdge` |
 | `UniToolbarSpacerSizing` | `.fixed`, `.flexible` |
 | `UniToolbarDefaultItemKind` | `.sidebarToggle`, `.title`, `.search` |
 | `UniTabViewStyle` | `.automatic`, `.sidebarAdaptable`, `.tabBarOnly`, `.grouped`, `.page(indexDisplayMode:)`, `.verticalPage` |
+| `UniDefaultTabBarPlacement` | `.automatic`, `.bottom`, `.top`, `.sidebar` |
+| `UniSectionExpansion` | `.automatic`, `.collapsed`, `.expanded` |
 | `UniPageTabIndexDisplayMode` | `.automatic`, `.always`, `.never` |
 | `UniTabBarMinimizeBehavior` | `.automatic`, `.never`, `.onScrollDown`, `.onScrollUp` |
 | `UniAdaptableTabBarPlacement` | `.automatic`, `.sidebar`, `.tabBar` |
@@ -302,10 +347,12 @@ UniNavigationStack {
 
 #### `UniNavigationSplitView<Sidebar, Detail>`
 
-Two-column split navigation.
+Two-column split navigation with optional preferred compact column binding (controls which column appears on top when collapsing on compact devices or foldable hardware like iPhone Duo).
 
 ```swift
-UniNavigationSplitView {
+@State private var compactColumn: UniPreferredCompactColumn = .detail
+
+UniNavigationSplitView(preferredCompactColumn: $compactColumn) {
     SidebarView()
 } detail: {
     DetailView()
@@ -317,7 +364,9 @@ UniNavigationSplitView {
 Three-column split navigation.
 
 ```swift
-UniNavigationSplitView3 {
+@State private var compactColumn: UniPreferredCompactColumn = .detail
+
+UniNavigationSplitView3(preferredCompactColumn: $compactColumn) {
     SidebarView()
 } content: {
     ContentView()
@@ -359,7 +408,17 @@ UniTab("Inbox", systemImage: "tray", value: 3) { InboxView() }
     .uniTabBadge(5)
     .uniCustomizationID("tab.inbox")
     .uniCustomizationBehavior(.reorderable, for: [.sidebar])
+
+// Sidebar section expansion control (iOS 27+ native defaultSectionExpansion, fallback on older OS)
+UniTabSection("Archives") {
+    UniTab("2025", systemImage: "folder", value: 4) { Archive2025View() }
+}
+.uniDefaultSectionExpansion(.collapsed)
 ```
+
+#### `UniValueTab` & `UniTabSection` (`TabContent` Protocol Conformance)
+
+On iOS 18+, `UniValueTab` and `UniTabSection` conform directly to SwiftUI's `TabContent` protocol, allowing them to be composed seamlessly inside native `TabView` hierarchies as well as `UniTabView`.
 
 ---
 
@@ -477,11 +536,14 @@ UniPicker("Color", selection: $color) {
 
 #### `UniDatePicker<Label>`
 
-Date picker with style and tint support.
+Date picker with style, tint, and flexible range support (`ClosedRange<Date>` or `PartialRangeFrom<Date>`).
 
 ```swift
 UniDatePicker("Start Date", selection: $date, displayedComponents: [.date])
     .uniDatePickerStyle(.graphical)
+
+// With range
+UniDatePicker("Future Date", selection: $date, in: Date()...)
 ```
 
 #### `UniMultiDatePicker<Label>`
@@ -738,6 +800,36 @@ UniMenu("Options") {
 
 StoreKit product view bridge (iOS 17+).
 
+#### `UniFormattedText<F: FormatStyle>`
+
+Type-safe formatted text rendering values (numbers, currencies, percentages, dates, measurements).
+
+```swift
+UniFormattedText(42.5, format: .number.precision(.fractionLength(2)))
+UniFormattedText(Date(), format: .dateTime.year().month().day())
+```
+
+#### `UniToolbarSpacer` & `UniToolbarSpacerView`
+
+Toolbar spacer bridging `ToolbarSpacer` (WWDC26 / iOS 27+) with flexible/fixed sizing. `UniToolbarSpacer` conforms to `ToolbarContent` for placement in toolbars, while `UniToolbarSpacerView` is a `View`.
+
+```swift
+.toolbar {
+    ToolbarItem(placement: .topBarLeading) { Button("Back") { } }
+    UniToolbarSpacer(.flexible)
+    ToolbarItem(placement: .topBarTrailing) { Button("Save") { } }
+}
+```
+
+#### `UniShape`
+
+Cross-platform geometric shape wrapper with tint and border support.
+
+```swift
+UniShape(shape: Capsule())
+    .uniShapeTint(.blue)
+```
+
 #### `UniLegacyCardModifier`
 
 A legacy card-style modifier with rounded corners and shadow.
@@ -745,6 +837,130 @@ A legacy card-style modifier with rounded corners and shadow.
 ```swift
 myView.uniLegacyCard(cornerRadius: 20)
 ```
+
+---
+
+### 3.17 Toggles
+
+**File**: `Components/UniToggle.swift`
+
+Unified toggle component supporting single bindings, multi-bindings (`sources: [Binding<Bool>]`), system styles, and custom labels.
+
+#### `UniToggle<Label: View>`
+
+```swift
+@State private var isEnabled: Bool = true
+@State private var itemA: Bool = true
+@State private var itemB: Bool = false
+
+// Standard single-binding toggle
+UniToggle("Enable Feature", isOn: $isEnabled)
+    .uniToggleStyle(.switch)
+
+// Checkbox style
+UniToggle("Accept terms", isOn: $isEnabled)
+    .uniToggleStyle(.checkbox)
+
+// Button style
+UniToggle("Active", isOn: $isEnabled)
+    .uniToggleStyle(.button)
+
+// Multi-binding toggle (hierarchical state: all on, all off, or mixed)
+UniToggle("Select All", sources: [$itemA, $itemB])
+
+// Custom view label
+UniToggle(isOn: $isEnabled) {
+    Label("Dark Mode", systemImage: "moon.fill")
+}
+```
+
+---
+
+### 3.18 StoreKit & In-App Purchases
+
+**File**: `Components/UniStoreView.swift`
+
+Comprehensive StoreKit 2 and paywall presentation components with graceful degradation for older OS versions.
+
+#### `UniStoreView<Icon, PlaceholderIcon>`
+
+In-app purchase storefront container for displaying collections of product IDs.
+
+```swift
+UniStoreView(productIDs: ["com.app.pro", "com.app.unlimited"]) {
+    // Custom header content
+    VStack {
+        Text("Unlock Full Access").font(.title).bold()
+        Text("Choose the plan that suits you best")
+    }
+}
+.uniStoreButton(.restorePurchases, visibility: .visible)
+.uniStoreButton(.cancellation, visibility: .visible)
+```
+
+#### `UniSubscriptionStoreView<Icon, PlaceholderIcon>`
+
+Subscription store container with subscription group support, marketing content, terms of service, and privacy policies.
+
+```swift
+UniSubscriptionStoreView(groupID: "21498721") {
+    VStack {
+        Image(systemName: "crown.fill").font(.largeTitle).foregroundColor(.yellow)
+        Text("Join Premium Club").font(.headline)
+    }
+}
+.uniStoreButton(.policies, visibility: .visible)
+.uniStoreButton(.signIn, visibility: .visible)
+```
+
+---
+
+### 3.19 Foldable Displays & Multi-Pane Arrangements (iPhone Duo)
+
+**File**: `Components/UniArrangementView.swift`
+
+Next-generation multi-screen and foldable layout container bridging WWDC26 arrangement APIs with automatic hinge sensing and graceful single-screen fallbacks.
+
+#### `UniArrangementView<Leading, Trailing, Top, Bottom>`
+
+Container view designed for dual-screen foldables (e.g. iPhone Duo) and adaptive multi-pane layouts.
+
+```swift
+UniArrangementView {
+    SidebarView()
+} trailing: {
+    DetailView()
+}
+.uniArrangementViewStyle(.split)
+.uniSplitArrangementLayoutRatio(0.4)
+.uniOnHingeChange { hinge in
+    print("Hinge status: \(hinge.status), angle: \(hinge.angle)")
+}
+```
+
+#### `UniDeviceHinge`
+
+Represents physical device hinge hardware geometry and posture:
+- `status: UniHingeStatus` (`.unknown`, `.flat`, `.halfOpened`, `.closed`)
+- `angle: Angle` (physical opening angle)
+- `bounds: CGRect` (screen coordinate bounding rect of physical hinge)
+
+#### `UniReservedRegion` & `GeometryProxy.uniReservedRegions`
+
+Hardware-occluded or divided screen regions (such as foldable hinges or display cutouts) can be queried directly from `GeometryReader`:
+
+```swift
+GeometryReader { proxy in
+    ForEach(proxy.uniReservedRegions(kind: .division)) { region in
+        Rectangle()
+            .fill(Color.blue.opacity(0.3))
+            .frame(width: region.frame.width, height: region.frame.height)
+            .offset(x: region.frame.minX, y: region.frame.minY)
+    }
+}
+```
+
+---
 
 ---
 
@@ -832,6 +1048,7 @@ All overloads:
 | `.uniBold(_ active:)` | Bold toggle |
 | `.uniSemi(_ active:)` | Semibold weight |
 | `.uniUnderline(_:pattern:color:)` | Underline style with pattern and color |
+| `.uniTextInputBorderShape(_ shape:)` | Text field / text editor border shape (`.roundedRectangle`, `.capsule`) |
 
 ---
 
@@ -877,6 +1094,25 @@ All overloads:
 | `.uniGlassEffect(in: shape)` | Glass effect in a specific shape |
 | `.uniMaterialBackground(style:cornerRadius:padding:)` | Material background with shape |
 | `.uniForegroundStyle(color:hierarchy:gradient:opacity:)` | Hierarchical foreground color |
+| `.uniToolbarVerticalBehavior(_ behavior:)` | Controls toolbar vertical behavior (`.compact`, `.regular`) |
+| `.uniContentMargins(for:edges:length:)` | Applies content margins for `.scrollContent` or `.container` guides |
+| `.uniMusicPicker(isPresented:selection:)` | Music item/catalog picker presentation |
+
+**Environment Values:**
+
+| Key | Type | Description |
+|:---|:---|:---|
+| `\.uniToolbarVerticalEdge` | `UniToolbarVerticalEdge` | System's preferred vertical bar edge (`.top`, `.bottom`) in current context |
+| `\.uniSystemPrefersReducedResourceUsage` | `Bool` | System resource constraint indicator (e.g. low memory/power, iOS 27+) |
+| `\.uniIsTabViewSidebarAvailable` | `Bool` | Availability of tab view sidebar in the environment (iOS 27+) |
+| `\.uniAccessibilityPrefersCrossFadeTransitions` | `Bool` | Accessibility preference for cross-fade transitions over spatial movement |
+| `\.uniAccessibilityReduceHighlightingEffects` | `Bool` | Accessibility preference to minimize highlighting effects |
+
+**On `GeometryProxy`:**
+
+| Method | Description |
+|:---|:---|
+| `proxy.uniContentMargins(for:edges:)` | Evaluates content margins for `.container` or `.scrollContent` within proxy space |
 
 ---
 
@@ -933,6 +1169,8 @@ All overloads:
 | `.uniNavigationSubtitle(_ subtitle:)` | Navigation subtitle |
 | `.uniToolbar(removing:)` | Remove default toolbar items |
 | `.uniToolbarVisibility(_:for:)` | System toolbar visibility (navigationBar, tabBar) |
+| `.uniHideSidebarToggle()` | Removes the default sidebar toggle toolbar item in NavigationSplitView |
+| `.uniNavigationTransition(_:)` | Navigation presentation transition style (`.automatic`, `.crossFade`, `.zoom`, iOS 27+) |
 
 ---
 
@@ -955,6 +1193,7 @@ All overloads:
 | Modifier | Description |
 |:---|:---|
 | `.uniPresentationSizing(_ sizing:)` | Sheet sizing (iOS 18+) |
+| `.uniPresentationPlacement(_ placement:)` | Preferred sheet presentation placement (`.compact`, `.regular`) |
 | `.uniPresentationDetents(_ detents:)` | Presentation detent set |
 | `.uniPresentationDetents(_:selection:)` | Detents with selection binding |
 | `.uniPresentationCornerRadius(_ radius:)` | Corner radius |
@@ -976,7 +1215,9 @@ All overloads:
 | `.uniTabViewSidebarHeader(content:)` | Sidebar header |
 | `.uniTabViewSidebarFooter(content:)` | Sidebar footer |
 | `.uniTabViewSidebarBottomBar(content:)` | Sidebar bottom bar |
-| `.uniDefaultAdaptableTabBarPlacement(_:)` | Default tab bar placement |
+| `.uniDefaultAdaptableTabBarPlacement(_:)` | Default adaptable tab bar placement |
+| `.uniDefaultTabBarPlacement(_:)` | Default tab bar placement (`.bottom`, `.top`, `.sidebar`) |
+| `.uniDefaultSectionExpansion(_:)` | Sidebar section expansion default (`.collapsed`, `.expanded`), on `View` and `TabContent` |
 | `.uniTabViewCustomization(_:)` | Tab customization binding |
 | `.uniTabBarMinimizeBehavior(_:)` | Tab bar minimize behavior |
 | `.uniTabViewBottomAccessory(placement:content:)` | Bottom accessory view |
@@ -990,10 +1231,22 @@ All overloads:
 | Type / Modifier | Description |
 |:---|:---|
 | `ToolbarItemPlacement.uni(_:)` | Unified toolbar placement |
-| `UniToolbarSpacer` | Toolbar spacer view |
+| `ToolbarItemPlacement.uniTopBarPinnedTrailing` | Pin trailing toolbar item (iOS 27+) |
+| `UniToolbarSpacer` | Toolbar spacer item conforming to `ToolbarContent` |
+| `UniToolbarSpacerView` | Toolbar spacer view for inline layouts |
 | `UniToolbarItemSpacer` | Toolbar content spacer |
-| `.uniSharedBackgroundVisibility(_:)` | Toolbar background visibility (on ToolbarContent) |
-| `.uniMatchedTransitionSource(id:in:)` | Matched geometry transition (on ToolbarContent) |
+| `UniToolbarOverflowMenu` | Overflow menu container conforming to `ToolbarContent` |
+| `.uniToolbarTitleAlignment(_:)` | Navigation bar title alignment (`.center`, `.leading`, `.trailing`) |
+| `.uniVisibilityPriority(_:)` | Visibility priority (`.low`, `.high`, relative) on `ToolbarContent` |
+| `.uniAxisBehavior(_:)` | Toolbar item axis behavior (`.horizontalOnly`, `.verticalPreferred`) on `ToolbarContent` |
+| `.uniToolbarVerticalCompressionBehavior(_:)` | Compression behavior (`.prefersToolbarItems`, `.prefersTabBar`) on `ToolbarContent` |
+| `.uniContentMarginsRemoved()` | Removes content margins around toolbar items on `ToolbarContent` |
+| `.uniHidden(_:)` | Configures whether a toolbar content item is hidden (iOS 26.4+, tvOS 27.2+) |
+| `.uniSharedBackgroundVisibility(_:)` | Toolbar background visibility (on `ToolbarContent`) |
+| `.uniMatchedTransitionSource(id:in:)` | Matched geometry transition (on `ToolbarContent`) |
+| `.uniToolbarMinimizationBehavior(_:for:)` | Toolbar minimization on scroll (`.automatic`, `.onScrollDown`, `.onScrollUp`, iOS 27+) |
+| `.uniToolbarMinimizationSafeAreaAdjustment(_:for:)` | Safe area adjustment during toolbar minimization (`.automatic`, `.disabled`, iOS 27+) |
+| `.uniToolbarMinimizationRestoration(_:for:)` | Restoration behavior for minimized toolbars (`.automatic`, `.atScrollEdge`, iOS 27+) |
 
 ---
 
@@ -1157,6 +1410,59 @@ On `View`:
 
 ---
 
+### 4.25 Toggles
+
+**File**: `Bridges/UniToggles.swift`
+
+| Modifier | Description |
+|:---|:---|
+| `.uniToggleStyle(_ style:)` | Toggle style (`.automatic`, `.switch`, `.button`, `.checkbox`) |
+
+---
+
+### 4.26 StoreKit & Subscriptions
+
+**File**: `Bridges/UniStoreViews.swift`
+
+| Modifier | Description |
+|:---|:---|
+| `.uniStoreButton(_:visibility:)` | Configures StoreKit button visibility (`.restorePurchases`, `.cancellation`, etc.) |
+| `.uniManageSubscriptionsSheet(isPresented:)` | Presents system subscription management sheet |
+| `.uniAppStoreOverlay(isPresented:)` | Presents App Store product overlay sheet |
+
+---
+
+### 4.27 Foldable Displays & Geometry Reader
+
+**File**: `Bridges/UniArrangementViews.swift`
+
+On `View`:
+
+| Modifier | Description |
+|:---|:---|
+| `.uniArrangementViewStyle(_:)` | Arrangement style (`.split`, `.overlay`) |
+| `.uniSplitArrangementLayoutRatio(_:)` | Layout ratio between arrangement panes (0.0 to 1.0) |
+| `.uniSplitArrangementLayoutRatio(minHorizontal:idealHorizontal:...)` | Multi-dimensional ratio constraints for split arrangement panes |
+| `.uniSplitArrangementLayoutSize(...)` | Preferred min/ideal/max width and height for split arrangement panes |
+| `.uniSplitArrangementFixedLayoutSize(horizontal:vertical:)` | Retains fixed layout size for split arrangement panes |
+| `.uniOverlayArrangementEdge(_:)` | Anchoring edge for overlay pane (supports `UniArrangementEdge`, `HorizontalEdge`, `VerticalEdge`) |
+| `.uniOnHingeChange(perform:)` | Listens for physical device hinge status and angle changes |
+
+**Environment Values:**
+
+| Key | Type | Description |
+|:---|:---|:---|
+| `\.uniSplitArrangementAxis` | `Axis?` | Active split axis for arrangement view |
+| `\.uniOverlayArrangementZIndex` | `Int` | Z-index for overlay arrangement panes |
+
+On `GeometryProxy`:
+
+| Method | Description |
+|:---|:---|
+| `proxy.uniReservedRegions(kind:)` | Queries hardware-reserved regions (`.division`, `.occlusion`) within proxy space |
+
+---
+
 ## 5. Usage Patterns for AI Agents
 
 ### Pattern 1: Import & Use Components
@@ -1228,12 +1534,54 @@ UniTabView(selection: $selection) {
         UniTab("Profile", systemImage: "person", value: .profile) { ProfileView() }
         UniTab("Settings", systemImage: "gear", value: .settings) { SettingsView() }
     }
+    .uniDefaultSectionExpansion(.collapsed)
 }
 .uniTabViewStyle(.sidebarAdaptable)
 .uniTabBarMinimizeBehavior(.onScrollDown)
 ```
 
+### Pattern 6: Foldable Multi-Pane Layout (iPhone Duo)
+
+```swift
+struct DualScreenDashboard: View {
+    @State private var hingeAngle: Double = 180.0
+    
+    var body: some View {
+        UniArrangementView {
+            SidebarView()
+        } trailing: {
+            DetailView()
+        }
+        .uniArrangementViewStyle(.split)
+        .uniSplitArrangementLayoutRatio(0.38)
+        .uniOnHingeChange { hinge in
+            hingeAngle = hinge.angle.degrees
+        }
+    }
+}
+```
+
+### Pattern 7: StoreKit Subscription Paywall
+
+```swift
+struct ProUpgradeView: View {
+    var body: some View {
+        UniSubscriptionStoreView(groupID: "pro_features") {
+            VStack(spacing: 12) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 48))
+                Text("Unlock Unlimited Access")
+                    .font(.title2.bold())
+            }
+            .padding()
+        }
+        .uniStoreButton(.policies, visibility: .visible)
+        .uniStoreButton(.restorePurchases, visibility: .visible)
+    }
+}
+```
+
 ---
 
-> **Last Updated**: 2026-07-03  
-> **Source**: Auto-generated from `Sources/ExploreSwiftUI/` source tree analysis.
+> **Last Updated**: 2026-11-11  
+> **Source**: Auto-generated from `Sources/ExploreSwiftUI/` source tree analysis and `exploreswiftui.com` catalog sync.

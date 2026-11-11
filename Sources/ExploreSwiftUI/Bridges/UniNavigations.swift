@@ -263,19 +263,60 @@ extension View {
         _ visibility: UniToolbarVisibility,
         for placement: UniToolbarPlacement
     ) -> some View {
-        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
-        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+        if #available(iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
             self.toolbar(visibility.native, for: placement.native)
         } else {
             switch placement {
             case .navigationBar:
+                #if os(iOS) || os(tvOS)
                 self.navigationBarHidden(visibility == .hidden)
+                #else
+                self
+                #endif
             case .tabBar:
                 self
             }
         }
+        #elseif os(macOS)
+        if #available(macOS 13.0, *) {
+            self.toolbar(visibility.native, for: placement.native)
+        } else {
+            self
+        }
         #else
         self
+        #endif
+    }
+
+    /// Removes the sidebar toggle toolbar item that NavigationSplitView adds by default.
+    @ViewBuilder
+    public func uniHideSidebarToggle(_ hide: Bool = true) -> some View {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *) {
+                if hide {
+                    self.toolbar(removing: .sidebarToggle)
+                } else {
+                    self
+                }
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
+    /// Applies a navigation transition for navigation views (iOS 27+).
+    @ViewBuilder
+    public func uniNavigationTransition(_ transition: UniNavigationTransition) -> some View {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+            if #available(iOS 27.0, macOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *) {
+                self.navigationTransition(.automatic)
+            } else {
+                self
+            }
+        #else
+            self
         #endif
     }
 }
@@ -289,10 +330,16 @@ public enum UniToolbarPlacement: Sendable {
     var native: ToolbarPlacement {
         switch self {
         case .navigationBar:
+            #if os(macOS)
+            return .windowToolbar
+            #else
             return .navigationBar
+            #endif
         case .tabBar:
             #if os(iOS) || os(tvOS)
             return .tabBar
+            #elseif os(macOS)
+            return .windowToolbar
             #else
             return .automatic
             #endif

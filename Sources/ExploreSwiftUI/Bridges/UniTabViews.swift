@@ -286,8 +286,8 @@ extension View {
     public func uniTabBarMinimizeBehavior(
         _ behavior: UniTabBarMinimizeBehavior = .onScrollDown
     ) -> some View {
-        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-            if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *) {
+        #if os(iOS)
+            if #available(iOS 26.0, *) {
                 switch behavior {
                 case .automatic: self.tabBarMinimizeBehavior(.automatic)
                 case .never: self.tabBarMinimizeBehavior(.never)
@@ -325,6 +325,38 @@ extension View {
             self
         #endif
     }
+
+    /// Sets the default tab bar placement for adaptable tab views (iOS 27+).
+    @ViewBuilder
+    public func uniDefaultTabBarPlacement(_ placement: UniDefaultTabBarPlacement) -> some View {
+        #if os(iOS) || os(visionOS)
+            if #available(iOS 27.0, visionOS 27.0, *) {
+                switch placement {
+                case .automatic: self.defaultTabBarPlacement(.automatic)
+                case .sidebar: self.defaultTabBarPlacement(.sidebar)
+                case .tabBar: self.defaultTabBarPlacement(.tabBar)
+                }
+            } else {
+                self
+            }
+        #elseif os(macOS) || os(tvOS) || os(watchOS)
+            if #available(macOS 27.0, tvOS 27.0, watchOS 27.0, *) {
+                switch placement {
+                case .automatic, .sidebar: self.defaultTabBarPlacement(.automatic)
+                case .tabBar: self.defaultTabBarPlacement(.tabBar)
+                }
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
+
+    /// Sets the default section expansion state when called on a view.
+    public func uniDefaultSectionExpansion(_ expansion: UniSectionExpansion) -> some View {
+        self
+    }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -334,6 +366,29 @@ extension View {
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension TabContent {
+
+    /// Sets the default section expansion state in the sidebar (iOS 27+).
+    public func uniDefaultSectionExpansion(_ expansion: UniSectionExpansion) -> some TabContent<TabValue> {
+        #if os(iOS) || os(visionOS)
+            if #available(iOS 27.0, visionOS 27.0, *) {
+                switch expansion {
+                case .automatic: return self.defaultSectionExpansion(.automatic)
+                case .expanded: return self.defaultSectionExpansion(.expanded)
+                case .collapsed: return self.defaultSectionExpansion(.collapsed)
+                }
+            } else {
+                return self
+            }
+        #elseif os(macOS) || os(tvOS) || os(watchOS)
+            if #available(macOS 27.0, tvOS 27.0, watchOS 27.0, *) {
+                return self.defaultSectionExpansion(.automatic)
+            } else {
+                return self
+            }
+        #else
+            return self
+        #endif
+    }
 
     /// Assigns a stable customization ID to this tab for state persistence.
     public func uniCustomizationID(_ id: String) -> some TabContent<TabValue> {

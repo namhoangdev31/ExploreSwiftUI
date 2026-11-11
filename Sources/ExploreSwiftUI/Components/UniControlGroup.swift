@@ -75,26 +75,20 @@ public struct UniControlGroup<Content: View, Label: View>: View {
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         @available(iOS 15.0, macOS 12.0, tvOS 17.0, visionOS 1.0, *)
-        @ViewBuilder
         private var nativeGroup: some View {
-            if let label = label {
-                if #available(iOS 16.0, macOS 13.0, tvOS 17.0, *) {
-                    ControlGroup {
-                        content()
-                    } label: {
-                        label()
+            Group {
+                if let label = label {
+                    if #available(iOS 16.0, macOS 13.0, tvOS 17.0, *) {
+                        AnyView(ControlGroup(content: content, label: label))
+                    } else {
+                        AnyView(
+                            VStack(alignment: .leading, spacing: 4) {
+                                label()
+                                ControlGroup(content: content)
+                            })
                     }
                 } else {
-                    VStack(alignment: .leading, spacing: 4) {
-                        label()
-                        ControlGroup {
-                            content()
-                        }
-                    }
-                }
-            } else {
-                ControlGroup {
-                    content()
+                    AnyView(ControlGroup(content: content))
                 }
             }
         }

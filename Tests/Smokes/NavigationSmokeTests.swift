@@ -1,7 +1,7 @@
 import SwiftUI
 import XCTest
 
-@testable import UniSwiftUi
+@testable import ExploreSwiftUI
 
 final class NavigationSmokeTests: XCTestCase {
     @MainActor
@@ -11,10 +11,30 @@ final class NavigationSmokeTests: XCTestCase {
 }
 
 private struct NavigationSmokeView: View {
+    @State private var compactColumn: UniPreferredCompactColumn = .detail
+
     var body: some View {
-        NavigationStack {
-            Text("Nav")
-                .uniNavigationTitle("Title", subtitle: "Subtitle")
+        VStack {
+            NavigationStack {
+                Text("Nav")
+                    .uniNavigationTitle("Title", subtitle: "Subtitle")
+            }
+            .uniNavigationTransition(.crossFade)
+
+            UniNavigationSplitView(preferredCompactColumn: $compactColumn) {
+                Text("Sidebar")
+                    .uniHideSidebarToggle()
+            } detail: {
+                Text("Detail")
+            }
+
+            UniNavigationSplitView3(preferredCompactColumn: $compactColumn) {
+                Text("Sidebar 3")
+            } content: {
+                Text("Content 3")
+            } detail: {
+                Text("Detail 3")
+            }
         }
     }
 }

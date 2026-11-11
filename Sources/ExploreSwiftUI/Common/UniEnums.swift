@@ -270,6 +270,7 @@ public enum UniPickerStyle: Sendable {
     case segmented
     case wheel
     case radioGroup
+    case tabs
 }
 
 /// Defines visual styles for `UniGauge`.
@@ -454,4 +455,190 @@ public enum UniLineStylePattern: Sendable {
         }
     }
 }
+
+// MARK: - Toggle Enums
+
+/// Defines visual styles for `UniToggle`.
+public enum UniToggleStyle: Sendable {
+    case automatic
+    case `switch`
+    case button
+    case checkbox
+}
+
+// MARK: - StoreKit & Subscription Enums
+
+/// Defines kinds of native StoreKit buttons.
+public enum UniStoreButtonKind: Sendable {
+    case cancellation
+    case restorePurchases
+}
+
+/// Defines visibility for StoreKit buttons.
+public enum UniStoreButtonVisibility: Sendable {
+    case automatic
+    case visible
+    case hidden
+}
+
+/// Defines relationships for displayed subscriptions.
+public enum UniSubscriptionRelationship: Sendable {
+    case all
+    case upgrade
+}
+
+// MARK: - Arrangement & Foldable (iPhone Duo) Enums
+
+/// Defines arrangement view styles for dual-screen and foldable devices.
+public enum UniArrangementStyle: Sendable, Equatable {
+    case split(axes: Axis.Set = [.horizontal, .vertical])
+    case overlay
+
+    public static let splitVertical: UniArrangementStyle = .split(axes: .vertical)
+    public static let splitHorizontal: UniArrangementStyle = .split(axes: .horizontal)
+}
+
+/// Defines the edge an arrangement view occupies during transitions.
+public enum UniArrangementEdge: Sendable {
+    case leading
+    case trailing
+    case top
+    case bottom
+}
+
+/// Defines kinds of reserved display regions (e.g. hinge folds or cutouts).
+public enum UniReservedRegionKind: Sendable {
+    case division
+    case occlusion
+}
+
+/// Defines physical hinge state on foldable devices.
+public enum UniHingeStatus: Sendable {
+    case flat
+    case halfOpened
+    case closed
+    case unknown
+}
+
+// MARK: - Advanced Toolbar & Navigation Enums (iOS 27+)
+
+/// Preferred alignment of the navigation bar's title.
+public enum UniToolbarTitleAlignment: Sendable {
+    case automatic
+    case leading
+    case center
+    case trailing
+}
+
+/// Defines visibility priority for toolbar items in crowded bars.
+public enum UniToolbarItemVisibilityPriority: Sendable, Comparable {
+    case lowest
+    case low
+    case automatic
+    case high
+    case highest
+}
+
+/// Defines bar axis preference for toolbar items.
+public enum UniToolbarAxisBehavior: Sendable {
+    case automatic
+    case horizontalOnly
+    case verticalPreferred
+}
+
+/// Defines toolbar compression behavior on adaptable layouts.
+public enum UniToolbarVerticalCompressionBehavior: Sendable {
+    case automatic
+    case prefersToolbarItems
+    case prefersTabs
+}
+
+/// Controls vertical bar behavior on modern layouts.
+public enum UniToolbarVerticalBehavior: Sendable {
+    case automatic
+    case disabled
+}
+
+/// Edge location of the vertical bar.
+public enum UniToolbarVerticalEdge: Sendable {
+    case leading
+    case trailing
+    case top
+    case bottom
+}
+
+/// Preferred placement for adaptable tab bars.
+public enum UniDefaultTabBarPlacement: Sendable {
+    case automatic
+    case tabBar
+    case sidebar
+}
+
+/// Default expansion state for collapsible sidebar sections.
+public enum UniSectionExpansion: Sendable {
+    case automatic
+    case expanded
+    case collapsed
+}
+
+/// Preferred presentation placement for sheets and modals.
+public enum UniPresentationPlacement: Sendable {
+    case automatic
+    case leading
+    case trailing
+    case top
+    case bottom
+    case center
+}
+
+/// Border shapes for text field inputs.
+public enum UniTextInputBorderShape: Sendable {
+    case automatic
+    case roundedRectangle
+    case capsule
+}
+
+/// Preferred compact column for NavigationSplitView collapsing.
+public enum UniPreferredCompactColumn: Sendable {
+    case sidebar
+    case content
+    case detail
+}
+
+/// Margin guide for container content margins (iOS 27.1+).
+public enum UniContentMarginGuide: Sendable {
+    case automatic
+    case container
+    case scrollContent
+    case scrollIndicators
+}
+
+// MARK: - Toolbar Minimization & Navigation Transitions (iOS 27+)
+
+/// Controls how toolbars and navigation bars minimize on scroll.
+public enum UniToolbarMinimizationBehavior: Hashable, Sendable {
+    case automatic
+    case onScrollDown
+    case onScrollUp
+}
+
+/// Controls whether safe area adjusts interactively during toolbar minimization.
+public enum UniToolbarMinimizationSafeAreaAdjustment: Hashable, Sendable {
+    case automatic
+    case disabled
+}
+
+/// Controls when a minimized toolbar restores its presentation.
+public enum UniToolbarMinimizationRestoration: Hashable, Sendable {
+    case automatic
+    case atScrollEdge
+}
+
+/// Navigation transitions bridging AnyNavigationTransition on iOS 27+.
+public enum UniNavigationTransition: Hashable, Sendable {
+    case automatic
+    case crossFade
+    case zoom
+}
+
 

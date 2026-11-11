@@ -164,6 +164,37 @@ extension View {
             self
         }
     }
+
+    /// Sets the placement for sheets in adaptable presentations (iOS 27+).
+    @ViewBuilder
+    public func uniPresentationPlacement(_ placement: UniPresentationPlacement) -> some View {
+        #if os(iOS)
+            if #available(iOS 27.0, *) {
+                switch placement {
+                case .automatic:
+                    self.presentationPlacement(.automatic)
+                case .leading:
+                    self.presentationPlacement(.leading)
+                case .center:
+                    self.presentationPlacement(.center)
+                case .trailing:
+                    self.presentationPlacement(.trailing)
+                case .top, .bottom:
+                    self.presentationPlacement(.automatic)
+                }
+            } else {
+                self
+            }
+        #elseif os(macOS) || os(tvOS) || os(watchOS) || os(visionOS)
+            if #available(macOS 27.0, tvOS 27.0, watchOS 27.0, visionOS 27.0, *) {
+                self.presentationPlacement(.automatic)
+            } else {
+                self
+            }
+        #else
+            self
+        #endif
+    }
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, visionOS 1.0, *)

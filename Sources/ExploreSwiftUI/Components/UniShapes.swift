@@ -36,3 +36,30 @@ public struct UniContainerRelativeShape: InsettableShape {
         return shape
     }
 }
+
+/// An uni generic shape component that defaults to a container-relative shape or rectangle.
+public struct UniShape: InsettableShape {
+    private var base: UniContainerRelativeShape
+    
+    public init() {
+        self.base = UniContainerRelativeShape()
+    }
+    
+    public func path(in rect: CGRect) -> Path {
+        base.path(in: rect)
+    }
+    
+    public func inset(by amount: CGFloat) -> UniShape {
+        var copy = self
+        copy.base = base.inset(by: amount)
+        return copy
+    }
+}
+
+extension Shape {
+    /// Applies a tint color or style to a shape.
+    @ViewBuilder
+    public func uniShapeTint<S: ShapeStyle>(_ style: S) -> some View {
+        self.fill(style)
+    }
+}

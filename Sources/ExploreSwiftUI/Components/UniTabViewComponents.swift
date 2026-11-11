@@ -58,15 +58,33 @@ public func UniTab<Value: Hashable, Content: View>(
 ///     UniTab("Settings", systemImage: "gear", value: 2) { SettingsView() }
 /// }
 /// ```
-public func UniTabSection<Value: Hashable>(
-    _ titleKey: LocalizedStringKey? = nil,
-    @UniTabBuilder<Value> content: @escaping () -> [_UniTabDescriptor<Value>]
-) -> _UniTabSectionDescriptor<Value> {
-    _UniTabSectionDescriptor(
-        titleKey: titleKey,
-        children: content()
-    )
+#if !os(watchOS)
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *)
+public struct UniTabSection<Value: Hashable, Content: TabContent<Value>>: TabContent {
+    private let titleKey: LocalizedStringKey?
+    private let content: () -> Content
+
+    public init(
+        _ titleKey: LocalizedStringKey? = nil,
+        @TabContentBuilder<Value> content: @escaping () -> Content
+    ) {
+        self.titleKey = titleKey
+        self.content = content
+    }
+
+    public var body: some TabContent<Value> {
+        if let titleKey = titleKey {
+            TabSection(titleKey) {
+                content()
+            }
+        } else {
+            TabSection {
+                content()
+            }
+        }
+    }
 }
+#endif
 
 // MARK: - UniTabView
 
@@ -209,7 +227,39 @@ public struct UniTabBuilder<Value: Hashable> {
     }
 }
 
-// MARK: - Compatibility Aliases
+// MARK: - Native TabContent Components (iOS 18+)
 
-/// Provided for backward compatibility with previous library versions.
-public typealias UniValueTab = _UniTabDescriptor
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
+public struct UniValueTab<Value: Hashable, Content: View>: TabContent {
+    private let titleKey: LocalizedStringKey
+    private let systemImage: String
+    private let value: Value
+    private let role: UniTabRole
+    private let content: () -> Content
+
+    public init(
+        _ titleKey: LocalizedStringKey,
+        systemImage: String,
+        value: Value,
+        role: UniTabRole = .automatic,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.titleKey = titleKey
+        self.systemImage = systemImage
+        self.value = value
+        self.role = role
+        self.content = content
+    }
+
+    public var body: some TabContent<Value> {
+        if role == .search {
+            Tab(titleKey, systemImage: systemImage, value: value, role: .search) {
+                content()
+            }
+        } else {
+            Tab(titleKey, systemImage: systemImage, value: value) {
+                content()
+            }
+        }
+    }
+}
